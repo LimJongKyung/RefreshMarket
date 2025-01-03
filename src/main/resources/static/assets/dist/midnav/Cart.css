@@ -1,0 +1,146 @@
+/* 장바구니 항목 스타일 */
+.cart-intro {
+	text-align: center;
+}
+
+#cartItems {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 수량 입력 필드 */
+.quantity-input {
+    width: 60px;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px 0;
+    transition: border-color 0.3s ease;
+}
+
+/* 수량 입력 필드에 포커스 시 스타일 */
+.quantity-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.cart-item img {
+    border-radius: 5px;
+    max-width: 100px;
+    height: auto;
+}
+
+.cart-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.remove-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.remove-btn:hover {
+    background-color: #ff1a1a;
+}
+
+/* 장바구니 비었을 때 메시지 스타일 */
+#emptyMessage {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #888;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#totalQuantity, #totalPrice {
+    font-size: 20px; /* 글자 크기 증가 */
+    font-weight: bold; /* 굵은 글씨 */
+    color: #4CAF50; /* 상큼한 초록색 */
+    text-align: center; /* 중앙 정렬 */
+    margin: 15px 0; /* 위, 아래 여백 추가 */
+    padding: 10px; /* 텍스트 주변에 패딩 추가 */
+    border-radius: 10px; /* 모서리를 둥글게 */
+    background-color: #f1f8e9; /* 부드러운 배경색 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    font-family: 'Arial', sans-serif; /* 글꼴 변경 */
+    transition: all 0.3s ease; /* 애니메이션 효과 */
+}
+
+/* 마우스 오버시 배경색 변경 */
+#totalQuantity:hover, #totalPrice:hover {
+    background-color: #e8f5e9; /* 살짝 연한 초록색으로 변화 */
+    cursor: pointer; /* 포인터 커서 */
+    transform: scale(1.05); /* 약간 커지는 효과 */
+}
+
+/* 공통 버튼 스타일 */
+button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* 버튼들을 동일한 라인에 배치 */
+#buttonContainer {
+    display: flex;
+    justify-content: center;  /* 버튼들을 가운데 정렬 */
+    gap: 10px;  /* 버튼 사이 간격 */
+    margin-top: 20px;
+}
+
+/* 구매하기 버튼 스타일 */
+.buy-button {
+    color: white;
+    background-color: #28a745; /* 초록색 */
+    width: auto;
+}
+
+.buy-button:hover {
+    background-color: #218838; /* 호버 시 어두운 초록색 */
+}
+
+/* 모두 취소하기 버튼 스타일 */
+.clear-btn {
+    color: white;
+    background-color: #dc3545; /* 빨간색 */
+    width: auto;
+}
+
+.clear-btn:hover {
+    background-color: #c82333; /* 호버 시 어두운 빨간색 */
+}

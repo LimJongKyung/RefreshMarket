@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+.search-id {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+    justify-content: center; /* 수평 정렬 */
+    height: 70vh; /* 화면 전체 높이 */
+    padding: 20px; /* 상하 패딩 추가 */
+    margin-bottom: 100px;
+    margin-top: 100px;
+}
+
+.form-box {
+    border: 1px solid #ced4da; /* 박스 테두리 */
+    border-radius: 10px; /* 박스 모서리 둥글게 */
+    padding: 20px; /* 내부 여백 */
+    background-color: #ffffff; /* 배경색 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    width: 100%; /* 폭 설정 */
+    max-width: 400px; /* 최대 폭 설정 */
+}
+
+.form-group {
+    margin-bottom: 10px; /* 요소 간격 추가 */
+}
+
+.form-control {
+    border-radius: 30px; /* 입력 필드 모서리 둥글게 */
+    border: 1px solid #ced4da; /* 테두리 */
+    padding: 12px 20px; /* 내부 여백 */
+    width: 85%; /* 인풋 필드의 너비를 부모 요소에 맞춤 */
+    max-width: 350px; /* 최대 너비 설정, 필요에 따라 조정 */
+}
+
+.d-grid {
+    text-align: center; /* 버튼 가운데 정렬 */
+}
+
+.btn-primary {
+    background-color: #66cdaa; /* 버튼 배경색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 30px; /* 버튼 모서리 둥글게 */
+    padding: 10px 20px; /* 버튼 내부 여백 */
+    font-weight: bold; /* 텍스트 두께 */
+    color: #333; /* 텍스트 색상 */
+    margin-bottom: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* 호버 시 색상 */
+    transform: translateY(-2px); /* 호버 시 효과 */
+}
+
+.btn-primary:active {
+    transform: translateY(0); /* 클릭 시 원위치 */
+}

@@ -1,0 +1,94 @@
+/* 게시글 상세보기 컨테이너 스타일 */
+.detail-container {
+    max-width: 800px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+/* 제목 스타일 */
+.detail-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+/* 테이블 스타일 */
+.detail-table {
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* 행 스타일 */
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+/* 헤더 스타일 */
+.detail-header {
+    flex: 1;
+    font-weight: bold;
+    color: #495057;
+}
+
+/* 내용 스타일 */
+.detail-content {
+    flex: 2;
+    text-align: left;
+    color: #212529;
+}
+
+/* 내용의 줄바꿈 설정 */
+.detail-content[style*="white-space: pre-wrap;"] {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* 목록 버튼 스타일 */
+.detail-actions .btn-primary {
+    background-color: #3cb371;
+    border-color: #007bff;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 50px; /* 둥근 모서리 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+/* 버튼 hover 효과 */
+.detail-actions .btn-primary:hover {
+    background-color: #0056b3; /* 진한 파란색 */
+    border-color: #004085;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* 그림자 강조 */
+    transform: translateY(-2px); /* 살짝 올라오는 효과 */
+}
+
+/* 버튼 active 효과 */
+.detail-actions .btn-primary:active {
+    background-color: #003f7f; /* 더 어두운 파란색 */
+    border-color: #003366;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 눌렸을 때 그림자 감소 */
+    transform: translateY(0); /* 원래 위치로 복귀 */
+}
+
+/* 작은 화면에서의 버튼 중앙 정렬 */
+@media (max-width: 576px) {
+    .detail-actions .btn-primary {
+        width: 100%;
+        padding: 12px;
+    }
+}

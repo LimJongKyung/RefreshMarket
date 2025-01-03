@@ -1,0 +1,163 @@
+@charset "UTF-8";
+
+/* 전체 배경 색상 및 여백 설정 */
+.signup-body {
+    background-color: #f8f9fa;
+    padding: 20px;
+    padding-top: 40px;
+}
+
+/* 컨테이너의 여백 및 그림자 추가 */
+.signup-container {
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* 최대 너비 설정 */
+}
+
+/* 제목 스타일 */
+.signup-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 폼 그룹의 여백 설정 */
+.signup-form-group {
+    margin-bottom: 20px;
+}
+
+/* 레이블 스타일 */
+.signup-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* 입력 필드의 스타일 */
+.signup-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+    width: 100%; /* 전체 너비 설정 */
+    padding: 10px; /* 내부 여백 추가 */
+}
+
+/* 입력 필드 포커스 스타일 */
+.signup-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 버튼 그룹을 위한 스타일 */
+.signup-button-group {
+    display: flex; /* Flexbox 사용하여 버튼을 가로로 배치 */
+    justify-content: space-between; /* 버튼 간격을 균등하게 배치 */
+    margin-top: 20px; /* 버튼 그룹 위쪽 여백 추가 */
+}
+
+/* 버튼 스타일 */
+.signup-button {
+    flex: 1; /* 버튼이 균등하게 공간을 차지하도록 설정 */
+    max-width: 150px; /* 버튼의 최대 너비 설정 */
+    padding: 8px; /* 버튼의 패딩 조정 */
+    font-size: 1rem; /* 글자 크기 조정 (작게 설정) */
+    margin: 0 5px; /* 버튼 사이의 여백 추가 */
+    border: none; /* 버튼 테두리 제거 */
+    color: #333; /* 버튼 텍스트 색상 */
+    border-radius: 8px; /* 버튼 모서리 둥글게 */
+    cursor: pointer; /* 커서 모양을 포인터로 변경 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 배경색과 크기 변화 효과 */
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+/* 가입하기 버튼 스타일 */
+.signup-button-primary {
+    background: #66cdaa; /* 그라데이션 색상 */
+}
+
+/* 가입하기 버튼 호버 스타일 */
+.signup-button-primary:hover {
+    background: linear-gradient(90deg, #0056b3, #004494);
+    transform: translateY(-1px); /* 호버 시 버튼이 살짝 떠오르는 효과 */
+}
+
+/* 리셋 버튼 스타일 */
+.signup-button-reset {
+    background: #66cdaa; /* 그라데이션 색상 */
+}
+
+/* 리셋 버튼 호버 스타일 */
+.signup-button-reset:hover {
+    background: linear-gradient(90deg, #e0a800, #c69500);
+    transform: translateY(-1px);
+}
+
+/* 메인으로 버튼 스타일 */
+.signup-button-main {
+    background: #66cdaa; /* 그라데이션 색상 */
+}
+
+/* 메인으로 버튼 호버 스타일 */
+.signup-button-main:hover {
+    background: linear-gradient(90deg, #218838, #1e7e34);
+    transform: translateY(-1px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 576px) {
+    .signup-container {
+        padding: 20px;
+    }
+
+    .signup-title {
+        font-size: 1.5rem;
+    }
+
+    .signup-button-group {
+        flex-direction: column; /* 작은 화면에서 버튼을 세로로 나열 */
+    }
+
+    .signup-button {
+        margin: 5px 0; /* 세로로 나열 시 여백 조정 */
+    }
+}
+
+/* styles.css */
+
+/* 중복 확인 버튼 스타일 */
+.btn-check-duplicate {
+    margin-left: 370px; /* 입력란과의 간격 조절 */
+    margin-bottom: 3px;
+    background-color: #66cdaa; /* 버튼 배경색 */
+    color: #333; /* 버튼 글자색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    padding: 0.375rem 0.75rem; /* 패딩 조절 */
+    font-size: 1rem; /* 글자 크기 조절 */
+    transition: background-color 0.3s; /* 호버 효과를 부드럽게 */
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.btn-check-duplicate:hover {
+    background-color: #218838; /* 호버 시 배경색 */
+}
+
+.btn-search-address {
+	margin-left: 390px;
+    margin-bottom: 3px;
+    background-color: #66cdaa; /* 기본 배경색 */
+    border: none; /* 테두리 없음 */
+    color: #333; /* 글자색 */
+    padding: 0.375rem 0.75rem; /* 패딩 */
+    font-size: 1rem; /* 글자 크기 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 커서 모양 변경 */
+    font-family: 'Do Hyeon', sans-serif;
+}
+        
+.btn-search-address:hover {
+    background-color: #0056b3; /* 마우스 오버 시 배경색 */
+}

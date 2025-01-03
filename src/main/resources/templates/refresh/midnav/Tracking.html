@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link rel="stylesheet" href="/assets/dist/midnav/Tracking.css"/>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+        	<div class="tracking-container mt-5">
+			    <h1 class="tracking-title text-center mb-4">배송조회</h1>
+			    <div class="tracking-card card p-4 shadow-lg">
+			        <form id="trackingForm">
+			            <div class="tracking-input-group mb-4">
+			                <label for="trackingNumber" class="tracking-label form-label">운송장 번호</label>
+			                <input type="text" class="tracking-input form-control" id="trackingNumber" placeholder="운송장 번호를 입력하세요" required>
+			            </div>
+			            <div class="tracking-button-group d-flex justify-content-center">
+			                <button type="submit" class="tracking-submit-btn btn btn-primary px-4 py-2">조회</button>
+			            </div>
+			        </form>
+			    </div>
+			    <div id="resultContainer" class="tracking-result mt-4 d-none">
+			        <h4 class="tracking-result-title">배송 조회 결과</h4>
+			        <p id="resultMessage" class="tracking-result-message alert alert-info">조회 중...</p>
+			    </div>
+			</div>
+
+			
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/js/refreshmain.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	</body>
+</html>

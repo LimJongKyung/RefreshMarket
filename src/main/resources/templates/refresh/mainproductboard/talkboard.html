@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/mainproductboardcss/talkboard.css" rel="stylesheet"/>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+        	<div class="container mt-5">
+			    <h1 class="text-center mb-4">게시판 목록</h1>
+			    <table class="table table-bordered table-hover">
+			        <thead class="thead-dark">
+			            <tr>
+			                <th scope="col" class="text-center">번호</th>
+			                <th scope="col" class="text-center">제목</th>
+			                <th scope="col" class="text-center">작성자</th>
+			                <th scope="col" class="text-center">작성일</th>
+			                <th scope="col" class="text-center">조회수</th>
+			                <th scope="col" class="text-center">글 유형</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <!-- 게시글 목록 출력 -->
+						<th:block th:each="post : ${posts}">
+						    <tr>
+						        <td th:text="${post.postId}" class="text-center"></td>
+						        <td>
+						            <!-- 제목을 클릭하면 게시글 상세 페이지로 이동 -->
+						            <a th:href="@{/inquiry/talkDetail(postId=${post.postId})}" th:text="${post.title}"></a>
+						        </td>
+						        <td th:text="${post.memberId}" class="text-center"></td>
+						        <td th:text="${post.createdDate}" class="text-center"></td>
+						        <td th:text="${post.viewCount}" class="text-center"></td>
+						        <td th:text="${post.boardType}" class="text-center"></td>
+						    </tr>
+						</th:block>
+			        </tbody>
+			    </table>
+			</div>
+			
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/js/refreshmain.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+<head>
+    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+    <meta name="theme-color" content="#712cf9">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+    <link href="/assets/dist/css/refreshsignup.css" rel="stylesheet"/>
+    
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=dfde7d829fbc90e684c292588603834a"></script>
+</head>
+</head>
+<body class="d-flex h-100 text-center text-bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
+                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
+                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+            </nav>
+        </header>
+
+        <main class="signup-body">
+            <div class="signup-container">
+                <h2 class="signup-title">회원가입</h2>
+                <form id="signupForm" th:action="@{/signup}" th:object="${member}" method="post">
+                    <div class="signup-form-group">
+                        <div class="input-group">
+                            <label class="signup-label" for="id">회원 ID</label>
+                            <button type="button" class="btn btn-check-duplicate" id="btnCheckDuplicate">중복 확인</button>
+                            <input type="text" class="signup-input" id="id" th:field="*{id}" required>
+                        </div>
+                        <small id="idCheckResult" class="text-danger"></small> <!-- ID 중복 체크 결과 메시지 -->
+                        <small id="idLengthResult" class="text-danger"></small> <!-- ID 글자 수 체크 결과 메시지 -->
+                    </div>
+                    <div class="signup-form-group">
+                        <label class="signup-label" for="passwd">비밀번호</label>
+                        <input type="password" class="signup-input" id="passwd" th:field="*{passwd}" required>
+                        <small id="passwordComplexityResult" class="text-danger"></small> <!-- 비밀번호 복잡성 체크 결과 메시지 -->
+                    </div>
+                    <div class="signup-form-group">
+                        <label class="signup-label" for="confirmPasswd">비밀번호 재확인</label>
+                        <input type="password" class="signup-input" id="confirmPasswd" required>
+                        <small id="passwordCheckResult" class="text-danger"></small> <!-- 비밀번호 확인 결과 메시지 -->
+                    </div>
+                    <div class="signup-form-group">
+                        <label class="signup-label" for="name">이름</label>
+                        <input type="text" class="signup-input" id="name" th:field="*{name}" required>
+                    </div>
+                    <div class="signup-form-group">
+                        <label class="signup-label" for="registrationNumber">주민등록번호</label>
+                        <input type="text" class="signup-input" id="registrationNumber" th:field="*{registrationNumber}" required>
+                    </div>
+                    <div class="signup-form-group">
+                        <div class="input-group">
+                        	<label class="signup-label" for="address">주소</label>
+                            <button type="button" class="btn btn-search-address" id="btnSearchAddress">주소 검색</button>
+                            <input type="text" class="signup-input" id="address" th:field="*{address}" placeholder="주소" required>
+                            <input type="text" class="signup-input" id="detailAddress" th:field="*{address}" placeholder="상세주소">
+                        </div>
+                    </div>
+					
+                    <div class="signup-form-group">
+                        <label class="signup-label" for="phoneNumber">전화번호</label>
+                        <input type="text" class="signup-input" id="phoneNumber" th:field="*{phoneNumber}">
+                    </div>
+                    <div class="signup-form-group">
+                        <label class="signup-label" for="email">이메일</label>
+                        <input type="email" class="signup-input" id="email" th:field="*{email}">
+                    </div>
+                    <div class="signup-button-group">
+                        <button type="submit" class="signup-button signup-button-primary">가입하기</button>
+                        <button type="reset" class="signup-button signup-button-reset">리셋</button>
+                        <button type="button" class="signup-button signup-button-main" onclick="location.href='/'">메인으로</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+        </footer>
+    </div>
+
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/assets/dist/js/refreshmain.js"></script>
+    <script src="/assets/dist/js/refreshsignup.js"></script> <!-- 스크립트 분리 후 파일 포함 -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+</body>
+</html>

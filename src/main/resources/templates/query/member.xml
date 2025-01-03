@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.refresh.member.dao.MemberDAO">
+    
+    <!-- 회원가입 -->
+    <insert id="insertMember" parameterType="member">
+        INSERT INTO MEMBER (ID, PASSWD, NAME, REGISTRATIONNUMBER, ADDRESS, PHONENUMBER, EMAIL)
+        VALUES (#{id}, #{passwd}, #{name}, #{registrationNumber}, #{address}, #{phoneNumber}, #{email})
+    </insert>
+    
+    <!-- 아이디 중복 체크 -->
+    <select id="checkIdDuplicate" parameterType="String" resultType="int">
+        SELECT COUNT(*) 
+        FROM Member 
+        WHERE id = #{id}
+    </select>
+    
+    <!-- 로그인 확인 -->
+    <select id="checkLogin" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM Member
+        WHERE id = #{id}
+        AND passwd = #{passwd}
+    </select>
+    
+    <!-- 회원 이름정보 표시를 위해 불러오기 -->
+    <select id="getUserByName" parameterType="String" resultType="String">
+        SELECT name
+        FROM Member
+        WHERE id = #{id}
+    </select>
+    
+    <!-- 분실시 이메일로 아이디 찾기 -->
+    <select id="findIdByEmailAndName" parameterType="map" resultType="String">
+	    SELECT id 
+	    FROM Member
+	    WHERE name = #{name} AND email = #{email} AND ROWNUM = 1
+	</select>
+
+	<select id="findPasswdByEmailAndName" parameterType="map" resultType="String">
+	    SELECT passwd
+	    FROM Member
+	    WHERE name = #{name} AND email = #{email} AND ROWNUM = 1
+	</select>
+</mapper>
