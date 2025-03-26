@@ -1,0 +1,31 @@
+package com.refresh.login.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.refresh.login.service.InfoService;
+import com.refresh.member.vo.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	
+	private final InfoService infoService;
+	
+	public LoginController(InfoService infoService) {
+		this.infoService = infoService;
+	}
+	
+	@GetMapping("/information")
+	public String getAllInfo (HttpSession session, Model model) {
+		String loginMember = (String) session.getAttribute("userId");
+		
+		MemberVO memberInfo = infoService.getAllInfo(loginMember);
+		model.addAttribute("memberInfo", memberInfo);
+		return "loginrefresh/logoutNav/information";
+	}
+}

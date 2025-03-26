@@ -1,0 +1,58 @@
+/* 입력 필드 스타일 통일 */
+.editable-info-form input,
+#address, 
+#detailAddress,
+#email,
+#phone {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+/* 입력 필드 포커스 시 효과 */
+.editable-info-form input:focus,
+#address:focus, 
+#detailAddress:focus,
+#email:focus,
+#phone:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* 주소 컨테이너 */
+.address-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+/* 주소 검색 영역 */
+.address-search {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* 주소 검색 버튼 */
+.btn-search-address {
+    background-color: #66cdaa;
+    color: #fff;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Do Hyeon', sans-serif;
+    height: 44px; /* 입력 필드와 높이 맞춤 */
+}
+
+.btn-search-address:hover {
+    background-color: #5cbf9b;
+}

@@ -1,0 +1,28 @@
+package com.refresh.login.service;
+
+import org.springframework.stereotype.Service;
+
+import com.refresh.login.dao.InfoDAO;
+import com.refresh.member.vo.MemberVO;
+
+@Service
+public class InfoServiceImpl implements InfoService {
+	
+	private final InfoDAO infoDAO;
+
+    public InfoServiceImpl(InfoDAO memberMapper) {
+        this.infoDAO = memberMapper;
+    }
+
+    @Override
+    public MemberVO getAllInfo(String id) {
+    	
+    	MemberVO member = infoDAO.getAllInfo(id);
+        return member;
+    }
+    
+    @Override
+    public void updateMemberInfo(MemberVO member) {
+        infoDAO.updateMemberInfo(member);
+    }
+}

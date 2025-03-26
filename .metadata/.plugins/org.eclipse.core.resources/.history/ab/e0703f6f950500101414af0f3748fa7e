@@ -1,0 +1,13 @@
+package com.refresh.login.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.refresh.member.vo.MemberVO;
+
+
+@Mapper
+public interface InfoDAO {
+	List<MemberVO> getAllInfo();
+}

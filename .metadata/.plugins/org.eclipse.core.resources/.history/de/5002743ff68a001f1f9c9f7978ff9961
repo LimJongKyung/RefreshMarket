@@ -1,0 +1,26 @@
+package com.refresh.member.controller;
+
+import com.refresh.member.vo.MemberVO;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class MemberController {
+
+    @GetMapping("/signup")
+    public String signupForm(Model model) {
+        model.addAttribute("member", new MemberVO());
+        return "refresh/signup/signup";  // signup.html 페이지를 반환
+    }
+
+    @PostMapping("/signup")
+    public String signup(MemberVO member) {
+        // 회원가입 로직 (데이터베이스에 저장 등)
+        // 여기서는 간단하게 콘솔에 출력
+        System.out.println("회원가입 정보: " + member);
+        
+        return "redirect:/"; // 메인 페이지로 리디렉션
+    }
+}

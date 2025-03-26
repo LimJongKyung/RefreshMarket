@@ -1,0 +1,9 @@
+1735530908473	Move 'review.html' to 'fragments'
+1735533072173	Rename resource 'fragments'
+1735622377635	Move 'talkcomment.html' to 'refresh'
+1735622468155	Delete element
+1735623087227	Rename type 'Comments'
+1735623108685	Rename type 'CommentsVO'
+1735624400692	Move 'fragmentsjs' to 'dist'
+1735624418857	Move 'comment.js' to 'fragmentsjs'
+1735630061439	Rename resource 'commnet.css'

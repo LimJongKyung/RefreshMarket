@@ -1,0 +1,13 @@
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("btnSearchAddress").addEventListener("click", function () {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                let fullAddress = data.roadAddress ? data.roadAddress : data.jibunAddress;
+                if (fullAddress) {
+                    document.getElementById("address").value = fullAddress;
+                    document.getElementById("detailAddress").focus(); // 상세 주소 입력칸으로 포커스 이동
+                }
+            }
+        }).open();
+    });
+});

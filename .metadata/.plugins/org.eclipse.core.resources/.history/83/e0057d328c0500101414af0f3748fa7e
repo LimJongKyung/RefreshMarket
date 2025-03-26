@@ -1,0 +1,16 @@
+package com.refresh.login.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.refresh.member.vo.MemberVO;
+
+@Service
+public class InfoServiceImpl implements InfoService {
+	
+	@Override
+	public List<MemberVO> getAllInfo() {
+		return List
+	}
+}

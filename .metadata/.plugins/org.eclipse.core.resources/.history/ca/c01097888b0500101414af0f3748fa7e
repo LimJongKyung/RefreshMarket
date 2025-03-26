@@ -1,0 +1,5 @@
+package com.refresh.login.service;
+
+public interface InfoService {
+
+}

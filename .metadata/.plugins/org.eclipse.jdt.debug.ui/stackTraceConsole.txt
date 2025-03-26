@@ -1,0 +1,25 @@
+package com.refresh.board.service.impl;
+
+import com.refresh.board.dao.QBoardDAO;
+import com.refresh.board.model.Request;
+import com.refresh.board.service.QBoardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class QBoardServiceImpl implements QBoardService {
+
+    private final QBoardDAO qBoardDAO;
+
+    @Autowired
+    public QBoardServiceImpl(QBoardDAO qBoardDAO) {
+        this.qBoardDAO = qBoardDAO;
+    }
+
+    @Override
+    public void createConsultationRequest(Request request) {
+        // 예: 요청 메시지를 문자열로 변환하여 DAO에 전달
+        String consultationMessage = request.getConsultantMessage(); 
+        qBoardDAO.insertConsultationRequest(consultationMessage);
+    }
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;RefreshMarket/src/main/resources/templates/template/config&apos;" deleteContents="false" description="Delete resource &apos;RefreshMarket/src/main/resources/templates/template/config&apos;" element1="/RefreshMarket/src/main/resources/templates/template/config" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1728910132549"/>
+</session>

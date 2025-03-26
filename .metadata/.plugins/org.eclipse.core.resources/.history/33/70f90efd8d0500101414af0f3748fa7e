@@ -1,0 +1,26 @@
+package com.refresh.login.controller;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.refresh.login.service.InfoService;
+import com.refresh.member.vo.MemberVO;
+
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	
+	private final InfoService infoService;
+	
+	public LoginController(InfoService infoService) {
+		this.infoService = infoService;
+	}
+	
+	@GetMapping("/information")
+	public List<MemberVO> getAllInfo () {
+		return infoService.getAllInfo();
+	}
+}

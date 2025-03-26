@@ -1,0 +1,76 @@
+package com.refresh.login.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.refresh.login.service.InfoService;
+import com.refresh.member.vo.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	
+	private final InfoService infoService;
+	
+	public LoginController(InfoService infoService) {
+		this.infoService = infoService;
+	}
+	
+	// 정보 보기
+	@GetMapping("/information")
+	public String getAllInfo (HttpSession session, Model model) {
+		String loginMember = (String) session.getAttribute("userId");
+		
+		MemberVO memberInfo = infoService.getAllInfo(loginMember);
+		model.addAttribute("memberInfo", memberInfo);
+		return "loginrefresh/logoutNav/information";
+	}
+	
+	// 정보 수정 페이지
+	@GetMapping("/InfoEdit")
+	public String getEditPage (HttpSession session, Model model) {
+		String memberId = (String) session.getAttribute("userId");
+      
+        MemberVO memberInfo = infoService.getAllInfo(memberId);
+        model.addAttribute("memberInfo", memberInfo);
+		return "loginrefresh/logoutNav/InfoEdit";
+	}
+	
+	// 수정 컨트롤러
+	@PostMapping("/InfoEdit1")
+	public String updateMemberInfo(@ModelAttribute MemberVO member, HttpSession session) {
+	    // 세션에서 userId를 가져와서 String으로 처리
+	    String loggedInMemberId = (String) session.getAttribute("userId");
+
+	    // 가져온 userId를 member 객체에 설정
+	    member.setId(loggedInMemberId);
+	    
+	    // 회원 정보 업데이트
+	    infoService.updateMemberInfo(member);
+	    return "redirect:/login/information";  // 수정 후 회원 정보 페이지로 이동 
+	}
+
+	// 회원 탈퇴 처리
+    @GetMapping("/delete")
+    public String deleteMember(HttpSession session) {
+        // 세션에서 회원 ID를 가져옴
+        String userId = (String) session.getAttribute("userId");
+
+        // 회원 삭제 서비스 호출
+        if (userId != null) {
+            infoService.deleteMember(userId);
+            session.invalidate();  // 세션 무효화
+            return "redirect:/home";  // 로그인 페이지로 리디렉션
+        }
+
+        // 만약 세션에 userId가 없다면 오류 페이지로
+        return "redirect:/error";
+    }
+	
+}

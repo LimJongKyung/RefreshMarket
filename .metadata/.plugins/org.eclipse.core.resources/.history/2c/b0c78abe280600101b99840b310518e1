@@ -1,0 +1,9 @@
+package com.refresh.login.service;
+
+import com.refresh.member.vo.MemberVO;
+
+public interface InfoService {
+	MemberVO getAllInfo(String id);
+	void updateMemberInfo(MemberVO member);
+	void deleteMember(String userId);
+}

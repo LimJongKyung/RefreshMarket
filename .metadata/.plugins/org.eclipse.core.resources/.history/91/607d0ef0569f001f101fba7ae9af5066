@@ -1,0 +1,21 @@
+package com.refresh.board.controller;
+
+import com.refresh.board.service.PBoardService;
+import com.refresh.board.vo.ProductBoardVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController // @RestController로 변경하여 JSON 반환
+public class ProductBoardController {
+
+    @Autowired
+    private PBoardService productService;
+
+    @GetMapping("/products/season")
+    public List<ProductBoardVO> getAllProducts() {
+        return productService.getAllProducts(); // JSON으로 변환되어 반환
+    }
+}

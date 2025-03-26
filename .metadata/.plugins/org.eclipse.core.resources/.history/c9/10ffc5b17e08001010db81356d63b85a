@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/maincss/refreshForConsumer.css" rel="stylesheet"/>
+	    
+	    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=dfde7d829fbc90e684c292588603834a"></script>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+	        <main>
+			    <div class="customer-service-container mt-5">
+			        <h1 class="mb-4 text-center text-light">고객센터</h1>
+			        
+			        <div class="consultation-faq-wrapper d-flex justify-content-between">
+			            <section id="one-on-one-consultation" class="consultation-section mb-5 text-center">
+			                <h2 class="text-light">1:1 상담</h2>
+			                <p class="text-muted">궁금한 사항이 있으신가요? 아래 양식을 통해 1:1 상담을 신청해주세요.</p>
+			                <form id="consultationForm" class="text-center">
+			                    <div class="mb-3">
+			                        <label for="consultationType" class="form-label text-light">문의사항 유형</label>
+			                        <select class="form-input" id="consultationType" required>
+			                            <option value="" disabled selected>문의 유형 선택</option>
+			                            <option value="general">일반 문의</option>
+			                            <option value="billing">청구 관련 문의</option>
+			                            <option value="technical">기술 지원</option>
+			                            <option value="feedback">피드백</option>
+			                        </select>
+			                    </div>
+			                    <div class="mb-3">
+			                        <label for="consultantName" class="form-label text-light">이름</label>
+			                        <input type="text" class="form-input" id="consultantName" required pattern="^[가-힣a-zA-Z\s]{2,20}$" title="이름은 2~20자의 한글 또는 영문만 가능합니다.">
+			                    </div>
+			                    <div class="mb-3">
+			                        <label for="consultantEmail" class="form-label text-light">이메일</label>
+			                        <input type="email" class="form-input" id="consultantEmail" required>
+			                    </div>
+			                    <div class="mb-3">
+			                        <label for="consultantMessage" class="form-label text-light">문의사항</label>
+			                        <textarea class="form-input" id="consultantMessage" rows="4" required></textarea>
+			                    </div>
+			                    <div class="mb-3">
+			                        <label for="consultantPassword" class="form-label text-light">비밀번호</label>
+			                        <input type="password" class="form-input" id="consultantPassword" required pattern="^(?=.*\d)(?=.*[a-zA-Z]).{6,20}$" title="비밀번호는 6~20자, 숫자와 영문자 조합이어야 합니다.">
+			                    </div>
+			                    <button type="submit" class="btn btn-primary">문의 신청</button>
+			                </form>
+			            </section>
+			       
+			
+			            <!-- 자주 묻는 질문 섹션 -->
+			            <section id="faq" class="faq-section text-center">
+			                <h2 class="text-light">자주 묻는 질문 (FAQ)</h2>
+			                <div class="accordion" id="faqAccordion">
+			                    <div class="accordion-item">
+			                        <h2 class="accordion-header" id="headingOne">
+			                            <button class="accordion-button text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			                                질문 1: 어떻게 계정을 생성하나요?
+			                            </button>
+			                        </h2>
+			                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+			                            <div class="accordion-body text-muted">
+			                                계정 생성은 매우 간단합니다. 홈페이지 상단 오른쪽에 있는 '회원가입' 버튼을 클릭하고 필요한 정보를 입력하세요.
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <div class="accordion-item">
+			                        <h2 class="accordion-header" id="headingTwo">
+			                            <button class="accordion-button text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			                                질문 2: 비밀번호를 잊어버렸습니다. 어떻게 해야 하나요?
+			                            </button>
+			                        </h2>
+			                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+			                            <div class="accordion-body text-muted">
+			                                비밀번호를 잊어버리셨다면 로그인 페이지에서 '비밀번호 찾기'를 클릭하시고, 안내에 따라 진행하세요.
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <div class="accordion-item">
+			                        <h2 class="accordion-header" id="headingThree">
+			                            <button class="accordion-button text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+			                                질문 3: 주문은 어떻게 취소하나요?
+			                            </button>
+			                        </h2>
+			                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+			                            <div class="accordion-body text-muted">
+			                                주문 취소는 마이페이지에서 가능합니다. 주문 내역에서 취소할 주문을 선택하고 '주문 취소' 버튼을 클릭하세요.
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </section>
+			        </div>
+			    </div>
+			</main>
+	
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/js/refreshmain.js"></script>
+	    <script src="/assets/dist/mainjs/refreshForConsumer.js"></script> <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	</body>
+</html>

@@ -1,0 +1,9 @@
+package com.refresh.login.service;
+
+import java.util.List;
+
+import com.refresh.member.vo.MemberVO;
+
+public interface InfoService {
+	List<MemberVO> getAllInfo(String id);
+}

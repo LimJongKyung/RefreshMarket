@@ -1,0 +1,22 @@
+// 수정 버튼 클릭 시
+document.querySelector('.btn-primary').addEventListener('click', function(event) {
+    // 폼 제출을 막음
+    event.preventDefault();
+    
+    // 주소와 상세 주소를 합침
+    const address = document.getElementById('address').value;
+    const detailAddress = document.getElementById('detailAddress').value;
+    
+    // 주소와 상세 주소를 합쳐서 새로운 address 필드에 넣어줌
+    const fullAddress = `${address} ${detailAddress}`;
+    
+    // 합친 주소를 폼에 hidden input으로 넣어 서버로 전송
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'fullAddress';  // 서버에서 사용할 파라미터 이름
+    hiddenInput.value = fullAddress;
+    document.querySelector('form').appendChild(hiddenInput);
+    
+    // 폼 제출
+    document.querySelector('form').submit();
+});

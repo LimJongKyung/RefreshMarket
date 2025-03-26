@@ -1,0 +1,75 @@
+package com.refresh.login.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.refresh.login.service.InfoService;
+import com.refresh.member.vo.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	
+	private final InfoService infoService;
+	
+	public LoginController(InfoService infoService) {
+		this.infoService = infoService;
+	}
+	
+	// 정보 보기
+	@GetMapping("/information")
+	public String getAllInfo (HttpSession session, Model model) {
+		String loginMember = (String) session.getAttribute("userId");
+		
+		MemberVO memberInfo = infoService.getAllInfo(loginMember);
+		model.addAttribute("memberInfo", memberInfo);
+		return "loginrefresh/logoutNav/information";
+	}
+	
+	// 정보 수정 페이지
+	@GetMapping("/InfoEdit")
+	public String getEditPage (HttpSession session, Model model) {
+		String memberId = (String) session.getAttribute("userId");
+      
+        MemberVO memberInfo = infoService.getAllInfo(memberId);
+        model.addAttribute("memberInfo", memberInfo);
+		return "loginrefresh/logoutNav/InfoEdit";
+	}
+	
+	@PostMapping("/InfoEdit1")
+	public String updateMemberInfo(@ModelAttribute MemberVO member, HttpSession session) {
+	    // 세션에서 로그인된 사용자 정보 가져오기
+	    MemberVO loggedInMember = (MemberVO) session.getAttribute("loggedInMember");
+	    
+	    // 로그인된 사용자의 정보가 존재하는 경우
+	    if (loggedInMember != null) {
+	        // 세션에서 가져온 ID를 수정하려는 member에 설정
+	        member.setId(loggedInMember.getId());
+	        infoService.updateMemberInfo(member);
+	        return "redirect:/login/information";  // 수정 후 회원 정보 페이지로 이동
+	    } else {
+	        // 로그인된 사용자가 없을 경우 처리
+	        return "redirect:/login";  // 로그인 페이지로 리다이렉트
+	    }
+	}
+
+    
+	// 정보 수정 후
+	/*@PostMapping("/InfoEdit")
+    public String updateMemberInfo(MemberVO member, HttpSession session) {
+        String memberId = (String) session.getAttribute("userId");
+        /*if (memberId == null) {
+            return "redirect:/login";
+        }*/
+
+       /* member.setId(memberId); // ID는 세션에서 가져와서 설정
+        infoService.updateMemberInfo(member);
+        return "redirect:/logoutNav/information"; // 수정 후 회원 정보 페이지로 이동
+    }*/
+}

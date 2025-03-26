@@ -1,0 +1,45 @@
+package com.refresh.login.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.refresh.login.service.InfoService;
+import com.refresh.member.vo.MemberVO;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+	
+	private final InfoService infoService;
+	
+	public LoginController(InfoService infoService) {
+		this.infoService = infoService;
+	}
+	
+	// 정보 보기
+	@GetMapping("/information")
+	public String getAllInfo (HttpSession session, Model model) {
+		String loginMember = (String) session.getAttribute("userId");
+		
+		MemberVO memberInfo = infoService.getAllInfo(loginMember);
+		model.addAttribute("memberInfo", memberInfo);
+		return "loginrefresh/logoutNav/information";
+	}
+	
+	@PostMapping("/member/InfoEdit")
+    public String updateMemberInfo(MemberVO member, HttpSession session) {
+        String memberId = (String) session.getAttribute("loggedInUser");
+        if (memberId == null) {
+            return "redirect:/login";
+        }
+
+        member.setId(memberId); // ID는 세션에서 가져와서 설정
+        infoService.updateMemberInfo(member);
+        return "redirect:/memberInfo"; // 수정 후 회원 정보 페이지로 이동
+    }
+}

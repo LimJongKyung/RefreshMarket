@@ -1,0 +1,14 @@
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("btnSearchAddress").addEventListener("click", function () {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 도로명 주소 또는 지번 주소 선택
+                let fullAddress = data.roadAddress ? data.roadAddress : data.jibunAddress;
+
+                if (fullAddress) {
+                    document.getElementById("address").value = fullAddress;
+                }
+            }
+        }).open();
+    });
+});
