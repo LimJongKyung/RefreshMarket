@@ -1,53 +1,86 @@
-// 서버에서 상품 정보 가져오기
-// 장바구니에 추가하는 함수
-function addToCart(product) {
-    // 로컬 스토리지에서 장바구니 항목을 가져옴 (없으면 빈 배열로 초기화)
+document.addEventListener('DOMContentLoaded', () => {
+  const addToCartBtn = document.getElementById('addToCartBtn');
+  const buyNowBtn = document.getElementById('buyNowBtn');
+  const quantityInput = document.getElementById('quantity');
+  const optionSelect = document.getElementById('detailOption');
+
+  // 옵션 가격 배열을 안전하게 정수 배열로 변환
+  let optionPriceList = Array.isArray(window.optionPriceList)
+    ? window.optionPriceList.map(p => parseInt(p) || 0)
+    : [];
+
+  function addToCart(btn) {
+    const productId = btn.dataset.id;
+    const productName = btn.dataset.name;
+    const basePrice = parseInt(btn.dataset.price) || 0;
+    const productImage = btn.dataset.image;
+    const quantity = parseInt(quantityInput.value) || 1;
+    const option = optionSelect ? optionSelect.value : '';
+
+    // 옵션 선택 안했을 때 경고
+    if (optionSelect && !option) {
+      alert('옵션을 선택해주세요.');
+      return false;
+    }
+
+    let optionPrice = 0;
+
+    if (optionSelect && optionPriceList.length > 0) {
+      // value 있는 옵션 목록만 필터링
+      const validOptions = Array.from(optionSelect.options).filter(opt => opt.value);
+      const selectedIndex = validOptions.findIndex(opt => opt.value === option);
+
+      if (selectedIndex !== -1 && selectedIndex < optionPriceList.length) {
+        optionPrice = optionPriceList[selectedIndex];
+      } else {
+        console.warn('옵션 가격을 찾을 수 없습니다.');
+      }
+    }
+
+    const unitPrice = basePrice + optionPrice;
+
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // 수량 선택과 선택사항 추가
-    const quantity = document.getElementById('quantity').value;
-    const selectedOption = document.getElementById('p-select').value;
+    const existingIndex = cart.findIndex(
+      item => item.productId === productId && item.option === option
+    );
 
-    // 상품 객체에 수량과 선택사항 추가
-    const cartItem = {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        imageUrl: product.imageUrl,
-        quantity: quantity,
-        selectedOption: selectedOption
-    };
+    if (existingIndex !== -1) {
+      cart[existingIndex].quantity += quantity;
+    } else {
+      cart.push({
+        productId,
+        name: productName,
+        image: productImage,
+        basePrice,
+        optionPrice,
+        price: unitPrice,
+        quantity,
+        option
+      });
+    }
 
-    // 장바구니에 상품 추가
-    cart.push(cartItem);
-
-    // 로컬 스토리지에 장바구니 업데이트
     localStorage.setItem('cart', JSON.stringify(cart));
+    return true;
+  }
 
-    // 장바구니에 추가된 상품 확인
-    console.log('Item added to cart:', cartItem);
-}
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', () => {
+      const success = addToCart(addToCartBtn);
+      if (success && confirm('장바구니에 추가되었습니다! 장바구니로 가시겠습니까?')) {
+        window.location.href = '/midnav/cart';
+      }
+    });
+  }
 
-// 장바구니 버튼 클릭 이벤트 처리
-document.getElementById('addToCartBtn').addEventListener('click', function() {
-	// 수량 선택과 선택사항 추가
-	
-	
-	// 서버에서 상품 정보를 받아오기
-    fetch('/products/otherController')
-        .then(response => response.json())  // 서버로부터 JSON 데이터 받아오기
-        .then(product => {
-            // 장바구니에 상품 추가
-            addToCart(product);
-        })
-        .catch(error => {
-            console.error('Error fetching product data:', error);
-        });
-		
-		const userChoice = confirm("장바구니에 추가되었습니다! 장바구니로 이동하시겠습니까?");
-
-		if (userChoice) {
-		        // 사용자가 '예'를 클릭한 경우 장바구니 페이지로 이동
-		        window.location.href = "/midnav/cart";  // 실제 장바구니 페이지 URL로 변경
-		}
+  if (buyNowBtn) {
+    buyNowBtn.addEventListener('click', () => {
+      if (confirm('정말 구매하시겠습니까?')) {
+        const success = addToCart(buyNowBtn);
+        if (success) {
+          window.location.href = '/midnav/cart';
+        }
+      }
+    });
+  }
 });

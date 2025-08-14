@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/mainproductboardcss/productboard.css" rel="stylesheet"/>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+	        <main class="product-card-container">
+			    <h1 class="product-title">수산물</h1>
+			    <div class="product-list">
+			        <!-- products가 비어 있으면 '제품이 없습니다.'를 출력 -->
+			        <div th:if="${#lists.isEmpty(products)}" class="no-products">제품이 없습니다.</div>
+			        
+			        <!-- products가 비어 있지 않으면 카드 형식으로 리스트 출력 -->
+			        <div 
+					    th:each="product : ${products}" 
+					    th:unless="${#lists.isEmpty(products)}" 
+					    class="product-card" 
+					    th:onclick="|window.location.href='/loginP/detail/' + ${product.productId}|"
+					    style="cursor: pointer;">
+					    <img th:src="${product.imageUrl}" alt="제품 이미지" class="product-image"/>
+					    <h2 class="product-name" th:text="${product.name}"></h2>
+					    <p class="product-price" th:text="'₩' + ${product.price}"></p>
+					    <p class="product-stock" th:text="'재고: ' + ${product.stock}"></p>
+					    <p class="product-description" th:text="${product.description}"></p>
+					</div>
+			    </div>
+			</main>
+
+			
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/js/refreshmain.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	</body>
+</html>

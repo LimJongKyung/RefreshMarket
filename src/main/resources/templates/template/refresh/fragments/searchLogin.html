@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/mainproductboardcss/PBoardDetail.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="/assets/dist/fragmentscss/reviewcss.css"/>
+	</head>
+	
+	<header class="mb-auto">
+    	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        	<th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+            <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	        <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	    </nav>
+	</header>
+	
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <h1>이거슨 검색하는 중</h1>
+	</body>
+	
+	<footer class="mt-auto text-white-50">
+	    <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	</footer>
+
+	<!-- External Scripts -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="/js/jquery-3.7.1.min.js"></script>
+	<script src="/assets/dist/mainproductboardjs/Detail.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</html>

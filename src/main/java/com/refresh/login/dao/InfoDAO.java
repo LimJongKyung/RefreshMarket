@@ -1,0 +1,13 @@
+package com.refresh.login.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.refresh.member.vo.MemberVO;
+
+
+@Mapper
+public interface InfoDAO {
+	MemberVO getAllInfo(String id);
+	void updateMemberInfo(MemberVO member);
+	void deleteMember(String id);
+}

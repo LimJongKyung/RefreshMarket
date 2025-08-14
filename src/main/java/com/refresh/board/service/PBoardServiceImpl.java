@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.refresh.board.dao.PBoardDAO;
+import com.refresh.board.vo.OrderVO;
 import com.refresh.board.vo.PReviewVO;
 import com.refresh.board.vo.ProductBoardVO;
 
@@ -16,36 +17,42 @@ public class PBoardServiceImpl implements PBoardService{
 	 private PBoardDAO pBoardDAO;
 	 // 계절 상품
 	 @Override
-	 public List<ProductBoardVO> seasonProducts() {
-	     return pBoardDAO.seasonProducts();
+	 public List<ProductBoardVO> productboard() {
+	     return pBoardDAO.productboard();
 	 }
-	 // 지역 상품
+	
 	 @Override
-	 public List<ProductBoardVO> localProducts() {
-	     return pBoardDAO.localProducts();
+	    public List<PReviewVO> getReviewsByProductId(int productId) {
+	        return pBoardDAO.getReviewsByProductId(productId);
+	    }
+	 
+	 @Override
+	 public ProductBoardVO getProductById(int productId) {
+	     return pBoardDAO.getProductById(productId);
 	 }
-	 // 세일 상품
+	 
 	 @Override
-	 public List<ProductBoardVO> saleProducts() {
-		 return pBoardDAO.saleProducts();
+	 public List<ProductBoardVO> getSaleProducts() {
+	     return pBoardDAO.getSaleProducts();
 	 }
-	 // 공동 구매 상품
+
 	 @Override
-	 public List<ProductBoardVO> groupPurchaseProducts() {
-		 return pBoardDAO.groupPurchaseProducts();
+	 public List<ProductBoardVO> getGroupProducts() {
+	     return pBoardDAO.getGroupProducts();
 	 }
-	 // 중소기업 상품
+
 	 @Override
-	 public List<ProductBoardVO> smallBusinessProducts() {
-		 return pBoardDAO.smallBusinessProducts();
+	 public List<ProductBoardVO> getPromotionProducts() {
+	     return pBoardDAO.getPromotionProducts();
 	 }
-	 // 디테일
+	 
 	 @Override
-	 public ProductBoardVO findById(int productId) {
-	     return pBoardDAO.findById(productId);
+	 public List<ProductBoardVO> searchProducts(String keyword) {
+	     return pBoardDAO.searchProducts(keyword);
 	 }
+	 
 	 @Override
-	 public List<PReviewVO> getReviewsByProductId(int productId) {
-	     return pBoardDAO.selectReviewsByProductId(productId);
+	 public void placeGuestOrder(OrderVO order) {
+	     pBoardDAO.insertGuestOrder(order);
 	 }
 }

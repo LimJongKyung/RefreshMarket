@@ -26,7 +26,7 @@
     
     <!-- 게시물 상세 조회 -->
     <select id="getPostById" parameterType="int" resultType="board">
-        SELECT POST_ID, TITLE, CONTENT, MEMBER_ID, CREATED_DATE, UPDATED_DATE, VIEW_COUNT, BOARD_TYPE
+        SELECT POST_ID, TITLE, CONTENT, MEMBER_ID, CREATED_DATE, UPDATED_DATE, VIEW_COUNT, BOARD_TYPE, IMAGE
         FROM POSTS
         WHERE POST_ID = #{postId}
     </select>

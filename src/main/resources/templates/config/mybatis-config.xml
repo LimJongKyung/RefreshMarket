@@ -11,5 +11,7 @@
 		<typeAlias type="com.refresh.board.vo.BoardVO" alias="board"/>
 		<typeAlias type="com.refresh.board.vo.CommentVO" alias="comment"/>
 		<typeAlias type="com.refresh.board.vo.PReviewVO" alias="review"/>
+		<typeAlias type="com.refresh.menu.vo.MenuVO" alias="menu"/>
+		<typeAlias type="com.refresh.board.vo.OrderVO" alias="order"/>
 	</typeAliases>
 </configuration>

@@ -53,3 +53,23 @@ h1 {
 .table td:empty {
     background-color: #f8f9fa; /* 빈 칸에 배경색을 추가하여 구분 */
 }
+
+.custom-write-btn {
+    background-color: #66cdaa; /* 파란색 */
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.3s;
+    display: inline-block;
+}
+
+.custom-write-btn:hover {
+    background-color: #0056b3; /* 진한 파란색 */
+}
+
+.write-btn-container {
+    text-align: right; /* 버튼을 오른쪽으로 정렬 */
+    margin-bottom: 15px; /* 버튼과 테이블 사이 간격 */
+}

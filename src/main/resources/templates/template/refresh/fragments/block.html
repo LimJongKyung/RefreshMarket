@@ -43,14 +43,14 @@
 	            <a class="navbar-brand" href="/">Refresh Market</a>
 	        </div>
 	        <!-- 검색창 -->
-	        <div class="d-flex justify-content-center">
-	            <div class="input-group">
-	                <input class="search-input form-control" type="search" placeholder="Search here...">
-	                <span class="input-group-text">
-	                    <i class="fas fa-search"></i> <!-- 검색 아이콘 추가 -->
-	                </span>
-	            </div>
-	        </div>
+	        <form action="/products/search" method="get" class="d-flex justify-content-center">
+			  <div class="input-group">
+			    <input class="search-input form-control" type="search" name="keyword" placeholder="Search here..." required>
+			    <button type="submit" class="input-group-text btn btn-primary">
+			    	<i class="fas fa-search"></i>
+			    </button>
+			  </div>
+			</form>
 	        <!-- 아이콘 추가 -->
 	        <div class="social-icons" style="margin-top: 10px;">
 	            <a href="/midnav/tracking" title="배송 추적">
@@ -70,43 +70,38 @@
     <th:block th:fragment="mainNavbar">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                	<div class="hamburger" id="hamburger">&#9776;</div>
-                	<div class="sidebar" id="sidebar">
-	                    <div class="sidebar-header">
-	                        <span class="close-btn" id="close-btn">✖</span>
-	                    </div>
-	                    <ul>
-	                        <li><a href="#">공산품</a></li>
-	                        <li><a href="#">수산물</a></li>
-	                        <li><a href="#">육류</a></li>
-	                        <li><a href="#">생활용품</a></li>
-	                    </ul>
-	                </div>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/season">계절상품</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/local">지역특산물</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/sale">세일상품</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/grouppurchase">공동구매</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products/smallbusiness">우리기업상품</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/inquiry/talkboard">게시판</a>
-                    </li>
-                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">   
+				    <div class="hamburger" id="hamburger">&#9776;</div>         
+				    
+				    <!-- 정적 Home 메뉴 -->
+				    <li class="nav-item">
+				        <a class="nav-link active" aria-current="page" href="/">Home</a>
+				    </li>
+					
+				    <li class="nav-item" th:each="menu : ${headerMenus}">
+				        <a class="nav-link" th:href="@{/products(category=${menu.name})}" th:text="${menu.name}">메뉴명</a>
+				    </li>
+				    
+				    <li class="nav-item">
+				        <a class="nav-link active" aria-current="page" href="/inquiry/talkboard">게시판</a>
+				    </li>
+				</ul>
             </div>
         </div>
+    </th:block>
+    
+    <th:block th:fragment="sideNavbar">
+                <!-- ✅ 햄버거 사이드 메뉴 -->
+                <div class="sidebar" id="sidebar">
+				   <div class="sidebar-header">
+					      <span class="close-btn" id="close-btn">✖</span>
+				  </div>
+					  <ul>
+					      <li class="nav-item" th:each="menu : ${sidebarMenus}">
+					        <a class="nav-link" th:href="@{/products(category=${menu.name})}" th:text="${menu.name}">메뉴명</a>
+					      </li>
+					  </ul>
+				</div>
     </th:block>
     
     <th:block th:fragment="footer">

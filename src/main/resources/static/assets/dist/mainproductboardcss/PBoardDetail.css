@@ -1,213 +1,203 @@
-/* 상품 세부사항 제목 스타일 */
-.product-introduce {
-    text-align: center; /* 텍스트 가운데 정렬 */
-    font-size: 2rem; /* 제목 크기 */
-    font-weight: bold; /* 굵은 텍스트 */
-    color: #333; /* 텍스트 색상 */
-    margin-top: 30px; /* 상단 여백 */
-    margin-bottom: 20px; /* 하단 여백 */
-    padding: 10px; /* 내부 여백 */
-    background-color: #f4f4f4; /* 배경색 */
-    border-radius: 8px; /* 모서리 둥글게 */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+/* 기본 컨테이너 */
+main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-/* 제품 상세 컨테이너 */
-.product-detail {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column; /* 요소들을 세로로 배치 */
-    gap: 20px; /* 각 요소들 간에 여백을 두어 겹치지 않게 */
-    align-items: center; /* 버튼들을 중앙 정렬 */
+/* 상품 이미지 */
+.detail-image {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* 제목 스타일 */
-.product-detail h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #222;
-    text-align: center;
+/* 제품 정보 영역 */
+.detail-info {
+  padding: 0 10px;
 }
 
-/* 이미지 스타일 */
-.product-image {
-    display: block;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto 20px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+/* 제목 */
+.detail-info h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
 }
 
-/* 가격 스타일 */
-.product-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #e74c3c;
-    margin: 10px 0;
-    text-align: center;
+/* 정보 텍스트 및 라벨 */
+.detail-info p,
+.detail-info label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 12px 0 4px;
 }
 
-/* 재고 스타일 */
-.product-stock {
-    font-size: 1rem;
-    color: #27ae60;
-    margin-bottom: 10px;
-    text-align: center;
+/* 구분선 */
+.detail-info hr {
+  border: none;
+  border-top: 1px solid #eaeaea;
+  margin: 10px 0 15px;
 }
 
-/* 설명 스타일 */
-.product-description {
-    font-size: 1rem;
-    color: #555;
-    text-align: justify;
-    line-height: 1.8;
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
+/* 수량 input */
+#quantity {
+  width: 70px;
+  padding: 6px 8px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-    .product-detail {
-        padding: 15px;
-    }
-
-    .product-detail h1 {
-        font-size: 1.5rem;
-    }
-
-    .product-price {
-        font-size: 1.25rem;
-    }
-
-    .product-description {
-        font-size: 0.95rem;
-    }
+#quantity:focus {
+  border-color: #007bff;
 }
 
-/* 목록 버튼 스타일 */
-.detail-actions .btn-primary {
-    background-color: #3cb371; /* 원본 배경색 */
-    border-color: #007bff; /* 원본 테두리 색 */
-    color: #333; /* 텍스트 색상 */
-    font-size: 1rem; /* 글자 크기 */
-    font-weight: 600; /* 글자 굵기 */
-    padding: 10px 20px; /* 여백 */
-    border-radius: 50px; /* 둥근 모서리 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 */
-    transition: all 0.3s ease; /* 전환 효과 */
-    text-transform: uppercase; /* 대문자 */
-    letter-spacing: 1px; /* 자간 조정 */
-    text-decoration: none; /* 링크 밑줄 제거 */
+/* 상세 옵션 select */
+#detailOption {
+  width: 200px;
+  padding: 6px 8px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+  transition: border-color 0.3s ease;
 }
 
-/* 버튼 hover 효과 */
-.detail-actions .btn-primary:hover {
-    background-color: #0056b3; /* 진한 파란색 */
-    border-color: #004085; /* 진한 테두리 색 */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* 그림자 강조 */
-    transform: translateY(-2px); /* 살짝 올라오는 효과 */
+#detailOption:focus {
+  border-color: #007bff;
 }
 
-/* 버튼 active 효과 */
-.detail-actions .btn-primary:active {
-    background-color: #003f7f; /* 더 어두운 파란색 */
-    border-color: #003366; /* 더 어두운 테두리 색 */
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 눌렸을 때 그림자 감소 */
-    transform: translateY(0); /* 원래 위치로 복귀 */
+/* 버튼 영역 */
+.button-section {
+  margin-top: 30px;
+  text-align: center;
 }
 
-/* 작은 화면에서의 버튼 중앙 정렬 */
-@media (max-width: 576px) {
-    .detail-actions .btn-primary {
-        width: 100%; /* 화면 크기에 맞춰 버튼을 전체 너비로 */
-        padding: 12px; /* 여백을 좀 더 키움 */
-    }
+/* 버튼 기본 */
+.btn {
+  padding: 10px 28px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-/* 버튼들을 한 줄로 정렬 */
-.button-container {
-    display: flex; /* 버튼들을 가로로 배치 */
-    justify-content: center; /* 버튼들이 중앙에 위치하도록 설정 */
-    gap: 20px; /* 버튼들 간의 간격을 설정 */
-    align-items: center; /* 버튼들을 수직 중앙으로 정렬 */
-    margin-top: 20px;
+/* 장바구니 */
+.btn.cart {
+  background-color: #28a745;
+  color: #fff;
 }
 
-/* 수량 버튼 스타일 */
-.product-options {
-    display: flex;
-    align-items: center; /* 수평 중앙 정렬 */
+.btn.cart:hover {
+  background-color: #218838;
 }
 
-.product-options label {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-right: 10px;
+/* 구매 */
+.btn.buy {
+  background-color: #007bff;
+  color: #fff;
+  margin-left: 10px;
 }
 
-.product-options input {
-    width: 60px;
-    padding: 5px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+.btn.buy:hover {
+  background-color: #0056b3;
 }
 
-/* 구매하기 버튼 스타일 */
-.buy-actions .btn-primary {
-    background-color: #3cb371;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-decoration: none;
-    width: 150px; /* 버튼의 너비 고정 */
-    border: none; /* 테두리 없애기 */
+/* 목록으로 버튼 */
+.btn.back {
+  display: inline-block;
+  margin-top: 30px;
+  background-color: #6c757d;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-/* 구매하기 버튼 호버 스타일 */
-.buy-actions .btn-primary:hover {
-    background-color: #28a745; /* 배경색을 조금 더 어두운 색으로 변경 */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 그림자 강조 */
-    transform: translateY(-2px); /* 버튼이 살짝 위로 올라가는 효과 */
+.btn.back:hover {
+  background-color: #5a6268;
 }
 
-/* 장바구니 버튼 스타일 */
-.inbag-actions .btn-secondary {
-    background-color: #ffc107;
-    color: #333;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-decoration: none;
-    width: 150px; /* 버튼의 너비 고정 */
-    border: none; /* 테두리 없애기 */
+/* 설명 */
+.detail-info p:last-of-type {
+  margin-top: 25px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
 }
 
-/* 장바구니 버튼 호버 스타일 */
-.inbag-actions .btn-secondary:hover {
-    background-color: #e0a800; /* 배경색을 조금 더 어두운 색으로 변경 */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* 그림자 강조 */
-    transform: translateY(-2px); /* 버튼이 살짝 위로 올라가는 효과 */
+/* 리뷰 섹션 */
+.review-section {
+  margin-top: 3rem;
+  padding: 0 10px;
+}
+
+.review-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.no-review {
+  color: #999;
+  font-style: italic;
+}
+
+.review {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
+}
+
+.review:hover {
+  background-color: #f1f1f1;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review strong {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.stars {
+  color: #FFD700;
+  font-size: 1.1rem;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+.review-comment {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.5;
 }

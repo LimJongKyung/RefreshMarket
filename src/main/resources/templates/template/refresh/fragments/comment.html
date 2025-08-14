@@ -33,9 +33,9 @@
 	            <span class="comment-like">좋아요: <span th:text="${comment.likeCount}"></span></span>
 	
 	            <!-- 댓글 수정일 -->
-	            <div th:if="${comment.updatedDate != null}" class="comment-update">
+	            <!-- <div th:if="${comment.updatedDate != null}" class="comment-update">
 	                <small>수정일: <span th:text="${#dates.format(comment.updatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span></small>
-	            </div>
+	            </div>  -->
 	        </li>
 	    </ul>
 	</th:block>

@@ -12,14 +12,14 @@
 	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 	        <header class="mb-auto">
 	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
-	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
-	                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
 	            </nav>
 	        </header>
 	
 	        <main class="product-card-container">
-			    <h1 class="product-title">계절 상품</h1>
+			    <h1 class="product-title">육류</h1>
 			    <div class="product-list">
 			        <!-- products가 비어 있으면 '제품이 없습니다.'를 출력 -->
 			        <div th:if="${#lists.isEmpty(products)}" class="no-products">제품이 없습니다.</div>
@@ -29,7 +29,7 @@
 					    th:each="product : ${products}" 
 					    th:unless="${#lists.isEmpty(products)}" 
 					    class="product-card" 
-					    th:onclick="|window.location.href='/products/detail/' + ${product.productId}|"
+					    th:onclick="|window.location.href='/loginP/detail/' + ${product.productId}|"
 					    style="cursor: pointer;">
 					    <img th:src="${product.imageUrl}" alt="제품 이미지" class="product-image"/>
 					    <h2 class="product-name" th:text="${product.name}"></h2>
@@ -39,6 +39,7 @@
 					</div>
 			    </div>
 			</main>
+
 			
 	        <footer class="mt-auto text-white-50">
 	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>

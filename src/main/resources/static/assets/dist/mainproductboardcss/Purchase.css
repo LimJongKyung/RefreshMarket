@@ -1,0 +1,113 @@
+/* 폼 내부 레이아웃 */
+form#guestOrderForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 각 라벨 + 입력 필드 세트 */
+form#guestOrderForm label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #444;
+  font-size: 1.1rem;
+}
+
+/* 입력 필드 공통 스타일 */
+form#guestOrderForm input[type="text"],
+form#guestOrderForm input[type="email"],
+form#guestOrderForm input[type="tel"],
+form#guestOrderForm select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+form#guestOrderForm input[type="text"]:focus,
+form#guestOrderForm input[type="email"]:focus,
+form#guestOrderForm input[type="tel"]:focus,
+form#guestOrderForm select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* 주소 검색 버튼 */
+form#guestOrderForm button[type="button"] {
+  padding: 8px 12px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+}
+
+form#guestOrderForm button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* 장바구니 목록 */
+#cartItems {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+#cartItems > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+#cartItems img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+
+#cartItems p {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* 총 수량, 총 가격 텍스트 */
+#totalQuantity,
+#totalPrice,
+#purchaseTotal {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 5px;
+  color: #222;
+}
+
+/* 구매 확정 버튼 */
+form#guestOrderForm button[type="submit"] {
+  margin-top: 25px;
+  padding: 12px 0;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#guestOrderForm button[type="submit"]:hover {
+  background-color: #218838;
+}

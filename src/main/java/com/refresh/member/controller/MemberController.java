@@ -8,10 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 import com.refresh.email.service.EmailServiceImpl;
 import com.refresh.member.service.MemberService;
 import com.refresh.member.vo.MemberVO;
+import com.refresh.menu.service.MenuService;
+import com.refresh.menu.vo.MenuVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,13 +24,21 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
-    
-    @Autowired
     private EmailServiceImpl emailService; // EmailServiceImpl 주입
+    private final MenuService menuService;
+    
+    public MemberController (MenuService menuService) {
+    	this.menuService = menuService;
+    }
     
     // 회원가입 양식 호출
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
+    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         model.addAttribute("member", new MemberVO());
         return "refresh/signup/signup"; // signup.html 페이지를 반환
     }
@@ -54,6 +65,11 @@ public class MemberController {
     // 로그인 페이지 반환
     @GetMapping("/login")
     public String loginForm(Model model) {
+    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         model.addAttribute("member", new MemberVO());
         return "refresh/login/login"; // signup.html 페이지를 반환
     }
@@ -85,25 +101,13 @@ public class MemberController {
         return response; // JSON 형식으로 반환
     }
     
-    // 사용자 이름 불러오기
-    @GetMapping("/home")
-    public String forCheckingId(Model model, HttpSession session) {
-        String userId = (String) session.getAttribute("userId");
-       
-        String username = null;
-
-        if (userId != null) {
-            // 사용자 ID를 통해 사용자 이름 가져오기
-            username = memberService.getUserByName(userId);
-        }
-
-        // 모델에 사용자 이름 추가
-        model.addAttribute("username", username);
-        return "refresh/mainlogin"; // 해당하는 HTML 파일 이름 반환 (예: home.html)
-    }
-    
     @GetMapping("/login/searchId")
-    public String searchId() {
+    public String searchId(Model model) {
+    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         return "refresh/login/searchId";
     }
 
@@ -142,7 +146,12 @@ public class MemberController {
     }
     
     @GetMapping("/login/searchPasswd")
-    public String searchPasswd() {
+    public String searchPasswd(Model model) {
+    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         return "refresh/login/searchPasswd";
     }
     

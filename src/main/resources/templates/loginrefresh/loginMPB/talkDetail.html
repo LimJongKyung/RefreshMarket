@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/mainproductboardcss/TalkDetail.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="/assets/dist/fragmentscss/comment.css"> <!-- css 링크 -->
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+        	<div class="detail-container mt-5">
+		        <h2 class="detail-title mb-4 text-center">게시글 상세 보기</h2>
+		        <div class="detail-table">
+		            <div class="detail-row">
+		                <div class="detail-header">글 번호</div>
+		                <div class="detail-content" th:text="${post.postId}"></div>
+		            </div>
+		            <div class="detail-row">
+		                <div class="detail-header">제목</div>
+		                <div class="detail-content" th:text="${post.title}"></div>
+		            </div>
+		            <div class="detail-row">
+		                <div class="detail-header">작성자</div>
+		                <div class="detail-content" th:text="${post.memberId}"></div>
+		            </div>
+		            <div class="detail-row">
+		                <div class="detail-header">작성일</div>
+		                <div class="detail-content" th:text="${post.createdDate}"></div>
+		            </div>
+		            <div class="detail-row">
+		                <div class="detail-header">조회수</div>
+		                <div class="detail-content" th:text="${post.viewCount}"></div>
+		            </div>
+		            <div class="detail-row">
+		                <div class="detail-header">게시판 유형</div>
+		                <div class="detail-content" th:text="${post.boardType}"></div>
+		            </div>
+		            <div class="detail-row">
+					    <div class="detail-header">내용</div>
+					    <div class="detail-content" style="white-space: pre-wrap; display: flex; align-items: center;">
+					      
+					        <p th:text="${post.content}"></p>
+					        
+					        <!-- 이미지가 있을 경우에만 표시 -->
+					        <div style="margin-left: 20px;">
+					            <img th:if="${imageBase64 != null}" th:src="'data:image/png;base64,' + ${imageBase64}" alt="게시글 이미지" style="max-width: 300px; height: auto;">
+					        </div>
+					    </div>
+					</div>
+		            
+		            <h2>댓글</h2>
+		            <div th:replace="~{template/refresh/fragments/commentLogin :: talk-commentCreate}"></div>
+				    <div th:replace="~{template/refresh/fragments/commentLogin :: talk-comment}"></div>
+   
+		        </div>
+		        <br/>
+		        <div class="detail-actions text-center mt-4">
+		            <a th:href="@{/ALPBoard/loginBoard}" class="btn btn-primary">목록으로</a>
+		        </div>
+		    </div>
+			
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/js/refreshmain.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	</body>
+</html>

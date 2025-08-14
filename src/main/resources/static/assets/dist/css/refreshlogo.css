@@ -23,3 +23,22 @@
     color: #aaa; /* 텍스트 색상 */
     font-style: italic; /* 텍스트 스타일 */
 }
+
+button.input-group-text.btn {
+  border: 2px solid #66cdaa;       /* 파란색 테두리 */
+  border-radius: 8px;              /* 둥근 모서리 */
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4); /* 살짝 그림자 */
+  padding: 8px 14px;               /* 적당한 내부 여백 */
+  transition: all 0.3s ease;
+  background-color: #66cdaa;       /* 배경색 파랑 */
+  color: white;                    /* 아이콘 색 흰색 */
+}
+
+button.input-group-text.btn:hover {
+  background-color: #0056b3;       /* 진한 파랑으로 호버 */
+  border-color: #0056b3;
+  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.6);
+  color: #e0e0e0;
+  transform: scale(1.05);          /* 살짝 커짐 */
+  cursor: pointer;
+}

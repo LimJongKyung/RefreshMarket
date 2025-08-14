@@ -3,7 +3,6 @@
 <head>
     <th:block th:fragment="config">
         <script src="/assets/dist/js/refreshnavbar.js"></script>
-        <script src="/assets/dist/js/refreshlogin.js"></script>
         <script src="/assets/dist/js/refreshmainlogin.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
@@ -13,7 +12,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="shortcut icon" href="/images/icon.png"/>
         <link rel="apple-touch-icon" href="/images/icon.png"/>
-        <link href="/assets/dist/css/refreshloginbar.css" rel="stylesheet">
+        <link href="/assets/dist/css/RefreshSiderBar.css" rel="stylesheet">
         <link href="/assets/dist/css/refreshlogo.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </th:block>
@@ -31,10 +30,10 @@
                         <a class="nav-link login-link" href="/">로그아웃</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link signup-link" href="#">회원정보</a>
+                        <a class="nav-link signup-link" href="/login/information">회원정보</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link signup-link" href="#">고객센터</a>
+                        <a class="nav-link signup-link" href="/login/consumer">고객센터</a>
                     </li>
                 </ul>
             </div>
@@ -45,26 +44,26 @@
 	    <div class="container-fluid">	    
 	        <!-- 브랜드명 -->
 	        <div class="d-flex justify-content-center" style="margin-bottom: 10px;">
-	            <a class="navbar-brand" href="/member/home">Refresh Market</a>
+	            <a class="navbar-brand" href="/home">Refresh Market</a>
 	        </div>
 	        <!-- 검색창 -->
-	        <div class="d-flex justify-content-center">
-	            <div class="input-group">
-	                <input class="search-input form-control" type="search" placeholder="Search here...">
-	                <span class="input-group-text">
-	                    <i class="fas fa-search"></i> <!-- 검색 아이콘 추가 -->
-	                </span>
-	            </div>
-	        </div>
+	        <form action="/products/search" method="get" class="d-flex justify-content-center">
+			  <div class="input-group">
+			    <input class="search-input form-control" type="search" name="keyword" placeholder="Search here..." required>
+			    <button type="submit" class="input-group-text btn btn-primary">
+			    	<i class="fas fa-search"></i>
+			    </button>
+			  </div>
+			</form>
 	        <!-- 아이콘 추가 -->
 	        <div class="social-icons" style="margin-top: 10px;">
-	            <a href="/tracking" title="배송 추적">
+	            <a href="/midnav/tracking" title="배송 추적">
 	                <i class="fas fa-truck"></i> <!-- 배송 추적 아이콘 -->
 	            </a>
-	            <a href="/cart" title="장바구니">
+	            <a href="/midnav/cart" title="장바구니">
 	                <i class="fas fa-shopping-cart"></i> <!-- 장바구니 아이콘 -->
 	            </a>
-	            <a href="/favorites" title="좋아요한 상품">
+	            <a href="/midnav/favorites" title="좋아요한 상품">
 	                <i class="fas fa-heart"></i> <!-- 좋아요 아이콘 -->
 	            </a>
 	        </div>
@@ -75,44 +74,39 @@
     <th:block th:fragment="mainNavbar">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                	<div class="hamburger" id="hamburger">&#9776;</div>
-                	<div class="sidebar" id="sidebar">
-	                    <div class="sidebar-header">
-	                        <span class="close-btn" id="close-btn">✖</span>
-	                    </div>
-	                    <ul>
-	                        <li><a href="#">공산품</a></li>
-	                        <li><a href="#">수산물</a></li>
-	                        <li><a href="#">육류</a></li>
-	                        <li><a href="#">생활용품</a></li>
-	                    </ul>
-	                </div>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/member/home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">계절상품</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">지역특산물</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">세일상품</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">공동구매</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">우리기업상품</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">게시판</a>
-                    </li>
-                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">   
+				    <div class="hamburger" id="hamburger">&#9776;</div>         
+				    
+				    <!-- 정적 Home 메뉴 -->
+				    <li class="nav-item">
+				        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+				    </li>
+					
+				    <li class="nav-item" th:each="menu : ${headerMenus}">
+				        <a class="nav-link" th:href="@{/products/login(category=${menu.name})}" th:text="${menu.name}">메뉴명</a>
+				    </li>
+				    
+				    <li class="nav-item">
+				        <a class="nav-link active" aria-current="page" href="/ALPBoard/loginBoard">게시판</a>
+				    </li>
+				</ul>
             </div>
         </div>
     </th:block>
+    
+    <th:block th:fragment="sideNavbar">
+	    <!-- ✅ 햄버거 사이드 메뉴 -->
+	    <div class="sidebar-menu" id="sidebar">
+	        <div class="sidebar-header">
+	            <span class="sidebar-close-btn" id="close-btn">✖</span>
+	        </div>
+	        <ul class="sidebar-nav">
+	            <li class="sidebar-nav-item" th:each="menu : ${sidebarMenus}">
+	                <a class="sidebar-nav-link" th:href="@{/products/login(category=${menu.name})}" th:text="${menu.name}">메뉴명</a>
+	            </li>
+	        </ul>
+	    </div>
+	</th:block>
     
     <th:block th:fragment="footer">
 	    <footer class="footer">

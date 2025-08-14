@@ -1,5 +1,7 @@
 package com.refresh.board.vo;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -8,8 +10,8 @@ public class CommentVO {
     private int postId;          // 게시글 ID
     private String memberId;     // 작성자 ID
     private String content;      // 댓글 내용
-    private String createdDate;  // 작성일 (String 형식으로)
-    private String updatedDate;  // 수정일
+    private LocalDate createdDate;  // 작성일 (String 형식으로)
+    private LocalDate updatedDate;  // 수정일
     private int likeCount;       // 좋아요 수
     private Integer parentId;    // 부모 댓글 ID (대댓글)
 
@@ -38,16 +40,16 @@ public class CommentVO {
     public void setContent(String content) {
         this.content = content;
     }
-    public String getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
-    public String getUpdatedDate() {
+    public LocalDate getUpdatedDate() {
         return updatedDate;
     }
-    public void setUpdatedDate(String updatedDate) {
+    public void setUpdatedDate(LocalDate updatedDate) {
         this.updatedDate = updatedDate;
     }
     public int getLikeCount() {

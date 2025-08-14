@@ -12,34 +12,35 @@
 	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 	        <header class="mb-auto">
 	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
-	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
-	                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
 	
 	        <main class="product-card-container">
-			    <h1 class="product-title">중소기업 제품</h1>
-			    <div class="product-list">
-			        <!-- products가 비어 있으면 '제품이 없습니다.'를 출력 -->
-			        <div th:if="${#lists.isEmpty(products)}" class="no-products">제품이 없습니다.</div>
-			        
-			        <!-- products가 비어 있지 않으면 카드 형식으로 리스트 출력 -->
-			        <div 
-					    th:each="product : ${products}" 
-					    th:unless="${#lists.isEmpty(products)}" 
-					    class="product-card" 
-					    th:onclick="|window.location.href='/products/detail/' + ${product.productId}|"
-					    style="cursor: pointer;">
-					    <img th:src="${product.imageUrl}" alt="제품 이미지" class="product-image"/>
-					    <h2 class="product-name" th:text="${product.name}"></h2>
-					    <p class="product-price" th:text="'₩' + ${product.price}"></p>
-					    <p class="product-stock" th:text="'재고: ' + ${product.stock}"></p>
-					    <p class="product-description" th:text="${product.description}"></p>
-					</div>
-			    </div>
+			    <div th:if="${#lists.isEmpty(products)}">
+				    <p>표시할 제품이 없습니다.</p>
+				</div>
+				
+				<div th:each="product : ${products}" class="product-card"
+				     th:onclick="|window.location.href='/products/detail/' + ${product.productId}|">
+				
+				    <img th:src="@{/products/image/{id}(id=${product.productId})}" alt="제품 이미지" class="product-image"/>
+				    <h3 th:text="${product.name}">제품명</h3>
+				    <p th:text="'₩' + ${product.price}">가격</p>
+				    <p th:text="'재고: ' + ${product.stock}">재고</p>
+				    <p th:text="${product.description}">설명</p>
+				</div>
 			</main>
-
+				<div class="pagination" th:if="${totalPages >= 1}">
+				    <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+				       th:href="@{/products(category=${selectedCategory}, page=${i})}"
+				       th:text="${i}"
+				       th:classappend="${i == currentPage} ? 'active'">
+				    </a>
+				</div>
 			
 	        <footer class="mt-auto text-white-50">
 	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>

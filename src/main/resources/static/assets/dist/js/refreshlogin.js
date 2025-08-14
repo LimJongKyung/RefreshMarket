@@ -29,7 +29,7 @@ $(document).ready(function() {
                     $('#welcomeMessage').show(); // 환영 메시지 표시
 
                     // 로그인 성공 시 /login 페이지로 리다이렉트
-                    window.location.href = '/member/home';
+                    window.location.href = '/home';
                 } else {
                     alert(response.message); // 로그인 실패 메시지
                 }

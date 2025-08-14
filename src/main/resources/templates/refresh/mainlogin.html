@@ -26,6 +26,7 @@
     				<th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
     				<th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
     				<th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
     			</nav>
     		</header>
     	
@@ -34,13 +35,13 @@
 			    <div class="slider">
 				    <div class="slides">
 				        <div class="slide active">
-				            <img src="/assets/brand/야채.png" alt="아이템 1">
+				            <img src="./assets/brand/야채.png" alt="아이템 1">
 				        </div>
 				        <div class="slide">
-				            <img src="/assets/brand/시장에서 파는 얼음위의 싱싱한 해산물.png" alt="아이템 2">
+				            <img src="./assets/brand/시장에서 파는 얼음위의 싱싱한 해산물.png" alt="아이템 2">
 				        </div>
 				        <div class="slide">
-				            <img src="/assets/brand/정육점에서 파는 싱싱한 고기.png" alt="아이템 3">
+				            <img src="./assets/brand/정육점에서 파는 싱싱한 고기.png" alt="아이템 3">
 				        </div>
 				    </div>
 				    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
@@ -49,163 +50,55 @@
 				
 				
 				<div class="specialsale">
-				    <h1 class="sale-h1">Today Refresh Sale</h1>
-				    <div class="products-wrapper">
-				        <!-- 첫 번째 제품 -->
-				        <div class="product-card">
-				            <img src="/assets/brand/당근.png" alt="Product 1">
-				            <h4>Product 1</h4>
-				            <p>$50.00</p>
-				            <p id="timer1"></p> <!-- 타이머 -->
-				            <button class="buy-btn">Buy Now</button>
-				        </div>
-				
-				        <!-- 두 번째 제품 -->
-				        <div class="product-card">
-				            <img src="/assets/brand/사과.png" alt="Product 2">
-				            <h4>Product 2</h4>
-				            <p>$45.00</p>
-				            <p id="timer2"></p> <!-- 타이머 -->
-				            <button class="buy-btn">Buy Now</button>
-				        </div>
-				
-				        <!-- 세 번째 제품 -->
-				        <div class="product-card">
-				            <img src="/assets/brand/스테이크.png" alt="Product 3">
-				            <h4>Product 3</h4>
-				            <p>$40.00</p>
-				            <p id="timer3"></p> <!-- 타이머 -->
-				            <button class="buy-btn">Buy Now</button>
-				        </div>
-				
-				        <!-- 네 번째 제품 -->
-				        <div class="product-card">
-				            <img src="/assets/brand/참치캔.png" alt="Product 4">
-				            <h4>Product 4</h4>
-				            <p>$55.00</p>
-				            <p id="timer4"></p> <!-- 타이머 -->
-				            <button class="buy-btn">Buy Now</button>
-				        </div>
-				
-				        <!-- 다섯 번째 제품 -->
-				        <div class="product-card">
-				            <img src="/assets/brand/초밥.png" alt="Product 5">
-				            <h4>Product 5</h4>
-				            <p>$60.00</p>
-				            <p id="timer5"></p> <!-- 타이머 -->
-				            <button class="buy-btn">Buy Now</button>
-				        </div>
+				  <h1 class="sale-h1">Today Refresh Sale</h1>
+				  <div class="products-wrapper">
+				    <div th:each="product : ${saleProducts}" class="product-card">
+				      <a th:href="@{/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
+				        <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
+				        <h4 th:text="${product.name}"></h4>
+				        <p th:text="'$' + ${product.price}"></p>
+				      </a>
+				      <p class="timer" th:id="'timer-' + ${product.productId}"></p>
+				      <button class="buy-btn">Buy Now</button>
 				    </div>
+				  </div>
 				</div>
+
 				
 				<div class="special-sale-section">
-				    <h1 class="sale-heading">공동구매</h1>
-				    <div class="products-container">
-				        <!-- 첫 번째 제품 -->
-				        <div class="sale-product-card">
-				            <img src="/assets/brand/당근.png" alt="Product 1">
-				            <h4>Product 1</h4>
-				            <p>$50.00</p>
-				            <p id="timer1"></p> <!-- 타이머 -->
-				            <button class="sale-buy-btn">Buy Now</button>
-				            <!-- 하트 버튼 및 좋아요 수 -->
-				            <button class="sale-like-btn" onclick="toggleLike(this)">
-				                <i class="far fa-heart"></i> <!-- 빈 하트 -->
-				            </button>
-				            <span class="like-count">0</span> <!-- 좋아요 수 -->
-				        </div>
+				  <h1 class="sale-heading">공동구매</h1>
+				  <div class="products-container">
+				    <div th:each="product : ${groupProducts}" class="sale-product-card">
+				      <a th:href="@{/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
+				        <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
+				        <h4 th:text="${product.name}"></h4>
+				        <p th:text="'$' + ${product.price}"></p>
+				      </a>
+				      <p class="timer" th:id="'timer-group-' + ${product.productId}"></p>
+				      <button class="sale-buy-btn">Buy Now</button>
 				
-				        <!-- 두 번째 제품 -->
-				        <div class="sale-product-card">
-				            <img src="/assets/brand/사과.png" alt="Product 2">
-				            <h4>Product 2</h4>
-				            <p>$45.00</p>
-				            <p id="timer2"></p> <!-- 타이머 -->
-				            <button class="sale-buy-btn">Buy Now</button>
-				            <!-- 하트 버튼 및 좋아요 수 -->
-				            <button class="sale-like-btn" onclick="toggleLike(this)">
-				                <i class="far fa-heart"></i>
-				            </button>
-				            <span class="like-count">0</span>
-				        </div>
-				
-				        <!-- 세 번째 제품 -->
-				        <div class="sale-product-card">
-				            <img src="/assets/brand/스테이크.png" alt="Product 3">
-				            <h4>Product 3</h4>
-				            <p>$40.00</p>
-				            <p id="timer3"></p> <!-- 타이머 -->
-				            <button class="sale-buy-btn">Buy Now</button>
-				            <!-- 하트 버튼 및 좋아요 수 -->
-				            <button class="sale-like-btn" onclick="toggleLike(this)">
-				                <i class="far fa-heart"></i>
-				            </button>
-				            <span class="like-count">0</span>
-				        </div>
-				
-				        <!-- 네 번째 제품 -->
-				        <div class="sale-product-card">
-				            <img src="/assets/brand/참치캔.png" alt="Product 4">
-				            <h4>Product 4</h4>
-				            <p>$55.00</p>
-				            <p id="timer4"></p> <!-- 타이머 -->
-				            <button class="sale-buy-btn">Buy Now</button>
-				            <!-- 하트 버튼 및 좋아요 수 -->
-				            <button class="sale-like-btn" onclick="toggleLike(this)">
-				                <i class="far fa-heart"></i>
-				            </button>
-				            <span class="like-count">0</span>
-				        </div>
+				      <!-- 하트 버튼 -->
+				      <button class="sale-like-btn" onclick="toggleLike(this)">
+				        <i class="far fa-heart"></i>
+				      </button>
+				      <span class="like-count">0</span>
 				    </div>
+				  </div>
 				</div>
 			
-			
 				<h1 class="small-business-sale-heading">중소기업 제품</h1>
-					<div class="small-business-products-wrapper">
-					    <!-- 첫 번째 제품 -->
-					    <div class="small-business-product-card">
-					        <img src="/assets/brand/당근.png" alt="Product 1">
-					        <h4>
-					            Product 1 
-					            <img src="/assets/brand/로고.png" alt="Logo 1" class="small-business-product-logo"> <!-- 로고 -->
-					        </h4>
-					        <p>$50.00</p>
-					        <!-- 버튼 제거 -->
-					    </div>
-					
-					    <!-- 두 번째 제품 -->
-					    <div class="small-business-product-card">
-					        <img src="/assets/brand/사과.png" alt="Product 2">
-					        <h4>
-					            Product 2 
-					            <img src="/assets/brand/로고.png" alt="Logo 2" class="small-business-product-logo"> <!-- 로고 -->
-					        </h4>
-					        <p>$45.00</p>
-					        <!-- 버튼 제거 -->
-					    </div>
-					
-					    <!-- 세 번째 제품 -->
-					    <div class="small-business-product-card">
-					        <img src="/assets/brand/스테이크.png" alt="Product 3">
-					        <h4>
-					            Product 3 
-					            <img src="/assets/brand/로고.png" alt="Logo 3" class="small-business-product-logo"> <!-- 로고 -->
-					        </h4>
-					        <p>$40.00</p>
-					        <!-- 버튼 제거 -->
-					    </div>
-					
-					    <!-- 네 번째 제품 -->
-					    <div class="small-business-product-card">
-					        <img src="/assets/brand/참치캔.png" alt="Product 4">
-					        <h4>
-					            Product 4 
-					            <img src="/assets/brand/로고.png" alt="Logo 4" class="small-business-product-logo"> <!-- 로고 -->
-					        </h4>
-					        <p>$55.00</p>
-					        <!-- 버튼 제거 -->
-					    </div>
-					</div>
+				<div class="small-business-products-wrapper">
+				  <div th:each="product : ${promotionProducts}" class="small-business-product-card">
+				    <a th:href="@{/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
+				      <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
+				      <h4>
+				        <span th:text="${product.name}"></span>
+				        <img src="/assets/brand/로고.png" alt="Logo" class="small-business-product-logo">
+				      </h4>
+				      <p th:text="'$' + ${product.price}"></p>
+				    </a>
+				  </div>
+				</div>
 			</main>
     		
     		<!-- 공통 레이아웃 페이지에서 th:insert="~{파일경로 :: fragment명}"으로 명시. Fragment명을 호출하여 레이아웃을 구성할 수 있다. -->
@@ -216,6 +109,6 @@
     	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<script src="/js/jquery-3.7.1.min.js"></script>
-		<script src="/assets/dist/js/refreshmain.js"></script>
+		<script src="./assets/dist/js/refreshmain.js"></script>
 	</body>
 </html>

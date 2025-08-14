@@ -16,6 +16,7 @@
 	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/block :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
 	
@@ -45,11 +46,20 @@
 		            <div class="detail-row">
 		                <div class="detail-header">게시판 유형</div>
 		                <div class="detail-content" th:text="${post.boardType}"></div>
-		            </div>
+		            </div>		            
+		            
 		            <div class="detail-row">
-		                <div class="detail-header">내용</div>
-		                <div class="detail-content" th:text="${post.content}" style="white-space: pre-wrap;"></div>
-		            </div>
+					    <div class="detail-header">내용</div>
+					    <div class="detail-content" style="white-space: pre-wrap; display: flex; align-items: center;">
+					      
+					        <p th:text="${post.content}"></p>
+					        
+					        <!-- 이미지가 있을 경우에만 표시 -->
+					        <div style="margin-left: 20px;">
+					            <img th:if="${imageBase64 != null}" th:src="'data:image/png;base64,' + ${imageBase64}" alt="게시글 이미지" style="max-width: 300px; height: auto;">
+					        </div>
+					    </div>
+					</div>
 		            
 		            <h2>댓글</h2>
 				    <div th:replace="~{template/refresh/fragments/comment :: talk-comment}"></div>

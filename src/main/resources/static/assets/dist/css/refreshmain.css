@@ -87,9 +87,12 @@ img {
 }
 
 .product-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+  width: 200px; /* 원하는 너비 */
+  height: 200px; /* 원하는 높이 */
+  object-fit: cover; /* 비율 무시하고 꽉 채우기 */
+  border-radius: 8px; /* (선택) 둥근 테두리 */
+  display: block;
+  margin: 0 auto;
 }
 
 .product-card h4 {

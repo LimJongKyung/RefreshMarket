@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/loginAfter/talkBoardC.css" rel="stylesheet"/>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+        	<div class="inquiry-form-container mt-5">
+			    <h1 class="inquiry-form-title text-center mb-4">글 작성</h1>
+			    
+			    <form action="/ALPBoard/BoardC" method="post" enctype="multipart/form-data" class="inquiry-form">
+			        <label for="title" class="inquiry-form-label">제목:</label>
+			        <input type="text" name="title" id="title" required class="inquiry-form-input mb-3">
+			
+					<label for="boardType" class="inquiry-form-label">게시판 유형:</label>
+			        <select name="boardType" id="boardType" class="inquiry-form-select mb-3">
+			            <option value="자유게시판">자유게시판</option>
+			            <option value="질문게시판">질문게시판</option>
+			            <option value="토론게시판">토론게시판</option>
+			            <option value="정보공유">정보공유</option>
+			        </select>
+			
+					<p class="inquiry-form-label">작성자: <span th:text="${userId}"></span></p>
+			        <input type="hidden" name="memberId" id="memberId"><br/>
+			
+			        내용: <textarea name="content" required></textarea><br>
+			
+			        <!-- 이미지 업로드 추가 -->
+        			이미지 업로드: <input type="file" name="imageFile" class="inquiry-form-input mb-4"><br>
+			        
+					<div class="inquiry-form-submit-container">
+			            <input type="submit" value="등록" class="inquiry-form-submit-btn">
+			        </div>
+			    </form>
+			    
+			</div>
+			
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/js/refreshmain.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	    <script>
+		    // 세션에서 가져온 사용자 정보를 입력 (컨트롤러에서 JSON으로 전달받는 방식)
+		    fetch('/ALPBoard/BoardC')
+		        .then(response => response.json())
+		        .then(data => {
+		            document.getElementById("memberId").value = data.memberId;
+		        })
+		        .catch(error => console.error('Error:', error));
+		</script>
+	</body>
+</html>

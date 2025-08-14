@@ -16,69 +16,119 @@
 	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/block :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/block :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
-	
-        	<h1 class="product-introduce">상품 세부사항 페이지</h1>
-			
-			<div class="product-detail" 
-			    data-product-id="${product.id}" 
-			    data-product-name="${product.name}" 
-			    data-product-price="${product.price}" 
-			    data-product-image-url="${product.imageUrl}">
-			    
-			    <!-- 상품 이름 -->
-			    <h1 th:text="${product.name}"></h1>
-			    
-			    <!-- 상품 이미지 -->
-			    <img th:src="${product.imageUrl}" alt="제품 이미지" class="product-image"/>
-			    
-			    <!-- 상품 가격 -->
-			    <p class="product-price" th:text="'₩' + ${product.price}"></p>
-			    
-			    <!-- 상품 재고 -->
-			    <p class="product-stock" th:text="'재고: ' + ${product.stock}"></p>
-			    
-			    <div class="product-options">
-				    <label for="quantity">수량:</label>
-				    <input type="number" id="quantity" name="quantity" value="1">
-				</div>
-				
-				<div class="product-select">
-				    <label for="p-select">선택사항</label>
-				    <select id="p-select" name="p-select">
-				    	<option>상품을 선택해 주세요!</option>
-				    	<option>예시 선택1</option>
-				    	<option>예시 선택2</option>
-				    	<option>예시 선택3</option>
-				    </select>
-				</div>
-				
-			    <!-- 세부사항 선택란 (옵션, 수량 등) -->
-			    <div class="button-container">
-				    <div class="buy-actions">
-				        <button class="btn-primary">구매하기</button>
-				    </div>
-				    <div class="inbag-actions">
-				        <button class="btn-secondary" id="addToCartBtn">장바구니</button>
-				    </div>
-				</div>
-			    
-			    <p class="product-description" th:text="${product.description}"></p>
-			    
-			    <th:block th:insert="~{template/refresh/fragments/review :: product-review}"></th:block>
-			    
-			    <div class="detail-actions">
-				    <a href="javascript:history.back()" class="btn-primary">뒤로가기</a>
-				</div>
-			</div>
-			
-	        <footer class="mt-auto text-white-50">
-	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
-	        </footer>
 	    </div>
+		<main>
+			<section class="detail-info">
+			    <h2 th:text="${product.name}">상품명</h2>
+			
+				<img class="detail-image"
+	     			th:src="@{/products/image/{id}(id=${product.productId})}"
+	     			alt="상품 이미지"
+	     			style="width:200px; height:200px; object-fit:cover;" />
+				<hr />
+			
+			    <p><strong>판매자:</strong> <span th:text="${product.seller}">판매자</span></p>
+			    <hr />
+			
+			    <p><strong>제조업체:</strong> <span th:text="${product.manufacturer}">제조업체</span></p>
+			    <hr />
+			
+			    <p><strong>가격:</strong> ₩<span th:text="${product.price}"></span></p>
+			    <hr />
+			
+			    <p><strong>재고:</strong> <span th:text="${product.stock}"></span></p>
+			    <hr />
+			
+				<p><strong>등록일:</strong> <span th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}"></span></p>
+			    <hr />
+			
+			    <!-- 수량 선택 -->
+			    <label for="quantity"><strong>수량 선택:</strong></label>
+			    <input type="number" id="quantity" name="quantity" min="1" value="1" />
+			    <hr />
+			
+			    <label for="detailOption"><strong>상세 옵션 선택:</strong></label>
 	
+				<!-- product.detailOption이 null이 아닐 때만 select 표시 -->
+				<th:block th:if="${optionList != null}">
+				    <select id="detailOption" name="detailOption" required>
+				        <option value="" disabled selected>옵션 선택</option>
+				        <option th:each="opt, iterStat : ${optionList}" 
+						        th:value="${opt}"
+						        th:text="|${opt} (+₩${optionPriceList[iterStat.index]})|">
+						</option>
+				    </select>
+				</th:block>
+				
+				<th:block th:if="${optionList == null}">
+				    <p><strong>상세 옵션:</strong> 없음</p>
+				    <p><strong>최종 가격:</strong> <span id="finalPrice">₩<span th:text="${product.price}"></span></span></p>
+				</th:block>
+				
+				
+				<p><strong>등록일:</strong> <span th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}"></span></p>
+			    <hr />
+			</section>
+
+		    <!-- 버튼 그룹 -->
+		    <section class="button-section">
+				<button
+				  id="addToCartBtn"
+				  class="btn cart"
+				  th:attr="data-id=${product.productId}, data-name=${product.name}, data-price=${product.price}, data-image=@{/products/image/{id}(id=${product.productId})}">
+				  장바구니
+				</button>
+		        <button
+			      id="buyNowBtn"
+			      class="btn buy"
+			      style="margin-left:10px;"
+			      th:attr="data-id=${product.productId}, data-name=${product.name}, data-price=${product.price}, data-image=@{/products/image/{id}(id=${product.productId})}">
+			      구매
+			    </button>
+		    </section>
+		    <p th:text="${product.description}">상품 설명</p>
+		        <hr />
+		
+		    <a th:href="@{/products}" class="btn back" style="margin-left:10px;">목록</a>
+		
+			<section class="review-section">
+			    <h3>리뷰</h3>
+			
+			    <div th:if="${#lists.isEmpty(reviews)}">
+			        <p class="no-review">리뷰가 아직 없습니다.</p>
+			    </div>
+			
+			    <div th:each="review : ${reviews}">
+			        <div class="review">
+			            <div class="review-header">
+			                <strong th:text="${review.userName}">사용자</strong>
+			                <span class="stars">
+						        <span th:each="i : ${#numbers.sequence(1, review.rating)}">★</span>
+						        <span th:each="i : ${#numbers.sequence(1, 5 - review.rating)}">☆</span>
+						    </span>
+			            </div>
+			            <div class="review-date" th:text="${#dates.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">
+			                2025-07-31 12:34
+			            </div>
+			            <p class="review-comment" th:text="${review.reviewComment}">리뷰 내용입니다.</p>
+			        </div>
+			    </div>
+			</section>
+
+		</main>
 	    <!-- External Scripts -->
+	    
+	    <footer class="mt-auto text-white-50">
+    		<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+    	</footer>
+	    
+	    <script>
+		  window.optionPriceList = [[${optionPriceList}]];
+		</script>
+		
 	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	    <script src="/js/jquery-3.7.1.min.js"></script>

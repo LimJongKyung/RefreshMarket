@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/mainproductboardcss/PBoardDetail.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="/assets/dist/fragmentscss/reviewcss.css"/>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	            </nav>
+	        </header>
+	
+        	<h1 class="product-introduce">상품 세부사항 페이지</h1>
+			
+			<div class="product-detail" 
+			    data-product-id="${product.id}" 
+			    data-product-name="${product.name}" 
+			    data-product-price="${product.price}" 
+			    data-product-image-url="${product.imageUrl}">
+			    
+			    <!-- 상품 이름 -->
+			    <h1 th:text="${product.name}"></h1>
+			    
+			    <!-- 상품 이미지 -->
+			    <img th:src="${product.imageUrl}" alt="제품 이미지" class="product-image"/>
+			    
+			    <!-- 상품 가격 -->
+			    <p class="product-price" th:text="'₩' + ${product.price}"></p>
+			    
+			    <!-- 상품 재고 -->
+			    <p class="product-stock" th:text="'재고: ' + ${product.stock}"></p>
+			    
+			    <div class="product-options">
+				    <label for="quantity">수량:</label>
+				    <input type="number" id="quantity" name="quantity" value="1">
+				</div>
+				
+				<div class="product-select">
+				    <label for="p-select">선택사항</label>
+				    <select id="p-select" name="p-select">
+				    	<option>상품을 선택해 주세요!</option>
+				    	<option>예시 선택1</option>
+				    	<option>예시 선택2</option>
+				    	<option>예시 선택3</option>
+				    </select>
+				</div>
+				
+			    <!-- 세부사항 선택란 (옵션, 수량 등) -->
+			    <div class="button-container">
+				    <div class="buy-actions">
+				        <button class="btn-primary">구매하기</button>
+				    </div>
+				    <div class="inbag-actions">
+				        <button class="btn-secondary" id="addToCartBtn">장바구니</button>
+				    </div>
+				</div>
+			    
+			    <p class="product-description" th:text="${product.description}"></p>
+			    
+			    <th:block th:insert="~{template/refresh/fragments/review :: product-review}"></th:block>
+			    
+			    <div class="detail-actions">
+				    <a href="javascript:history.back()" class="btn-primary">뒤로가기</a>
+				</div>
+			</div>
+			
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/loginAfterJS/Detail.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	</body>
+</html>

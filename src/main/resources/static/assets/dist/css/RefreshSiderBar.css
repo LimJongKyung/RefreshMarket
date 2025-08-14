@@ -1,7 +1,3 @@
-@charset "UTF-8";
-
-/* custom.css */
-
 /* 기본 폰트 설정 */
 body {
     font-family: 'Do Hyeon', sans-serif; /* Do Hyeon 폰트 적용 */
@@ -172,15 +168,6 @@ ul.navbar-nav {
     color: white; /* 호버 시 텍스트 색상 변경 */
 }
 
-/* 햄버거 메뉴 스타일 */  
-.hamburger {
-    cursor: pointer;
-    padding: 10px;
-    font-size: 24px; /* 크기를 키워서 더 눈에 띄게 */
-    position: absolute; /* 위치 절대 지정 */
-    left: 2.5%; /* 왼쪽으로 이동 */
-}
-
 .close-btn {
     position: absolute; /* 절대 위치 지정 */
     top: 10px; /* 상단에서 10px 떨어진 위치 */
@@ -194,6 +181,72 @@ ul.navbar-nav {
 /* X 버튼 hover 효과 */
 .close-btn:hover {
     color: #ff0000; /* hover 시 빨간색으로 변경 */
+}
+
+/* 로그인 후 */
+.sidebar-menu {
+    position: absolute; 
+    top: 55%; 
+    left: -300px; 
+    width: 250px;
+    height: 100%; 
+    background-color: #66cdaa;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease;
+    z-index: 2;
+}
+
+.sidebar-menu.open {
+    left: 2.5%; 
+}
+
+.sidebar-header {
+    padding: 10px;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-nav-item {
+    padding: 10px 15px;
+}
+
+.sidebar-nav-link {
+    text-decoration: none;
+    color: #000; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+.sidebar-nav-link:hover {
+    background-color: #3cb371; 
+    color: white; 
+}
+
+/* 닫기 버튼 */
+.sidebar-close-btn {
+    position: absolute; /* 절대 위치 지정 */
+    top: 10px; /* 상단에서 10px 떨어진 위치 */
+    right: 10px; /* 오른쪽에서 10px 떨어진 위치 */
+    font-size: 24px; /* 버튼 크기 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    color: #333; /* X 버튼 색상 */
+    transition: color 0.3s ease; /* 색상 변화 효과 */
+}
+
+/* X 버튼 hover 효과 */
+.sidebar-close-btn:hover {
+    color: #ff0000; /* hover 시 빨간색으로 변경 */
+}
+
+/* 햄버거 메뉴 스타일 */  
+.hamburger {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 24px; /* 크기를 키워서 더 눈에 띄게 */
+    position: absolute; /* 위치 절대 지정 */
+    left: 2.5%; /* 왼쪽으로 이동 */
 }
 
 .social-icons {
@@ -239,4 +292,52 @@ ul.navbar-nav {
     content: "\1F609"; /* 윙크 이모지 추가 */
     font-size: 1rem;
     margin-left: 10px;
+}
+
+/* login siderbar */
+.sidebarlogin {
+	position: absolute; /* 사이드바의 위치를 절대값으로 조정 */
+    top: 55%; /* 메인 메뉴바 아래로 위치 조정 */
+    left: -300px; /* 숨기기 위해 화면 밖으로 이동 */
+    width: 250px;
+    height: 100%; /* 전체 높이에서 메뉴바 높이만큼 빼줌 */
+    background-color: #66cdaa;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease;
+    z-index: 2;
+}
+
+.sidebarlogin.open {
+    left: 2.5%; /* 사이드바가 열릴 때 화면에 표시 */
+}
+
+.sidebarlogin h2 {
+                padding: 10px;
+}
+
+.sidebarlogin ul {
+                list-style: none;
+                padding: 0;
+}
+
+.sidebarlogin ul li {
+                padding: 10px 15px;
+}
+
+.sidebarlogin ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+/* 사이드바 메뉴 항목 링크 스타일 */
+.sidebarlogin ul li a {
+    text-decoration: none;
+    color: #000; /* 기본 색상 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+/* 사이드바 메뉴 항목 링크 hover 효과 */
+.sidebarlogin ul li a:hover {
+    background-color: #3cb371; /* 호버 시 배경색 변경 */
+    color: white; /* 호버 시 텍스트 색상 변경 */
 }

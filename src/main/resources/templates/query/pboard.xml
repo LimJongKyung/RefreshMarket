@@ -1,101 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.refresh.board.dao.PBoardDAO">
-	<!-- 계절 상품 제품 목록 조회 -->
-    <select id="seasonProducts" resultType="pboard">
-        SELECT
-            PRODUCT_ID,
-            NAME,
-            DESCRIPTION,
-            PRICE,
-            STOCK,
-            IMAGE_URL,
-            CATEGORY_ID,
-            CREATED_AT,
-            UPDATED_AT
-        FROM
-            PRODUCTS
+	
+	<!-- 전체 -->
+    <select id="productboard" resultType="pboard">
+        SELECT * FROM products ORDER BY created_at DESC
     </select>
-    
-    <!-- 지역 상품 제품 목록 조회 -->
-    <select id="localProducts" resultType="pboard">
-        SELECT
-            PRODUCT_ID,
-            NAME,
-            DESCRIPTION,
-            PRICE,
-            STOCK,
-            IMAGE_URL,
-            CATEGORY_ID,
-            CREATED_AT,
-            UPDATED_AT
-        FROM
-            PRODUCTS
-    </select>
-    
-    <!-- 세일 상품 제품 목록 조회 -->
-    <select id="saleProducts" resultType="pboard">
-        SELECT
-            PRODUCT_ID,
-            NAME,
-            DESCRIPTION,
-            PRICE,
-            STOCK,
-            IMAGE_URL,
-            CATEGORY_ID,
-            CREATED_AT,
-            UPDATED_AT
-        FROM
-            PRODUCTS
-    </select>
-    
-    <!-- 공동구매 상품 제품 목록 조회 -->
-    <select id="groupPurchaseProducts" resultType="pboard">
-        SELECT
-            PRODUCT_ID,
-            NAME,
-            DESCRIPTION,
-            PRICE,
-            STOCK,
-            IMAGE_URL,
-            CATEGORY_ID,
-            CREATED_AT,
-            UPDATED_AT
-        FROM
-            PRODUCTS
-    </select>
-    
-    <!-- 중소기업 상품 제품 목록 조회 -->
-    <select id="smallBusinessProducts" resultType="pboard">
-        SELECT
-            PRODUCT_ID,
-            NAME,
-            DESCRIPTION,
-            PRICE,
-            STOCK,
-            IMAGE_URL,
-            CATEGORY_ID,
-            CREATED_AT,
-            UPDATED_AT
-        FROM
-            PRODUCTS
-    </select>
-    
-	<select id="findById" resultType="pboard">
-	    SELECT 
-	        PRODUCT_ID,
-	        NAME,
-	        PRICE,
-	        STOCK,
-	        DESCRIPTION,
-	        IMAGE_URL
-	    FROM PRODUCTS
-	    WHERE PRODUCT_ID = #{productId}
-	</select>
 	
 	<!-- 리뷰 목록 조회 -->
-    <select id="selectReviewsByProductId" resultType="review">
-        SELECT * FROM REVIEW WHERE PRODUCT_ID = #{productId}
+    <select id="getReviewsByProductId" resultType="review">
+        SELECT * FROM review
+        WHERE product_id = #{productId}
+        ORDER BY created_at DESC
     </select>
 	
+    
+    <select id="getProductById" resultType="pboard">
+	    SELECT * FROM products WHERE product_id = #{productId}
+	</select>
+	
+	<!-- 오늘의 세일용 상품 -->
+	<select id="getSaleProducts" resultType="pboard">
+	    SELECT * FROM PRODUCTS
+	    WHERE INSTR(MAIN_DISPLAY, 'sale') > 0
+	</select>
+	
+	<!-- 공동구매용 상품 -->
+	<select id="getGroupProducts" resultType="pboard">
+	    SELECT * FROM PRODUCTS
+	    WHERE INSTR(MAIN_DISPLAY, 'group') > 0
+	</select>
+	
+	<!-- 중소기업 제품 홍보용 상품 -->
+	<select id="getPromotionProducts" resultType="pboard">
+	    SELECT * FROM PRODUCTS
+	    WHERE INSTR(MAIN_DISPLAY, 'promotion') > 0
+	</select>
+	
+	<select id="searchProducts" parameterType="string" resultType="pboard">
+	  SELECT * FROM PRODUCTS
+	  WHERE LOWER(NAME) LIKE '%' || LOWER(#{keyword}) || '%'
+	     OR LOWER(DESCRIPTION) LIKE '%' || LOWER(#{keyword}) || '%'
+	</select>
+	
+	<insert id="insertGuestOrder" parameterType="order">
+	    INSERT INTO ORDER_INFO (
+	      ORDER_ID,
+	      CUSTOMER_ID,
+	      CUSTOMER_NAME,
+	      PRODUCT_ID,
+	      QUANTITY,
+	      PRODUCT_QUANTITIES,     <!-- 기존 추가 -->
+	      DETAIL_OPTION,          <!-- 새로 추가 -->
+	      TOTAL_PRICE,
+	      SHIPPING_ADDRESS,
+	      PAYMENT_METHOD,
+	      BANK_STATUS,
+	      ORDER_STATUS,
+	      ORDER_DATE,
+	      PHONE_NUMBER,
+	      EMAIL,
+	      DELIVERY_REQUEST,
+	      IS_CANCELED,
+	      LAST_UPDATED
+	    ) VALUES (
+	      ORDER_SEQ.NEXTVAL,
+	      NULL,
+	      #{customerName},
+	      #{productId},
+	      #{quantity},
+	      #{productQuantities},   <!-- 기존 추가 -->
+	      #{detailOption},        <!-- 새로 추가 -->
+	      #{totalPrice},
+	      #{shippingAddress},
+	      #{paymentMethod},
+	      '입금하지_않음',
+	      '주문확인',
+	      SYSDATE,
+	      #{phoneNumber},
+	      #{email},
+	      #{deliveryRequest},
+	      'N',
+	      SYSDATE
+	    )
+	</insert>
 </mapper>

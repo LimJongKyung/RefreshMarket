@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.refresh.login.dao.LBoardDAO">
+
+	<insert id="insertBoard" parameterType="board">
+	    INSERT INTO POSTS (
+	        POST_ID,
+	        TITLE,
+	        CONTENT,
+	        MEMBER_ID,
+	        CREATED_DATE,
+	        UPDATED_DATE,
+	        VIEW_COUNT,
+	        BOARD_TYPE,
+	        IMAGE
+	    ) VALUES (
+	        POSTS_SEQ.NEXTVAL,
+	        #{title},
+	        #{content},
+	        #{memberId},
+	        SYSDATE,
+	        SYSDATE,
+	        0,
+	        #{boardType},
+	        #{image, jdbcType=BLOB}
+	    )
+	</insert>
+	
+	<!-- 댓글 추가 -->
+    <insert id="insertComment" parameterType="comment">
+        INSERT INTO COMMENTS (COMMENT_ID, POST_ID, MEMBER_ID, CONTENT, CREATED_DATE, UPDATED_DATE, LIKE_COUNT)
+        VALUES (COMMENTS_SEQ.NEXTVAL, #{postId}, #{memberId}, #{content}, SYSDATE, SYSDATE, 0)
+    </insert>
+
+</mapper>
