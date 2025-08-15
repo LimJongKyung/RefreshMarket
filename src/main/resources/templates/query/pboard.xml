@@ -43,45 +43,45 @@
 	     OR LOWER(DESCRIPTION) LIKE '%' || LOWER(#{keyword}) || '%'
 	</select>
 	
-	<insert id="insertGuestOrder" parameterType="order">
+	<insert id="insertGuestOrder" parameterType="com.refresh.board.vo.OrderVO">
 	    INSERT INTO ORDER_INFO (
-	      ORDER_ID,
-	      CUSTOMER_ID,
-	      CUSTOMER_NAME,
-	      PRODUCT_ID,
-	      QUANTITY,
-	      PRODUCT_QUANTITIES,     <!-- 기존 추가 -->
-	      DETAIL_OPTION,          <!-- 새로 추가 -->
-	      TOTAL_PRICE,
-	      SHIPPING_ADDRESS,
-	      PAYMENT_METHOD,
-	      BANK_STATUS,
-	      ORDER_STATUS,
-	      ORDER_DATE,
-	      PHONE_NUMBER,
-	      EMAIL,
-	      DELIVERY_REQUEST,
-	      IS_CANCELED,
-	      LAST_UPDATED
+	        ORDER_ID,
+	        CUSTOMER_ID,
+	        CUSTOMER_NAME,
+	        PRODUCT_ID,
+	        QUANTITY,
+	        PRODUCT_QUANTITIES,
+	        DETAIL_OPTION,
+	        TOTAL_PRICE,
+	        SHIPPING_ADDRESS,
+	        PAYMENT_METHOD,
+	        BANK_STATUS,
+	        ORDER_STATUS,
+	        ORDER_DATE,
+	        PHONE_NUMBER,
+	        EMAIL,
+	        DELIVERY_REQUEST,
+	        IS_CANCELED,
+	        LAST_UPDATED
 	    ) VALUES (
-	      ORDER_SEQ.NEXTVAL,
-	      NULL,
-	      #{customerName},
-	      #{productId},
-	      #{quantity},
-	      #{productQuantities},   <!-- 기존 추가 -->
-	      #{detailOption},        <!-- 새로 추가 -->
-	      #{totalPrice},
-	      #{shippingAddress},
-	      #{paymentMethod},
-	      '입금하지_않음',
-	      '주문확인',
-	      SYSDATE,
-	      #{phoneNumber},
-	      #{email},
-	      #{deliveryRequest},
-	      'N',
-	      SYSDATE
+	        ORDER_SEQ.NEXTVAL,
+	        #{customerId, jdbcType=VARCHAR},
+	        #{customerName},
+	        #{productId},
+	        #{quantity},
+	        #{productQuantities},
+	        #{detailOption},
+	        #{totalPrice},
+	        #{shippingAddress},
+	        #{paymentMethod},
+	        #{bankStatus},        <!-- 여기를 동적으로 -->
+	        #{orderStatus},       <!-- orderStatus도 미리 세팅 -->
+	        SYSDATE,
+	        #{phoneNumber},
+	        #{email},
+	        #{deliveryRequest},
+	        #{isCanceled},        <!-- 취소 여부도 미리 세팅 -->
+	        SYSDATE
 	    )
 	</insert>
 </mapper>

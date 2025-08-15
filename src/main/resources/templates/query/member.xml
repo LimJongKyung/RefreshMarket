@@ -45,4 +45,14 @@
 	    FROM Member
 	    WHERE name = #{name} AND email = #{email} AND ROWNUM = 1
 	</select>
+	
+	<select id="findById" parameterType="member" resultType="member">
+	    SELECT id,
+           name,
+           email,
+           PHONENUMBER AS phoneNumber,
+           address
+    	FROM member
+    	WHERE id = #{id}
+	</select>
 </mapper>

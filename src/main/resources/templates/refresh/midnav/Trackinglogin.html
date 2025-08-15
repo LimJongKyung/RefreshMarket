@@ -6,7 +6,7 @@
 	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
-	    <link href="/assets/dist/mainproductboardcss/productboard.css" rel="stylesheet"/>
+	    <link rel="stylesheet" href="/assets/dist/midnav/Tracking.css"/>
 	</head>
 	<body class="d-flex h-100 text-center text-bg-dark">
 	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -15,30 +15,28 @@
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
 	
-	        <main class="product-card-container">
-			    <h1 class="product-title">중소기업 제품</h1>
-			    <div class="product-list">
-			        <!-- products가 비어 있으면 '제품이 없습니다.'를 출력 -->
-			        <div th:if="${#lists.isEmpty(products)}" class="no-products">제품이 없습니다.</div>
-			        
-			        <!-- products가 비어 있지 않으면 카드 형식으로 리스트 출력 -->
-			        <div 
-					    th:each="product : ${products}" 
-					    th:unless="${#lists.isEmpty(products)}" 
-					    class="product-card" 
-					    th:onclick="|window.location.href='/loginP/detail/' + ${product.productId}|"
-					    style="cursor: pointer;">
-					    <img th:src="${product.imageUrl}" alt="제품 이미지" class="product-image"/>
-					    <h2 class="product-name" th:text="${product.name}"></h2>
-					    <p class="product-price" th:text="'₩' + ${product.price}"></p>
-					    <p class="product-stock" th:text="'재고: ' + ${product.stock}"></p>
-					    <p class="product-description" th:text="${product.description}"></p>
-					</div>
+        	<div class="tracking-container mt-5">
+			    <h1 class="tracking-title text-center mb-4">배송조회</h1>
+			    <div class="tracking-card card p-4 shadow-lg">
+			        <form id="trackingForm">
+			            <div class="tracking-input-group mb-4">
+			                <label for="trackingNumber" class="tracking-label form-label">운송장 번호</label>
+			                <input type="text" class="tracking-input form-control" id="trackingNumber" placeholder="운송장 번호를 입력하세요" required>
+			            </div>
+			            <div class="tracking-button-group d-flex justify-content-center">
+			                <button type="submit" class="tracking-submit-btn btn btn-primary px-4 py-2">조회</button>
+			            </div>
+			        </form>
 			    </div>
-			</main>
+			    <div id="resultContainer" class="tracking-result mt-4 d-none">
+			        <h4 class="tracking-result-title">배송 조회 결과</h4>
+			        <p id="resultMessage" class="tracking-result-message alert alert-info">조회 중...</p>
+			    </div>
+			</div>
 
 			
 	        <footer class="mt-auto text-white-50">

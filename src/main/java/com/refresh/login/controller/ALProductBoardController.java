@@ -72,7 +72,12 @@ public class ALProductBoardController {
         BoardVO post = qboardService.getPostById(postId);  
         String userId = (String) session.getAttribute("userId");
         String userName = memberService.getUserByName(userId);
-        List<CommentVO> comments = qboardService.listCommentsByPostId(postId);  
+        List<CommentVO> comments = qboardService.listCommentsByPostId(postId); 
+        List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+        
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         model.addAttribute("post", post);  
         model.addAttribute("comments", comments);  
         model.addAttribute("postId", postId);  // 👉 postId를 모델에 저장
@@ -89,7 +94,14 @@ public class ALProductBoardController {
     // 게시글 등록 폼
     @GetMapping("/BoardC")
     public String writeForm(HttpSession session, Model model) {
-        String userId = (String) session.getAttribute("userId");
+    	String userId = (String) session.getAttribute("userId");
+    	String userName = memberService.getUserByName(userId);
+    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+        
+        model.addAttribute("username", userName);
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         model.addAttribute("userId", userId);
         return "loginrefresh/loginMPB/talkBoardCreate";
     }

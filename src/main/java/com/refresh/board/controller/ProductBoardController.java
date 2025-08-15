@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,7 @@ import com.refresh.board.vo.OrderVO;
 import com.refresh.board.vo.PReviewVO;
 import com.refresh.board.vo.ProductBoardVO;
 import com.refresh.member.service.MemberService;
+import com.refresh.member.vo.MemberVO;
 import com.refresh.menu.service.MenuService;
 import com.refresh.menu.vo.MenuVO;
 
@@ -115,6 +119,7 @@ public class ProductBoardController {
         return "refresh/productboardlogin";
     }
     
+    // 로그인 전 디테일
     @GetMapping("/detail/{id}")
     public String productDetail(@PathVariable("id") int productId, Model model) {
         ProductBoardVO product = productService.getProductById(productId);
@@ -154,6 +159,52 @@ public class ProductBoardController {
         return "refresh/detail";
     }
 
+    // 로그인 후 디테일
+    @GetMapping("/detailL/{id}")
+    public String productDetailLogin(@PathVariable("id") int productId, Model model, HttpSession session) {
+    	String userId = (String) session.getAttribute("userId");
+        ProductBoardVO product = productService.getProductById(productId);
+        List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+        List<PReviewVO> reviews = productService.getReviewsByProductId(productId);
+        String username = null;
+        if (userId != null) {
+            // 사용자 ID를 통해 사용자 이름 가져오기
+            username = memberService.getUserByName(userId);
+        }
+        model.addAttribute("username", username);
+        
+        // 옵션 리스트
+        if (product.getDetailOption() != null) {
+            List<String> options = Arrays.asList(product.getDetailOption().split(","));
+            model.addAttribute("optionList", options);
+        } else {
+            model.addAttribute("optionList", null);
+        }
+
+        // 옵션별 추가 가격 리스트 (문자열 → 숫자 리스트 변환)
+        if (product.getDetailOptionPrice() != null) {
+            String[] priceStrArr = product.getDetailOptionPrice().split(",");
+            List<Integer> optionPriceList = new ArrayList<>();
+            for (String p : priceStrArr) {
+                try {
+                    optionPriceList.add(Integer.parseInt(p.trim()));
+                } catch (NumberFormatException e) {
+                    optionPriceList.add(0);
+                }
+            }
+            model.addAttribute("optionPriceList", optionPriceList);
+        } else {
+            model.addAttribute("optionPriceList", null);
+        }
+
+        model.addAttribute("product", product);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
+
+        return "refresh/detailLogin";
+    }
     
     @GetMapping("/image/{id}")
     @ResponseBody
@@ -175,6 +226,7 @@ public class ProductBoardController {
                 .body(imageData);
     }
     
+    // 로그인전 상품 검색
     @GetMapping("/search")
     public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
         List<ProductBoardVO> products = productService.searchProducts(keyword);
@@ -188,6 +240,28 @@ public class ProductBoardController {
         return "refresh/psearch";  // 검색 결과를 보여줄 뷰 이름
     }
     
+    // 로그인후 상품 검색
+    @GetMapping("/searchL")
+    public String searchProductsLogin(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
+    	String userId = (String) session.getAttribute("userId");
+        List<ProductBoardVO> products = productService.searchProducts(keyword);
+        List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+        String username = null;
+        if (userId != null) {
+            // 사용자 ID를 통해 사용자 이름 가져오기
+            username = memberService.getUserByName(userId);
+        }
+        model.addAttribute("username", username);
+        
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
+        model.addAttribute("products", products);
+        model.addAttribute("keyword", keyword);
+        return "refresh/psearchlogin";  // 검색 결과를 보여줄 뷰 이름
+    }
+    
+    // 비회원 구매
     @GetMapping("/purchase")
     public String purchase(Model model) {
     	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
@@ -198,15 +272,62 @@ public class ProductBoardController {
     	return "refresh/purchase";
     }
     
+    // 회원 구매
+    @GetMapping("/purchaseL")
+    public String purchaselogin(Model model, HttpSession session) {
+    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+        String userId = (String) session.getAttribute("userId");
+        String username = null;
+        if (userId != null) {
+            // 사용자 ID를 통해 사용자 이름 가져오기
+            username = memberService.getUserByName(userId);
+        }
+        model.addAttribute("username", username);
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
+    	return "refresh/purchaselogin";
+    }
+    
+    @GetMapping("/user-info")
+    public ResponseEntity<Map<String, String>> getUserInfo(HttpSession session) {
+        String userId = (String) session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        MemberVO member = memberService.getUserById(userId);
+
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Map<String, String> info = new HashMap<>();
+        info.put("customerId", member.getId());  // 추가
+        info.put("name", member.getName());
+        info.put("email", member.getEmail());
+        info.put("phone", member.getPhoneNumber());
+        info.put("address", member.getAddress());
+
+        return ResponseEntity.ok(info);
+    }
+
     @PostMapping("/order")
     @ResponseBody
-    public String guestOrderSubmit(@RequestParam String customerName,
-                                   @RequestParam String email,
-                                   @RequestParam String phoneNumber,
-                                   @RequestParam String shippingAddress,
-                                   @RequestParam String deliveryRequest,
-                                   @RequestParam String paymentMethod,
-                                   @RequestParam String cartData) {
+    public String guestOrderSubmit(
+            @RequestParam(required = false) String customerId,  // optional로 변경
+            @RequestParam String customerName,
+            @RequestParam String email,
+            @RequestParam String phoneNumber,
+            @RequestParam String shippingAddress,
+            @RequestParam String deliveryRequest,
+            @RequestParam String paymentMethod,
+            @RequestParam String cartData) {
+
+        // 비회원 주문 시 customerId를 null로 설정
+        if (customerId == null || customerId.trim().isEmpty()) {
+            customerId = null;
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         List<CartItem> cart = null;
@@ -227,20 +348,16 @@ public class ProductBoardController {
         String quantities = cart.stream()
                 .map(item -> String.valueOf(item.getQuantity()))
                 .collect(Collectors.joining(","));
-        
+
         String detailOption = cart.stream()
-        		.map(item -> (item.getOption() != null && !item.getOption().trim().isEmpty()) ? item.getOption() : "없음")
-        		.collect(Collectors.joining(","));
+                .map(item -> (item.getOption() != null && !item.getOption().trim().isEmpty()) ? item.getOption() : "없음")
+                .collect(Collectors.joining(","));
 
-        int totalQuantity = cart.stream()
-                                .mapToInt(CartItem::getQuantity)
-                                .sum();
-
-        int sumTotalPrice = cart.stream()
-                                .mapToInt(item -> item.getQuantity() * item.getPrice())
-                                .sum();
+        int totalQuantity = cart.stream().mapToInt(CartItem::getQuantity).sum();
+        int sumTotalPrice = cart.stream().mapToInt(item -> item.getQuantity() * item.getPrice()).sum();
 
         OrderVO order = new OrderVO();
+        order.setCustomerId(customerId);  // 회원이면 ID, 비회원이면 null
         order.setCustomerName(customerName);
         order.setEmail(email);
         order.setPhoneNumber(phoneNumber);
@@ -250,12 +367,12 @@ public class ProductBoardController {
 
         order.setProductId(productId);
         order.setProductQuantities(quantities);
-        order.setDetailOption(detailOption);  // 추가한 부분
+        order.setDetailOption(detailOption);
         order.setQuantity(totalQuantity);
         order.setTotalPrice(sumTotalPrice);
 
         productService.placeGuestOrder(order);
 
-        return "<script>alert('구매가 완료되었습니다! 감사합니다!'); window.location='/';</script>";
+        return "<script>alert('구매가 완료되었습니다! 감사합니다!'); window.location='/home';</script>";
     }
 }

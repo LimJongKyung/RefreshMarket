@@ -64,3 +64,38 @@ document.getElementById('guestOrderForm').addEventListener('submit', function(e)
   // 주문 제출 시 장바구니 비우기
   localStorage.removeItem('cart');
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loadInfoCheckbox = document.getElementById("loadExistingInfo");
+
+  loadInfoCheckbox.addEventListener("change", async function () {
+    if (this.checked) {
+      try {
+        const response = await fetch("/products/user-info");
+        if (!response.ok) throw new Error("정보 불러오기 실패");
+
+        const data = await response.json();
+
+        document.getElementById("customerName").value = data.name || "";
+        document.getElementById("email").value = data.email || "";
+        document.getElementById("phoneNumber").value = data.phone || "";
+        document.getElementById("roadAddress").value = data.address || "";
+        document.getElementById("customerId").value = data.customerId || ""; // 수정
+
+      } catch (error) {
+        console.error(error);
+        alert("기존 정보를 불러오지 못했습니다.");
+        this.checked = false;
+      }
+    } else {
+      // 체크 해제 시 비우기
+      document.getElementById("customerName").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("phoneNumber").value = "";
+      document.getElementById("roadAddress").value = "";
+      document.getElementById("customerId").value = ""; // 수정
+    }
+  });
+});
+

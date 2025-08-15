@@ -11,6 +11,7 @@ public class MemberVO {
     private String address;
     private String phoneNumber;
     private String email;
+    private String grade;
 	
     public MemberVO(String id, String passwd) {
         this.id = id;
@@ -63,6 +64,10 @@ public class MemberVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
-    
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}  
 }

@@ -1,5 +1,7 @@
 package com.refresh.login.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.refresh.login.service.InfoService;
 import com.refresh.member.service.MemberService;
 import com.refresh.member.vo.MemberVO;
+import com.refresh.menu.service.MenuService;
+import com.refresh.menu.vo.MenuVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,15 +23,20 @@ public class LoginController {
 	
 	private final InfoService infoService;
 	private final MemberService memberService;
+	private final MenuService menuService;
 	
-	public LoginController(InfoService infoService, MemberService memberService) {
+	public LoginController(InfoService infoService, MemberService memberService
+			, MenuService menuService) {
 		this.infoService = infoService;
 		this.memberService = memberService;
+		this.menuService = menuService;
 	}
 	
 	// 정보 보기
 	@GetMapping("/information")
 	public String getAllInfo (HttpSession session, Model model) {
+		List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
 		String loginMember = (String) session.getAttribute("userId");
 		String userId = (String) session.getAttribute("userId");
 		String username = null;
@@ -40,6 +49,8 @@ public class LoginController {
 		MemberVO memberInfo = infoService.getAllInfo(loginMember);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("username", username);
+		model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
 		return "loginrefresh/logoutNav/information";
 	}
 	
@@ -47,10 +58,10 @@ public class LoginController {
 	@GetMapping("/InfoEdit")
 	public String getEditPage (HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("userId");
-		
 		String userId = (String) session.getAttribute("userId");
-	       
         String username = null;
+        List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
 
         if (userId != null) {
             // 사용자 ID를 통해 사용자 이름 가져오기
@@ -61,6 +72,8 @@ public class LoginController {
         model.addAttribute("username", username);
 		
         MemberVO memberInfo = infoService.getAllInfo(memberId);
+        model.addAttribute("sidebarMenus", sidebarMenus);
+        model.addAttribute("headerMenus", headerMenus);
         model.addAttribute("memberInfo", memberInfo);
 		return "loginrefresh/logoutNav/InfoEdit";
 	}

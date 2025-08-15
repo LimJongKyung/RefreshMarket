@@ -53,6 +53,16 @@ public class PBoardServiceImpl implements PBoardService{
 	 
 	 @Override
 	 public void placeGuestOrder(OrderVO order) {
+	     // 결제 수단에 따른 BANK_STATUS
+		 if ("카드".equalsIgnoreCase(order.getPaymentMethod())) {
+			    order.setBankStatus("입금");  // DB 체크 제약조건에 맞춰서 정확히
+			} else {
+			    order.setBankStatus("입금하지_않음");  // 또는 "입금전"이 DB와 맞는지 확인
+			}
+
+	     order.setOrderStatus("주문확인");
+	     order.setIsCanceled("N");
+
 	     pBoardDAO.insertGuestOrder(order);
 	 }
 }

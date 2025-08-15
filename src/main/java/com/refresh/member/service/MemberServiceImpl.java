@@ -67,4 +67,9 @@ public class MemberServiceImpl implements MemberService {
     public String findUserPasswdByNameAndEmail(String name, String email) {
         return memberDAO.findPasswdByEmailAndName(name, email); // DAO
     }
+    
+    @Override
+    public MemberVO getUserById(String id) {
+        return memberDAO.findById(id);
+    }
 }

@@ -12,4 +12,6 @@ public interface MemberDAO {
     String getUserByName(String id); // 로그인회원 이름 확인
     String findIdByEmailAndName(@Param("name") String name, @Param("email") String email); // 이름과 이메일로 회원 아이디 찾기
     String findPasswdByEmailAndName(@Param("name") String name, @Param("email") String email);
+    
+    MemberVO findById(String id);
 }

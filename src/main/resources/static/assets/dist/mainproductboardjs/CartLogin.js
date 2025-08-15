@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('장바구니가 비어있습니다!');
         return;
       }
-      window.location.href = '/products/purchase';
+      window.location.href = '/products/purchaseL';
     });
   }
 });

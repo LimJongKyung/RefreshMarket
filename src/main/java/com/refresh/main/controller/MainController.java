@@ -49,7 +49,6 @@ public class MainController {
         model.addAttribute("saleProducts", saleProducts);
         model.addAttribute("groupProducts", groupProducts);
         model.addAttribute("promotionProducts", promotionProducts);
-        
         model.addAttribute("sidebarMenus", sidebarMenus);
         model.addAttribute("headerMenus", headerMenus);
 		return "refresh/main";

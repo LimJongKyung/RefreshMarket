@@ -10,4 +10,6 @@ public interface MemberService {
     boolean sendVerificationCodeIfUserExists(String name, String email);
     String findUserIdByNameAndEmail(String name, String email);
     String findUserPasswdByNameAndEmail(String name, String email);
+    
+    MemberVO getUserById(String id);
 }
