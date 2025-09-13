@@ -30,7 +30,7 @@
     <select id="getUserByName" parameterType="String" resultType="String">
         SELECT name
         FROM Member
-        WHERE id = #{id}
+        WHERE id = #{id, jdbcType=VARCHAR}
     </select>
     
     <!-- 분실시 이메일로 아이디 찾기 -->
@@ -51,8 +51,34 @@
            name,
            email,
            PHONENUMBER AS phoneNumber,
-           address
+           address,
+           grade
     	FROM member
     	WHERE id = #{id}
 	</select>
+	
+	<!-- 회원 ID로 혜택 리스트 조회 -->
+    <select id="getBenefitsByMemberId" resultType="com.refresh.member.vo.MemberBenefit">
+        SELECT
+            id,
+            member_id,
+            benefit_name,
+            benefit_description
+        FROM
+            member_benefit
+        WHERE
+            member_id = #{memberId}
+        ORDER BY
+            id ASC
+    </select>
+    
+    <delete id="deleteBenefits" parameterType="map">
+	  DELETE FROM member_benefit
+	  WHERE member_id = #{memberId, jdbcType=VARCHAR}
+	    AND benefit_description IN
+	    <foreach item="desc" collection="benefitDescriptions" open="(" separator="," close=")">
+	      #{desc, jdbcType=VARCHAR}
+	    </foreach>
+	</delete>
+
 </mapper>

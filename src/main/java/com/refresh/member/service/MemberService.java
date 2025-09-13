@@ -1,5 +1,8 @@
 package com.refresh.member.service;
 
+import java.util.List;
+
+import com.refresh.member.vo.MemberBenefit;
 import com.refresh.member.vo.MemberVO;
 
 public interface MemberService {
@@ -12,4 +15,8 @@ public interface MemberService {
     String findUserPasswdByNameAndEmail(String name, String email);
     
     MemberVO getUserById(String id);
+    
+    // 멤버 혜택
+    List<MemberBenefit> getBenefits(String memberId);
+    void deleteBenefits(String memberId, List<String> benefitDescriptions);
 }

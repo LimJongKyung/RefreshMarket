@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto" >
+	<head>
+		<th:block th:insert="~{template/refresh/fragments/blocklogin :: config}"></th:block>
+		<meta name="theme-color" content="#712cf9">
+		<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+    	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    	<link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+    	<link href="/assets/dist/loginAfter/myReview.css" rel="stylesheet">
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+    	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    		<header class="mb-auto">
+    			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    				<!-- header 추가 내용 -->
+    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
+    			</nav>
+    		</header>
+			<main class="my-review">
+			    <!-- 검색창 -->
+			    <form method="get" action="/login/reviewlist" class="review-search-form">
+			        <input type="text" name="keyword" placeholder="내용으로 검색" th:value="${keyword}" />
+			        <button type="submit">검색</button>
+			    </form>
+			
+			    <!-- 리뷰 목록 -->
+			    <section class="review-list">
+			        <h2>리뷰 목록</h2>
+			        <div th:each="review : ${reviewList}" class="review-item">
+					    <div class="review-header">
+					        <strong th:text="${review.userName}">작성자</strong>
+					        <span th:text="'평점: ' + ${review.rating} + '점'">평점</span>
+					    </div>
+					
+					    <p th:text="${review.reviewComment}">리뷰 내용</p>
+					    <p th:text="'작성일: ' + ${#dates.format(review.createdAt, 'yyyy-MM-dd')}">작성일</p>
+					
+					    <!-- 🔗 상품 상세 페이지 링크 -->
+					    <p>
+					        <a th:href="@{/products/detailL/{id}(id=${review.productId})}" class="detail-link">
+					            해당 상품 상세 보기
+					        </a>
+					    </p>
+					
+					    <!-- 이미지 출력 -->
+					    <div th:if="${imageMap[review.reviewId] != null}">
+					        <p>첨부 이미지:</p>
+					        <ul>
+					            <li th:each="img : ${imageMap[review.reviewId]}" th:text="${img.imageName}"></li>
+					        </ul>
+					    </div>
+					</div>
+			    </section>
+			
+			    <!-- 페이징 -->
+			    <nav class="review-pagination">
+			        <ul>
+			            <li th:each="i : ${#numbers.sequence(1, totalPages)}">
+			                <a th:href="@{/login/reviewlist(page=${i}, keyword=${keyword})}"
+			                   th:text="${i}"
+			                   th:classappend="${i == currentPage} ? 'active' : ''"></a>
+			            </li>
+			        </ul>
+			    </nav>
+			</main>
+ 	  		<!-- 공통 레이아웃 페이지에서 th:insert="~{파일경로 :: fragment명}"으로 명시. Fragment명을 호출하여 레이아웃을 구성할 수 있다. -->
+    		<footer class="mt-auto text-white-50">
+    			<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+    		</footer>
+    	</div>
+    	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/js/jquery-3.7.1.min.js"></script>
+		<script src="/assets/dist/js/refreshmain.js"></script>
+	</body>
+</html>

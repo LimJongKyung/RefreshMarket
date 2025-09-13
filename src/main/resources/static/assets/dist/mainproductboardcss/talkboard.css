@@ -73,3 +73,75 @@ h1 {
     text-align: right; /* 버튼을 오른쪽으로 정렬 */
     margin-bottom: 15px; /* 버튼과 테이블 사이 간격 */
 }
+
+/* 페이징 */
+.pagination {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.pagination .page-link {
+    color: #66cdaa;
+    border: 1px solid #66cdaa;
+    border-radius: 30px;
+    margin: 0 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+    background-color: #66cdaa;
+    color: white;
+}
+
+.pagination .active .page-link {
+    background-color: #66cdaa;
+    color: white;
+    border-color: #66cdaa;
+}
+
+.pagination .disabled .page-link {
+    color: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* 검색창 */
+.search-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: 1px solid #66cdaa;
+    border-radius: 30px;
+    font-size: 1rem;
+    width: 250px;
+    transition: box-shadow 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(102, 205, 170, 0.6);
+}
+
+.search-btn {
+    background-color: #66cdaa;
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 30px;
+    margin-left: 8px;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #4ebd9e;
+}

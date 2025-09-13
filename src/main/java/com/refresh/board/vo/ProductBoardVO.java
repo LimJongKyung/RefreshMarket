@@ -1,6 +1,7 @@
 package com.refresh.board.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -22,6 +23,8 @@ public class ProductBoardVO {
     private String manufacturer;   // 제조업체
     private String detailOption;   // 상세선택 (콤마로 구분)
     private String detailOptionPrice;
+    
+    private List<ProductImageVO> images;
     
 	public String getSeller() {
 		return seller;
@@ -118,5 +121,11 @@ public class ProductBoardVO {
 	}
 	public void setDetailOptionPrice(String detailOptionPrice) {
 		this.detailOptionPrice = detailOptionPrice;
+	}
+	public List<ProductImageVO> getImages() {
+		return images;
+	}
+	public void setImages(List<ProductImageVO> images) {
+		this.images = images;
 	} 
 }

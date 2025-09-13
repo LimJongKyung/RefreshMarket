@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
+	<head>
+	    <th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
+	    <meta name="theme-color" content="#712cf9">
+	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+	    <link href="/assets/dist/mainproductboardcss/PBoardDetail.css" rel="stylesheet"/>
+	</head>
+	<body class="d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	        <header class="mb-auto">
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
+	            </nav>
+	        </header>
+			<main>
+					<section class="detail-info">
+					    <h2 th:text="${product.name}">상품명</h2>
+					
+						<div class="product-images">
+						    <!-- 메인 이미지 -->
+						    <img id="mainImage"
+						         class="detail-image"
+						         th:src="@{/products/main-image/{id}(id=${product.productId})}"
+						         alt="상품 이미지" />
+						
+						    <!-- 추가 이미지 -->
+						    <div class="additional-images">
+						        <div th:if="${#lists.isEmpty(additionalImages)}">
+						            <p>추가 이미지가 없습니다.</p>
+						        </div>
+						        <div th:each="img, iterStat : ${additionalImages}">
+						            <img th:src="@{/products/detail-image/{productId}/{index}(productId=${img.productId}, index=${iterStat.index})}"
+						                 alt="추가 이미지"
+						                 class="thumb"
+						                 style="width:80px; height:80px; object-fit:cover; border:1px solid #ccc; border-radius:6px; cursor:pointer;" />
+						        </div>
+						    </div>
+						</div>
+					
+					    <p><strong>판매자:</strong> <span th:text="${product.seller}">판매자</span></p>
+					    <hr />
+					
+					    <p><strong>제조업체:</strong> <span th:text="${product.manufacturer}">제조업체</span></p>
+					    <hr />
+					
+					    <p><strong>가격:</strong> ₩<span th:text="${product.price}"></span></p>
+					    <hr />
+					
+					    <p><strong>재고:</strong> <span th:text="${product.stock}"></span></p>
+					    <hr />
+					
+						<p><strong>등록일:</strong> <span th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}"></span></p>
+					    <hr />
+					
+					    <!-- 수량 선택 -->
+					    <label for="quantity"><strong>수량 선택:</strong></label>
+					    <input type="number" id="quantity" name="quantity" min="1" value="1" />
+					    <hr />
+					
+					    <label for="detailOption"><strong>상세 옵션 선택:</strong></label>
+			
+						<!-- product.detailOption이 null이 아닐 때만 select 표시 -->
+						<th:block th:if="${optionList != null}">
+						    <select id="detailOption" name="detailOption" required>
+						        <option value="" disabled selected>옵션 선택</option>
+						        <option th:each="opt, iterStat : ${optionList}" 
+								        th:value="${opt}"
+								        th:text="|${opt} (+₩${optionPriceList[iterStat.index]})|">
+								</option>
+						    </select>
+						</th:block>
+						
+						<th:block th:if="${optionList == null}">
+						    <p><strong>상세 옵션:</strong> 없음</p>
+						    <p><strong>최종 가격:</strong> <span id="finalPrice">₩<span th:text="${product.price}"></span></span></p>
+						</th:block>
+						
+						
+						<p><strong>등록일:</strong> <span th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}"></span></p>
+					    <hr />
+					</section>
+		
+				    <!-- 버튼 그룹 -->
+				    <section class="button-section">
+						<button
+						  id="addToCartBtn"
+						  class="btn cart"
+						  th:attr="data-id=${product.productId}, data-name=${product.name}, data-price=${product.price}, data-image=@{/products/image/{id}(id=${product.productId})}">
+						  장바구니
+						</button>
+				        <button
+					      id="buyNowBtn"
+					      class="btn buy"
+					      style="margin-left:10px;"
+					      th:attr="data-id=${product.productId}, data-name=${product.name}, data-price=${product.price}, data-image=@{/products/image/{id}(id=${product.productId})}">
+					      구매
+					    </button>
+				    </section>
+				    <!-- 기존 추가 이미지 아래에 삽입 -->
+					<div class="detail-images">
+					    <h4>상세 이미지</h4>
+					    <div th:if="${#lists.isEmpty(detailImages)}">
+					        <p>상세 이미지가 없습니다.</p>
+					    </div>
+					    <div th:each="img : ${detailImages}">
+					        <img th:src="${img}" 
+					             alt="상세 이미지"
+					             class="thumb-detail"
+					             style="object-fit:cover; border:1px solid #ccc; border-radius:6px; margin-right:10px;" />
+					    </div>
+					</div>
+			    
+				    <p th:text="${product.description}">상품 설명</p>
+				        <hr />
+				
+				    <a th:href="@{/products/login(category=${category})}" class="btn back" style="margin-left:10px;">목록</a>
+	
+					<section class="review-section">
+					
+					<div class="review-form-container mt-4">
+					    <h4>📝 리뷰 작성</h4>
+					    <form th:action="@{/products/createreview}" method="post" enctype="multipart/form-data">
+					        <input type="hidden" name="productId" th:value="${product.productId}" />
+					        <input type="hidden" name="userId" th:value="${session.userId}" />
+					
+					        <div class="mb-2">
+							    <label>작성자:</label>
+							    <input type="text" name="userName" th:value="${session.userName}" readonly class="form-control-sm" />
+							</div>
+					
+					        <div class="mb-2">
+					            <label>평점:</label>
+					            <select name="rating" required class="form-select-sm">
+					                <option value="">-- 선택 --</option>
+					                <option value="5">★★★★★</option>
+					                <option value="4">★★★★</option>
+					                <option value="3">★★★</option>
+					                <option value="2">★★</option>
+					                <option value="1">★</option>
+					            </select>
+					        </div>
+					
+					        <div class="mb-2">
+					            <label>리뷰 내용:</label>
+					            <textarea name="reviewComment" rows="3" class="form-control" required></textarea>
+					        </div>
+					
+					        <div class="mb-2">
+					            <label>이미지 첨부:</label>
+					            <input type="file" name="reviewImages" multiple accept="image/*" />
+					        </div>
+					
+					        <button type="submit" class="btn btn-primary">리뷰 등록</button>
+					    </form>
+					</div>				
+					
+				    <h3>리뷰</h3>
+				
+				    <!-- 리뷰 없을 때 -->
+				    <div th:if="${#lists.isEmpty(reviews)}">
+				        <p class="no-review">리뷰가 아직 없습니다.</p>
+				    </div>
+				
+				    <!-- 리뷰 목록 -->
+				    <div th:each="review : ${reviews}">
+				        <div class="review">
+				            <div class="review-header">
+				                <strong th:text="${review.userName}">사용자</strong>
+				                <span class="stars">
+				                    <span th:each="i : ${#numbers.sequence(1, review.rating)}">★</span>
+				                </span>
+				            </div>
+				            <div class="review-date" th:text="${#dates.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">
+				                2025-07-31 12:34
+				            </div>
+				            <p class="review-comment" th:text="${review.reviewComment}">리뷰 내용입니다.</p>				
+				
+				            <!-- 리뷰 이미지 출력 -->
+				            <div class="review-img-container">
+							    <th:block th:each="img, iterStat : ${review.imageList}">
+							        <img th:src="@{/products/review-image/{reviewId}/{index}(reviewId=${review.reviewId}, index=${iterStat.index})}" 
+							             class="review-img" />
+							    </th:block>
+							</div>
+				        </div>
+				    </div>
+				
+				    <!-- 페이징 -->
+				    <div class="pagination" th:if="${totalPages > 1}">
+				        <a th:if="${currentPage > 1}"
+				           th:href="@{/products/detailL/{id}(id=${product.productId}, page=${currentPage - 1})}">이전</a>
+				
+				        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+				            <a th:href="@{/products/detailL/{id}(id=${product.productId}, page=${i})}"
+				               th:text="${i}"
+				               th:classappend="${i == currentPage} ? 'active' : ''">페이지</a>
+				        </span>
+				
+				        <a th:if="${currentPage < totalPages}"
+				           th:href="@{/products/detailL/{id}(id=${product.productId}, page=${currentPage + 1})}">다음</a>
+				    </div>
+				</section>
+		
+				<script>
+				  window.loggedInUserId = /* 로그인 시 회원 ID, 비로그인 시 null */;
+				</script>
+			</main>	
+	        <footer class="mt-auto text-white-50">
+	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
+	        </footer>
+	    </div>
+	
+		<script>
+		  window.optionPriceList = [[${optionPriceList}]];
+		</script>
+		
+	    <!-- External Scripts -->
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
+	    <script src="/assets/dist/mainproductboardjs/DetailLogin.js"></script>
+	     <!-- 스크립트 분리 후 파일 포함 -->
+	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	</body>
+</html>

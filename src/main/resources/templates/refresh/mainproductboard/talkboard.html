@@ -21,7 +21,15 @@
 	
         	<div class="container mt-5">
 			    <h1 class="text-center mb-4">게시판 목록</h1>
-			    
+			
+			    <!-- 🔍 검색창 -->
+			    <form method="get" action="/inquiry/talkboard" class="search-form">
+				    <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력"
+				           class="search-input" />
+				    <button type="submit" class="search-btn">검색</button>
+				</form>
+
+			    <!-- 📋 게시글 테이블 -->
 			    <table class="table table-bordered table-hover">
 			        <thead class="thead-dark">
 			            <tr>
@@ -34,22 +42,41 @@
 			            </tr>
 			        </thead>
 			        <tbody>
-			            <!-- 게시글 목록 출력 -->
-						<th:block th:each="post : ${posts}">
-						    <tr>
-						        <td th:text="${post.postId}" class="text-center"></td>
-						        <td>
-						            <!-- 제목을 클릭하면 게시글 상세 페이지로 이동 -->
-						            <a th:href="@{/inquiry/talkDetail(postId=${post.postId})}" th:text="${post.title}"></a>
-						        </td>
-						        <td th:text="${post.memberId}" class="text-center"></td>
-						        <td th:text="${post.createdDate}" class="text-center"></td>
-						        <td th:text="${post.viewCount}" class="text-center"></td>
-						        <td th:text="${post.boardType}" class="text-center"></td>
-						    </tr>
-						</th:block>
+			            <th:block th:each="post : ${posts}">
+			                <tr>
+			                    <td th:text="${post.postId}" class="text-center"></td>
+			                    <td>
+			                        <a th:href="@{/inquiry/talkDetail(postId=${post.postId})}" th:text="${post.title}"></a>
+			                    </td>
+			                    <td th:text="${post.memberId}" class="text-center"></td>
+			                    <td th:text="${post.createdDate}" class="text-center"></td>
+			                    <td th:text="${post.viewCount}" class="text-center"></td>
+			                    <td th:text="${post.boardType}" class="text-center"></td>
+			                </tr>
+			            </th:block>
 			        </tbody>
 			    </table>
+			
+			    <!-- 📄 페이징 -->
+			    <nav>
+			        <ul class="pagination justify-content-center">
+			            <!-- 이전 버튼 -->
+			            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+			                <a class="page-link" th:href="@{/inquiry/talkboard(page=${currentPage - 1}, keyword=${keyword})}">이전</a>
+			            </li>
+			
+			            <!-- 페이지 번호 -->
+			            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+			                th:classappend="${i == currentPage} ? 'active'">
+			                <a class="page-link" th:href="@{/inquiry/talkboard(page=${i}, keyword=${keyword})}" th:text="${i}"></a>
+			            </li>
+			
+			            <!-- 다음 버튼 -->
+			            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+			                <a class="page-link" th:href="@{/inquiry/talkboard(page=${currentPage + 1}, keyword=${keyword})}">다음</a>
+			            </li>
+			        </ul>
+			    </nav>
 			</div>
 			
 	        <footer class="mt-auto text-white-50">

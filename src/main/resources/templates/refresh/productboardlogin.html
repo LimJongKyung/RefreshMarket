@@ -25,9 +25,9 @@
 				</div>
 				
 				<div th:each="product : ${products}" class="product-card"
-				     th:onclick="|window.location.href='/products/detailL/' + ${product.productId}|">
+     			th:attr="onclick='window.location.href=\'/products/detailL/' + ${product.productId} + '?category=' + ${selectedCategory} + '\''">
 				
-				    <img th:src="@{/products/image/{id}(id=${product.productId})}" alt="제품 이미지" class="product-image"/>
+				    <img th:src="@{/products/main-image/{id}(id=${product.productId})}" alt="제품 이미지" class="product-image"/>
 				    <h3 th:text="${product.name}">제품명</h3>
 				    <p th:text="'₩' + ${product.price}">가격</p>
 				    <p th:text="'재고: ' + ${product.stock}">재고</p>

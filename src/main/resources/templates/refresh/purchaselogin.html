@@ -18,8 +18,7 @@
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
-	    </div>
-	    
+	    </div>    
 	    <main style="max-width:600px; margin: 40px auto; padding: 0 20px; font-family: 'Noto Sans KR', sans-serif;">
 		  <h2 style="text-align:center; margin-bottom:30px;" th:text="'구매자, ' + ${username} + ' 고객님!'"></h2>
 		
@@ -30,7 +29,8 @@
 		  </label>
 		
 		  <form id="guestOrderForm" action="/products/order" method="post" style="display: flex; flex-direction: column; gap: 15px;">
-		    <input type="hidden" id="customerId" name="customerId" />
+		    <input type="hidden" id="customerId" name="customerId" th:value="${userId}" />
+		    
 		    <label>
 		      이름
 		      <input type="text" id="customerName" name="customerName" required placeholder="이름을 입력하세요" style="width:100%; padding:8px; font-size:1rem;"/>
@@ -52,7 +52,10 @@
 		        주소 검색
 		      </button>
 		      <input type="text" id="roadAddress" placeholder="주소검색" readonly style="width:100%; padding:8px; margin-bottom:10px;" />
-		      <input type="text" id="detailAddress" name="shippingAddress" required placeholder="상세 주소를 입력하세요" style="width:100%; padding:8px;" />
+		      <input type="text" id="detailAddress" placeholder="상세 주소를 입력하세요" style="width:100%; padding:8px;" />
+		      
+		      <!-- 서버 전송용 hidden input -->
+		      <input type="hidden" name="shippingAddress" id="shippingAddress" />
 		    </label>
 		
 		    <label>
@@ -69,7 +72,26 @@
 		      </select>
 		    </label>
 		
+		    <!-- 쿠폰 선택 영역 -->
+		    <div class="user-benefits">
+		      <h3>🎁 쿠폰 사용</h3>
+		      <select id="benefitSelector">
+		        <option value="">-- 쿠폰을 선택하세요 --</option>
+		        <option th:each="benefit : ${benefits}"
+		                th:value="${benefit.benefitDescription}"
+		                th:text="${benefit.benefitName + ' - ' + benefit.benefitDescription}">
+		        </option>
+		      </select>
+		    </div>
+		    
+		    <!-- 선택된 쿠폰 표시 영역 -->
+		    <ul id="selectedBenefitsList" style="margin-top:10px; padding-left:20px;"></ul>
+		    
+		    <!-- 경고 문구 -->
+		    <p id="benefitWarning" style="margin-top:10px; font-weight:bold; color:red;"></p>
+		
 		    <div id="cartItems"></div>
+		    <p id="deliveryCharges"></p>
 		    <p id="totalQuantity"></p>
 		    <p id="totalPrice"></p>
 		    <p id="purchaseTotal"></p>
@@ -77,12 +99,11 @@
 		    <!-- 기존 숨겨진 장바구니 JSON 데이터 필드 -->
 		    <input type="hidden" name="cartData" id="cartData" />
 		    <input type="hidden" name="quantities" id="quantities" />
-		
+		    <input type="hidden" name="usedBenefits" id="usedBenefits" />
+		    
 		    <button type="submit">구매 확정</button>
 		  </form>
 		</main>
-	    
-	    
 	    <footer class="mt-auto text-white-50">
     		<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
     	</footer>

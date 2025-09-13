@@ -22,6 +22,13 @@
         	<div class="container mt-5">
 			    <h1 class="text-center mb-4">게시판 목록</h1>
 			    
+			    <!-- 🔍 검색창 -->
+			    <form method="get" action="/ALPBoard/loginBoard" class="search-form">
+				    <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력"
+				           class="search-input" />
+				    <button type="submit" class="search-btn">검색</button>
+				</form>
+			    
 			    <!-- 글쓰기 버튼 -->
 			    <div class="write-btn-container">
 			        <a href="/ALPBoard/BoardC" class="custom-write-btn">글쓰기</a>
@@ -55,6 +62,25 @@
 						</th:block>
 			        </tbody>
 			    </table>
+			    <nav>
+			        <ul class="pagination justify-content-center">
+			            <!-- 이전 버튼 -->
+			            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+			                <a class="page-link" th:href="@{/ALPBoard/loginBoard(page=${currentPage - 1}, keyword=${keyword})}">이전</a>
+			            </li>
+			
+			            <!-- 페이지 번호 -->
+			            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+			                th:classappend="${i == currentPage} ? 'active'">
+			                <a class="page-link" th:href="@{/ALPBoard/loginBoard(page=${i}, keyword=${keyword})}" th:text="${i}"></a>
+			            </li>
+			
+			            <!-- 다음 버튼 -->
+			            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+			                <a class="page-link" th:href="@{/ALPBoard/loginBoard(page=${currentPage + 1}, keyword=${keyword})}">다음</a>
+			            </li>
+			        </ul>
+			    </nav>
 			</div>
 			
 	        <footer class="mt-auto text-white-50">

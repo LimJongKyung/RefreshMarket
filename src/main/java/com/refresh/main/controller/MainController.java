@@ -1,6 +1,5 @@
 package com.refresh.main.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import com.refresh.menu.vo.MenuVO;
 import jakarta.servlet.http.HttpSession;
 
 import com.refresh.board.service.PBoardService;
-import com.refresh.board.vo.PReviewVO;
 import com.refresh.board.vo.ProductBoardVO;
 import com.refresh.member.service.MemberService;
 import com.refresh.menu.service.MenuService;
@@ -99,24 +97,5 @@ public class MainController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(imageType))
                 .body(imageData);
-    }
-    
-    @GetMapping("/detail/{id}")
-    public String productDetail(@PathVariable("id") int productId, Model model) {
-    	ProductBoardVO product = productService.getProductById(productId);
-        List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
-        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
-        List<PReviewVO> reviews = productService.getReviewsByProductId(productId);
-
-        if (product.getDetailOption() != null) {
-            List<String> options = Arrays.asList(product.getDetailOption().split(","));
-            model.addAttribute("optionList", options);
-        }
-        
-        model.addAttribute("product", product);
-        model.addAttribute("reviews", reviews);
-        model.addAttribute("sidebarMenus", sidebarMenus);
-        model.addAttribute("headerMenus", headerMenus);
-        return "refresh/detail";
     }
 }

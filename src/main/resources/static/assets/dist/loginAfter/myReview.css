@@ -1,0 +1,113 @@
+/* 전체 레이아웃 */
+.my-review {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* 검색창 */
+.review-search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.review-search-form input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    width: 200px;
+}
+
+.review-search-form button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #66cdaa;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.review-search-form button:hover {
+    background-color: #45a049;
+}
+
+/* 리뷰 카드 */
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 16px;
+    transition: transform 0.2s ease;
+}
+
+.review-item:hover {
+    transform: translateY(-3px);
+}
+
+/* 리뷰 헤더 */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 이미지 목록 */
+.review-item ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 8px;
+}
+
+.review-item li {
+    background-color: #f0f0f0;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+/* 페이징 */
+.review-pagination ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 30px;
+}
+
+.review-pagination li a {
+    padding: 8px 12px;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.review-pagination li a.active {
+    background-color: #66cdaa;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.detail-link {
+    display: inline-block;
+    margin-top: 6px;
+    color: #007bff;
+    text-decoration: underline;
+}
+.detail-link:hover {
+    text-decoration: none;
+}

@@ -20,34 +20,197 @@
     				<th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
     			</nav>
     		</header>
-    	
-			<main class="member-info-container">
-			    <h1 class="member-info-title">회원 정보</h1>
-			    <!-- 회원 정보 출력 -->
-			    <div class="member-info-details">
-			        <p>아이디: <span th:text="${memberInfo.id}"></span></p>
-			        <p>이름: <span th:text="${memberInfo.name}"></span></p>
-			        <p>주민 등록 번호: <span th:text="${memberInfo.registrationNumber}"></span></p>
-			        <p>주소: <span th:text="${memberInfo.address}"></span></p>
-			        <p>전화번호: <span th:text="${memberInfo.phoneNumber}"></span></p>
-			        <p>이메일: <span th:text="${memberInfo.email}"></span></p>
-			        <p>회원등급: <span th:text="${memberInfo.grade}"></span></p>
+			<main class="member-info-container container mt-4">
+			    <h1 class="member-info-title mb-3">회원 정보</h1>
+			
+			    <div class="member-info-details mb-4">
+			        <p>아이디: <span th:text="${memberInfo.id}">-</span></p>
+			        <p>이름: <span th:text="${memberInfo.name}">-</span></p>
+			        <p>주민 등록 번호: <span th:text="${memberInfo.registrationNumber}">-</span></p>
+			        <p>주소: <span th:text="${memberInfo.address}">-</span></p>
+			        <p>전화번호: <span th:text="${memberInfo.phoneNumber}">-</span></p>
+			        <p>이메일: <span th:text="${memberInfo.email}">-</span></p>
+			        <p>회원등급: <span th:text="${memberInfo.grade}">-</span></p>
 			    </div>
-			    
-			    <!-- 수정 및 탈퇴 버튼 -->
-			    <div class="edit-delete-buttons">
-			        <a th:href="@{/login/InfoEdit}" class="btn btn-primary">회원 정보 수정</a>
-			        <a th:href="@{/login/delete}" class="btn btn-danger" onclick="return confirm('정말 탈퇴하시겠습니까?');">회원 탈퇴</a>
+			
+			    <div class="edit-delete-buttons mb-4">
+			        <a th:href="@{/login/InfoEdit}" class="btn btn-primary me-2">회원 정보 수정</a>
+			        <a th:href="@{/login/delete}" class="btn btn-danger"
+			           onclick="return confirm('정말 탈퇴하시겠습니까?');">회원 탈퇴</a>
+			        <a th:href="@{/login/reviewlist}" class="btn btn-review">나의 리뷰</a>
+			    </div>
+			
+			    <h2>주문 목록</h2>
+			    <div class="order-cards-container">
+			        <th:block th:each="order : ${orders}">
+			            <div class="order-card">
+			                <div class="order-header">
+			                    <span>주문번호: <strong th:text="${order.orderId}">-</strong></span>
+			                    <span>주문일: <strong th:text="${#dates.format(order.orderDate,'yyyy-MM-dd')}">-</strong></span>
+			                    <span>총 가격: <strong th:text="${order.totalPrice}">-</strong></span>
+			                    <span>배송지: <strong th:text="${order.shippingAddress}">-</strong></span>
+			                    <span>주문 상태: <strong th:text="${order.orderStatus}">-</strong></span>
+			                    <span>송장 번호: <strong th:text="${order.trackingNumber != null ? order.trackingNumber : '-'}">-</strong></span>
+			                </div>
+			
+			                <div class="order-products">
+			                    <th:block th:each="product : ${orderDetailsMap[order.orderId]}">
+			                        <div class="product-card">
+			                            <img th:if="${product.image != null}" th:src="${product.image}" alt="상품 이미지" />
+			                            <div class="product-info">
+			                                <span>상품명: 
+											  <strong th:text="${product.name}">-</strong>
+											  <a th:if="${order.orderStatus == '배송완료'}"
+											   th:href="@{'/products/createreview/' + ${product.productId}}"
+											   class="btn-review-write">리뷰 작성</a>
+											</span>
+			                                <span>수량: <strong th:text="${product.quantity}">-</strong></span>
+			                                <span>옵션: <strong th:text="${product.detailOption}">-</strong></span>
+			                            </div>
+			                        </div>
+			                    </th:block>
+			                </div>
+			
+			                <!-- 주문 관리 버튼 그룹 -->
+							<div class="order-action-group mt-3">						   
+							    <!-- 주문 취소 폼 -->
+								<form th:action="@{/login/update}" method="post"
+								      onsubmit="return handleCancel('${order.orderStatus}')"
+								      class="cancel-form">
+								    <input type="hidden" name="orderId" th:value="${order.orderId}" />
+								
+								    <div class="cancel-ui-group">
+								        <label for="cancelReason" class="cancel-label">취소 사유</label>
+								        <select name="cancelReason" required class="cancel-select">
+								            <option value="">-- 선택 --</option>
+								            <option value="주문 실수">주문 실수</option>
+								            <option value="단순 변심">단순 변심</option>
+								        </select>
+								        <button type="submit" class="btn-cancel-order">🚫 주문 취소</button>
+								    </div>
+								</form>
+							
+							    <!-- 반품 버튼 -->
+							    <div th:if="${order.orderStatus == '배송완료'}">
+							        <button type="button" class="btn-return"
+							                th:attr="onclick=|openReturnModal('returnModal__${order.orderId}')|">
+							            🔄 반품하기
+							        </button>
+							    </div>
+							
+							    <!-- 반품 현황 버튼 -->
+							    <div th:if="${returnRequestMap[order.orderId] != null and #lists.size(returnRequestMap[order.orderId]) > 0}">
+							        <button type="button" class="btn-return-status"
+							                th:attr="onclick=|openReturnStatusModal('returnStatusModal__${order.orderId}')|">
+							            📦 반품 진행 현황
+							        </button>
+							    </div>
+							</div>
+			
+			                <!-- 반품 모달 -->
+			                <div class="return-modal" th:id="'returnModal__' + ${order.orderId}">
+			                    <div class="modal-header">
+			                        <h5 class="modal-title">반품 요청</h5>
+			                        <button class="btn-close"
+			                                th:attr="onclick=|closeReturnModal('returnModal__${order.orderId}')|">&times;</button>
+			                    </div>
+			                    <form th:action="@{/login/return}" method="post" enctype="multipart/form-data">
+			                        <div class="modal-body">
+			                            <input type="hidden" name="orderId" th:value="${order.orderId}" />
+			                            <input type="hidden" name="memberId" th:value="${memberInfo.id}" />
+			
+			                            <label>반품할 상품 선택:</label>
+			                            <div class="return-product-list">
+			                                <th:block th:each="product, idx : ${orderDetailsMap[order.orderId]}">
+			                                    <div class="return-product-item">
+			                                        <input type="checkbox" name="returnProducts"
+			                                               th:value="${product.productId}"
+			                                               th:id="'returnProduct__' + ${order.orderId} + '__' + ${idx.index}" />
+			                                        <label th:for="'returnProduct__' + ${order.orderId} + '__' + ${idx.index}">
+			                                            <span th:text="${product.name}">상품명</span> /
+			                                            <span th:text="${product.quantity}">수량</span> /
+			                                            <span th:text="${product.detailOption}">옵션</span>
+			                                        </label>
+			                                    </div>
+			                                </th:block>
+			                            </div>
+			
+			                            <label>반품 사유:</label>
+			                            <select name="reasonType" required>
+			                                <option value="">-- 선택 --</option>
+			                                <option value="단순변심">단순변심</option>
+			                                <option value="제품하자">제품하자</option>
+			                            </select>
+			
+			                            <label>반품 상세 사유:</label>
+			                            <textarea name="reasonText" rows="3"></textarea>
+			
+			                            <label>이미지 첨부:</label>
+			                            <input type="file" name="images" multiple accept="image/*" />
+			                        </div>
+			                        <div class="modal-footer">
+			                            <button type="submit" class="btn-submit">반품 요청</button>
+			                        </div>
+			                    </form>
+			                </div>
+			
+			                <!-- 반품 진행 현황 모달 -->
+			                <div class="return-modal" th:id="'returnStatusModal__' + ${order.orderId}">
+			                    <div class="modal-header">
+			                        <h5 class="modal-title">반품 진행 현황</h5>
+			                        <button class="btn-close"
+			                                th:attr="onclick=|closeReturnModal('returnStatusModal__${order.orderId}')|">&times;</button>
+			                    </div>
+			                    <div class="modal-body">
+			                        <th:block th:each="request : ${returnRequestMap[order.orderId] != null ? returnRequestMap[order.orderId] : {}}">
+			                            <div class="return-entry mb-3 border-bottom pb-2">
+			                                <p>요청일: <strong th:text="${#dates.format(request.requestDate, 'yyyy-MM-dd')}">-</strong></p>
+			                                <p>사유: <strong th:text="${request.reasonType}">-</strong></p>
+			                                <p>상세 사유: <strong th:text="${request.reasonText}">-</strong></p>
+			                                <p>상태: <strong th:text="${request.status}">-</strong></p>
+			                                <p th:if="${request.rejectReason != null}">
+			                                    상세 설명: <strong th:text="${request.rejectReason}">-</strong>
+			                                </p>
+			
+			                                <!-- 첨부 이미지 -->
+			                                <div class="return-images mt-2" th:if="${request.images != null and #lists.size(request.images) > 0}">
+											    <label>첨부 이미지:</label>
+											    <div class="image-list d-flex flex-wrap">
+											        <th:block th:each="img : ${request.images}">
+											            <img th:if="${img.imageBase64 != null}"
+											                 th:src="${'data:image/png;base64,' + img.imageBase64}" 
+											                 alt="반품 이미지"
+											                 class="return-image-thumb"/>
+											        </th:block>
+											    </div>
+											</div>
+			                            </div>
+			                        </th:block>
+			                        <p th:if="${returnRequestMap[order.orderId] == null or #lists.isEmpty(returnRequestMap[order.orderId])}">반품 요청 내역이 없습니다.</p>
+			                    </div>
+			                </div>
+			
+			            </div>
+			        </th:block>
+			    </div>
+			
+			    <!-- 주문 목록 페이징 -->
+			    <div class="pagination mt-4">
+			        <th:block th:each="i : ${#numbers.sequence(1, totalOrderPages)}">
+			            <a th:href="@{/login/information(orderPage=${i}, orderSize=${orderSize})}"
+			               th:text="${i}"
+			               class="page-link me-1"
+			               th:classappend="${i == currentOrderPage} ? 'active' : ''">1</a>
+			        </th:block>
 			    </div>
 			</main>
-    		
-    		<!-- 공통 레이아웃 페이지에서 th:insert="~{파일경로 :: fragment명}"으로 명시. Fragment명을 호출하여 레이아웃을 구성할 수 있다. -->
+ 	  		<!-- 공통 레이아웃 페이지에서 th:insert="~{파일경로 :: fragment명}"으로 명시. Fragment명을 호출하여 레이아웃을 구성할 수 있다. -->
     		<footer class="mt-auto text-white-50">
     			<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
     		</footer>
     	</div>
     	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/js/jquery-3.7.1.min.js"></script>
 		<script src="/assets/dist/js/refreshmain.js"></script>
 	</body>

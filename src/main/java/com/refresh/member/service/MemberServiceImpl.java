@@ -1,8 +1,11 @@
 package com.refresh.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.refresh.member.vo.MemberBenefit;
 import com.refresh.member.vo.MemberVO;
 import com.refresh.email.service.EmailService;
 import com.refresh.member.dao.MemberDAO;
@@ -71,5 +74,17 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberVO getUserById(String id) {
         return memberDAO.findById(id);
+    }
+    
+    @Override
+    public List<MemberBenefit> getBenefits(String memberId) {
+        return memberDAO.getBenefitsByMemberId(memberId);
+    }
+
+    @Override
+    public void deleteBenefits(String memberId, List<String> benefitDescriptions) {
+        if (benefitDescriptions == null || benefitDescriptions.isEmpty()) return;
+
+        memberDAO.deleteBenefits(memberId, benefitDescriptions);
     }
 }

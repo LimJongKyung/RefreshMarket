@@ -84,3 +84,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// JS: mainImageHover.js
+
+document.addEventListener("DOMContentLoaded", function() {
+    const mainImage = document.getElementById("mainImage");
+    const originalSrc = mainImage.src; // 원래 메인 이미지 저장
+
+    // 모든 썸네일 선택
+    const thumbs = document.querySelectorAll(".additional-images .thumb");
+
+    thumbs.forEach(function(thumb) {
+        // 마우스 올리면 메인 이미지 변경
+        thumb.addEventListener("mouseenter", function() {
+            mainImage.src = this.src;
+        });
+
+        // 마우스 치우면 원래 이미지로 복원
+        thumb.addEventListener("mouseleave", function() {
+            mainImage.src = originalSrc;
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const editButtons = document.querySelectorAll(".btn-edit");
+
+    editButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const reviewId = button.getAttribute("data-review-id");
+            const form = document.getElementById(`edit-form-${reviewId}`);
+            if (form) {
+                form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+            }
+        });
+    });
+});

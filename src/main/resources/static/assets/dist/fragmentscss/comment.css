@@ -114,3 +114,158 @@
 .comment-button:focus {
     outline: none;
 }
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+    gap: 8px;
+}
+
+.pagination li {
+    display: inline;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+/* 댓글 리스트 전체 */
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 각 댓글 아이템 */
+.comment-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px 12px;
+  background-color: #fafafa;
+  transition: background-color 0.2s ease;
+}
+
+.comment-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* 작성자 정보 */
+.comment-author strong {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-right: 8px;
+}
+
+/* 날짜 */
+.comment-item span {
+  font-size: 12px;
+  color: #888;
+}
+
+/* 댓글 내용 */
+.comment-item p {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+/* 수정 input */
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* 좋아요 */
+.comment-like {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #e67e22;
+  cursor: pointer;
+}
+
+/* 수정일 */
+.comment-update small {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 버튼들 */
+.comment-actions button {
+  padding: 6px 10px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.comment-actions button:nth-child(1) {
+  background-color: #3498db;
+  color: white;
+}
+
+.comment-actions button:nth-child(2) {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.comment-actions form button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* 페이징 */
+.pagination ul {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  list-style: none;
+}
+
+.pagination li {
+  margin: 0 4px;
+}
+
+.pagination a {
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: #ecf0f1;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.pagination a.active {
+  background-color: #3498db;
+  color: white;
+}

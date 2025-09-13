@@ -16,13 +16,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </th:block>
 </head>
-<body>
-    
+<body>   
     <th:block th:fragment="product-review">
 	    <div class="container my-5">
 	        <div class="review-container">
 	            <h1 class="review-title">아이템 리뷰</h1>
-	            <!-- 리뷰 목록 -->
 	            <div id="reviews">
 	                <div class="reviews-box" th:each="review : ${reviews}">
 	                    <img src="https://via.placeholder.com/80" alt="user-image" class="reviews-image">
@@ -30,12 +28,29 @@
 	                        <span class="reviews-user" th:text="${review.userName}">유저</span>
 	                        <p class="reviews-text" th:text="${review.reviewComment}">리뷰 내용</p>
 	                        <p class="reviews-rating">평점: <span th:text="${review.rating}">평점</span></p>
+	
+	                        <!-- 이미지 출력 -->
+	                        <div class="review-images" th:if="${imageMap[review.reviewId] != null}">
+	                            <img th:each="img : ${imageMap[review.reviewId]}"
+	                                 th:src="'data:image/jpeg;base64,' + ${#strings.encodeBase64(img.imageData)}"
+	                                 th:alt="${img.imageName}" class="review-img"/>
+	                        </div>
 	                    </div>
 	                </div>
 	            </div>
+	
+	            <!-- 페이징 -->
+	            <div class="pagination" th:if="${totalPages > 1}">
+				    <a th:if="${currentPage > 1}" th:href="@{/products/detailL/{id}(id=${product.productId}, page=${currentPage - 1})}">이전</a>
+				    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+				        <a th:href="@{/products/detailL/{id}(id=${product.productId}, page=${i})}"
+				           th:text="${i}"
+				           th:classappend="${i == currentPage} ? 'active' : ''">페이지</a>
+				    </span>
+				    <a th:if="${currentPage < totalPages}" th:href="@{/products/detailL/{id}(id=${product.productId}, page=${currentPage + 1})}">다음</a>
+				</div>
 	        </div>
 	    </div>
 	</th:block>
-    
 </body>
 </html>

@@ -20,52 +20,65 @@
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
-	
 	        <main>
 			    <div class="customer-service-container mt-5">
 			        <h1 class="mb-4 text-center text-light">고객센터</h1>
 			        
 			        <div class="consultation-faq-wrapper d-flex justify-content-between">
+			            <!-- 1:1 상담 폼 -->
 			            <section id="one-on-one-consultation" class="consultation-section mb-5 text-center">
 			                <h2 class="text-light">1:1 상담</h2>
 			                <p class="text-muted">궁금한 사항이 있으신가요? 아래 양식을 통해 1:1 상담을 신청해주세요.</p>
-			                <form id="consultationForm" class="text-center">
-			                    <div class="mb-3">
-			                        <label for="consultationType" class="form-label text-light">문의사항 유형</label>
-			                        <select class="form-input" id="consultationType" required>
-			                            <option value="" disabled selected>문의 유형 선택</option>
-			                            <option value="general">일반 문의</option>
-			                            <option value="billing">청구 관련 문의</option>
-			                            <option value="technical">기술 지원</option>
-			                            <option value="feedback">피드백</option>
-			                        </select>
-			                    </div>
-			                    <div class="mb-3">
-			                        <label for="consultantName" class="form-label text-light">이름</label>
-			                        <input type="hidden" id="username" th:value="${username}">
-			                        <h1 th:text="'안녕하세요 ' + ${username} + ' 회원님!'" class="forName"></h1>
-			                    </div>
-			                    <div class="mb-3">
-			                        <label for="consultantEmail" class="form-label text-light">이메일</label>
-			                        <input type="email" class="form-input" id="consultantEmail" required>
-			                    </div>
-			                    <div class="mb-3">
-			                        <label for="consultantMessage" class="form-label text-light">문의사항</label>
-			                        <textarea class="form-input" id="consultantMessage" rows="4" required></textarea>
-			                    </div>
-			                    <div class="mb-3">
-			                        <label for="consultantPassword" class="form-label text-light">비밀번호</label>
-			                        <input type="password" class="form-input" id="consultantPassword" required pattern="^(?=.*\d)(?=.*[a-zA-Z]).{6,20}$" title="비밀번호는 6~20자, 숫자와 영문자 조합이어야 합니다.">
-			                    </div>
-			                    <button type="submit" class="btn btn-primary">문의 신청</button>
-			                </form>
-			            </section>
-			       
+			                <form id="consultationForm" class="text-center" method="post" th:action="@{/login/consultation}">
+							    <div class="mb-3">
+							        <label for="consultationType" class="form-label text-light">문의사항 유형</label>
+							        <select class="form-input" id="consultationType" name="consultationType" required>
+							            <option value="" disabled selected>문의 유형 선택</option>
+							            <option value="general">일반 문의</option>
+							            <option value="billing">청구 관련 문의</option>
+							            <option value="technical">기술 지원</option>
+							            <option value="feedback">피드백</option>
+							        </select>
+							    </div>
+							
+							    <div class="mb-3">
+							        <label for="userId" class="form-label text-light">아이디</label>
+							        <input type="hidden" id="userId" name="userId" th:value="${userId}">
+							        <h1 th:text="${userId}" class="forName"></h1>
+							    </div>
+							
+							    <div class="mb-3">
+							        <label for="username" class="form-label text-light">이름</label>
+							        <input type="hidden" id="username" name="username" th:value="${username}">
+							        <h1 th:text="'안녕하세요 ' + ${username} + ' 회원님!'" class="forName"></h1>
+							    </div>
+							
+							    <div class="mb-3">
+							        <label for="consultantEmail" class="form-label text-light">이메일</label>
+							        <input type="email" class="form-input" id="consultantEmail" name="consultantEmail" required>
+							    </div>
+							
+							    <div class="mb-3">
+							        <label for="consultantMessage" class="form-label text-light">문의사항</label>
+							        <textarea class="form-input" id="consultantMessage" name="consultantMessage" rows="4" required></textarea>
+							    </div>
+							
+							    <div class="mb-3">
+							        <label for="consultantPassword" class="form-label text-light">비밀번호</label>
+							        <input type="password" class="form-input" id="consultantPassword" name="consultantPassword" required
+							               pattern="^(?=.*\d)(?=.*[a-zA-Z]).{6,20}$"
+							               title="비밀번호는 6~20자, 숫자와 영문자 조합이어야 합니다.">
+							    </div>
+							
+							    <button type="submit" class="btn btn-primary">문의 신청</button>
+							</form>
+			            </section>       
 			
 			            <!-- 자주 묻는 질문 섹션 -->
 			            <section id="faq" class="faq-section text-center">
 			                <h2 class="text-light">자주 묻는 질문 (FAQ)</h2>
 			                <div class="accordion" id="faqAccordion">
+			
 			                    <div class="accordion-item">
 			                        <h2 class="accordion-header" id="headingOne">
 			                            <button class="accordion-button text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -78,6 +91,7 @@
 			                            </div>
 			                        </div>
 			                    </div>
+			
 			                    <div class="accordion-item">
 			                        <h2 class="accordion-header" id="headingTwo">
 			                            <button class="accordion-button text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -90,6 +104,7 @@
 			                            </div>
 			                        </div>
 			                    </div>
+			
 			                    <div class="accordion-item">
 			                        <h2 class="accordion-header" id="headingThree">
 			                            <button class="accordion-button text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -98,16 +113,46 @@
 			                        </h2>
 			                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
 			                            <div class="accordion-body text-muted">
-			                                주문 취소는 마이페이지에서 가능합니다. 주문 내역에서 취소할 주문을 선택하고 '주문 취소' 버튼을 클릭하세요.
+			                                주문 취소는 회원 정보에서 가능합니다. 주문 내역에서 취소할 주문을 선택하고 '주문 취소' 버튼을 클릭하세요.<br>
+			                                * 비회원은 문의 사항에 남겨주시면 취소가 가능합니다.<br>
+			                                * 단순 변심에 의한 주문 취소 및 환불 배송비는 고객님께서 부담합니다.
 			                            </div>
 			                        </div>
-			                    </div>
+			                    </div>			
 			                </div>
-			            </section>
+			            </section>			            			          
 			        </div>
+			        <!-- 상담 상세 정보 -->
+					<section id="consultation-detail">
+					    <h2 class="text-light">상담 내역</h2>
+					    <div class="card-wrapper">
+					        <div th:each="request : ${requestList}" class="card">
+					            <div class="card-body">
+					                <!-- 상담 정보 출력 -->
+					                <p><strong>상담 ID:</strong> <span th:text="${request.requestId}"></span></p>
+					                <p><strong>회원 ID:</strong> <span th:text="${request.memberId}"></span></p>
+					                <p><strong>이름:</strong> <span th:text="${request.consultantName}"></span></p>
+					                <p><strong>이메일:</strong> <span th:text="${request.consultantEmail}"></span></p>
+					                <p><strong>문의 유형:</strong> <span th:text="${request.consultationType}"></span></p>
+					                <p><strong>내용:</strong> <span th:text="${request.consultantMessage}"></span></p>
+					                <p><strong>요청 날짜:</strong> <span th:text="${#dates.format(request.requestDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+					                <p><strong>답변:</strong> <span th:text="${request.answer != null ? request.answer : '답변 대기 중'}"></span></p>
+					            </div>
+					        </div>
+					    </div>
+					
+					    <!-- 페이징 버튼 -->
+					    <div class="pagination mt-4 text-center">
+					        <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+					           th:text="${i}"
+					           th:classappend="${i == currentPage} ? 'active-page'"
+					           th:href="@{/login/consumer(page=${i})}"
+					           class="btn btn-outline-secondary mx-1">
+					        </a>
+					    </div>
+					</section>
 			    </div>
-			</main>
-	
+			</main>	
 	        <footer class="mt-auto text-white-50">
 	            <th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
 	        </footer>
@@ -118,7 +163,7 @@
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	    <script src="/js/jquery-3.7.1.min.js"></script>
 	    <script src="/assets/dist/js/refreshmain.js"></script>
-	    <script src="/assets/dist/loginAfterJs/loginConsumer.js"></script> <!-- 스크립트 분리 후 파일 포함 -->
+	    <!-- <script src="/assets/dist/loginAfterJs/loginConsumer.js"></script> --> <!-- 스크립트 분리 후 파일 포함 -->
 	    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	</body>

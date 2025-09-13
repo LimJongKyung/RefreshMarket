@@ -13,6 +13,8 @@ public class QBoardVO {
     private String consultantPassword;   // 비밀번호
     private String consultantMessage;    // 메시지
     private Timestamp requestDate;       // 요청 날짜
+    private String answer;
+    private String memberId;
 
     // Getter 및 Setter 메소드
     public Long getRequestId() {
@@ -70,4 +72,21 @@ public class QBoardVO {
     public void setRequestDate(Timestamp requestDate) {
         this.requestDate = requestDate;
     }
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+    
 }

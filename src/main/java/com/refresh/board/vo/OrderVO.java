@@ -23,6 +23,7 @@ public class OrderVO {
     private Date lastUpdated;
     private String productQuantities;
     private String detailOption;
+    private String trackingNumber;
     
 	public Long getOrderId() {
 		return orderId;
@@ -143,5 +144,11 @@ public class OrderVO {
 	}
 	public void setDetailOption(String detailOption) {
 		this.detailOption = detailOption;
+	}
+	public String getTrackingNumber() {
+		return trackingNumber;
+	}
+	public void setTrackingNumber(String trackingNumber) {
+		this.trackingNumber = trackingNumber;
 	}
 }

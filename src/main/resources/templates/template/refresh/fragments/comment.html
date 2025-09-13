@@ -17,28 +17,74 @@
     </th:block>
 </head>
 <body>
-	<th:block th:fragment="talk-comment" th:each="comment : ${comments}">
-	    <ul class="comment-list">
-	        <li class="comment-item">
-	            <!-- 댓글 작성자 -->
-	            <div class="comment-author"><strong th:text="${comment.memberId}"></strong></div>
-	
-	            <!-- 댓글 작성일 -->
-	            <span class="comment-date" th:text="${#dates.format(commentDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
-	
-	            <!-- 댓글 내용 -->
-	            <p class="comment-content" th:text="${comment.content}"></p>
-	
-	            <!-- 댓글 좋아요 수 -->
-	            <span class="comment-like">좋아요: <span th:text="${comment.likeCount}"></span></span>
-	
-	            <!-- 댓글 수정일 -->
-	            <!-- <div th:if="${comment.updatedDate != null}" class="comment-update">
-	                <small>수정일: <span th:text="${#dates.format(comment.updatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span></small>
-	            </div>  -->
-	        </li>
-	    </ul>
+	<th:block th:fragment="talk-commentCreate">
+	    <h2 class="comment-title">댓글 작성</h2>
+		
+		<label for="name" class="comment-ID">작성자ID:</label>
+		<a th:text="${userId}"></a>
+	    
+	    <form class="comment-form" action="/ALPBoard/insert" method="post">
+	        <!-- postId를 Thymeleaf로 동적으로 삽입 -->
+	        <input type="hidden" name="postId" th:value="${postId}">
+	    	
+	        <label for="content" class="comment-label">댓글 내용:</label>
+	        <textarea id="content" name="content" class="comment-textarea" required></textarea>
+	    
+	        <button type="submit" class="comment-button">작성</button>
+	    </form>
 	</th:block>
-    <script src="assets/dist/fragmentsjs.js"></script>
+
+	<th:block th:fragment="talk-comment">
+	    <ul class="comment-list">
+	        <li class="comment-item" th:each="comment : ${comments}">
+			    <div class="comment-author">
+			        <strong th:text="${comment.memberId}"></strong>
+			    </div>
+			
+			    <span th:if="${comment.createdDate != null}"
+			          th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd')}"></span>
+			
+			    <!-- 원래 댓글 내용 -->
+			    <p th:id="'content-' + ${comment.commentId}" th:text="${comment.content}"></p>
+			
+			    <!-- 수정 input (초기에는 숨김) -->
+			    <input type="text" th:id="'editInput-' + ${comment.commentId}"
+			           th:value="${comment.content}" style="display:none;" />
+			
+			    <span class="comment-like" onclick="increaseLike([[${comment.commentId}]])">
+			        좋아요: <span id="likeCount" th:text="${comment.likeCount}"></span>
+			    </span>
+			
+			    <div th:if="${comment.updatedDate != null}" class="comment-update">
+			        <small>수정일: <span th:text="${comment.updatedDate}"></span></small>
+			    </div>						    
+			</li>
+	    </ul>
+	
+	    <!-- 페이징 -->
+	    <div class="pagination">
+		    <ul>
+		        <!-- 댓글이 없을 때 -->
+		        <li th:if="${totalPages == 0}">
+		        	<p>댓글이 없습니다!</p>
+		        </li>
+		
+		        <!-- 댓글이 있을 때 -->
+		        <li th:if="${totalPages > 0 and currentPage > 1}">
+		            <a th:href="@{/ALPBoard/LBDetail(postId=${postId}, page=${currentPage - 1})}">이전</a>
+		        </li>
+		
+		        <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:if="${totalPages > 0}">
+		            <a th:href="@{/ALPBoard/LBDetail(postId=${postId}, page=${i})}"
+		               th:text="${i}"
+		               th:classappend="${i == currentPage} ? 'active' : ''"></a>
+		        </li>
+		
+		        <li th:if="${totalPages > 0 and currentPage < totalPages}">
+		            <a th:href="@{/ALPBoard/LBDetail(postId=${postId}, page=${currentPage + 1})}">다음</a>
+		        </li>
+		    </ul>
+		</div>	
+	</th:block>
 </body>
 </html>

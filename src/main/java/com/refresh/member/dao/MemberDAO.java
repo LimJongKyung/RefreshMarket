@@ -1,6 +1,10 @@
 package com.refresh.member.dao;
 
+import com.refresh.member.vo.MemberBenefit;
 import com.refresh.member.vo.MemberVO;
+
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +18,9 @@ public interface MemberDAO {
     String findPasswdByEmailAndName(@Param("name") String name, @Param("email") String email);
     
     MemberVO findById(String id);
+    
+    // 혜택적용
+    List<MemberBenefit> getBenefitsByMemberId(String memberId);
+    void deleteBenefits(@Param("memberId") String memberId,
+            @Param("benefitDescriptions") List<String> benefitDescriptions);
 }

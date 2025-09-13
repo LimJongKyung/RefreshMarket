@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const totalItemPrice = (basePrice + optionPrice) * item.quantity;
 
       const itemContent = `
-        <img src="${item.image}" alt="${item.name}" style="width:100px; height:100px; object-fit:cover; border-radius:8px; margin-right:15px;">
+        <img src="/midnav/main-image/${item.productId}" alt="${item.name}" style="width:100px; height:100px; object-fit:cover; border-radius:8px; margin-right:15px;">
         <div style="flex-grow:1;">
-          <p><strong>상품명:</strong> <a href="/products/detail/${item.productId}" style="color:#0d6efd; text-decoration:none;">${item.name}</a></p>
+          <p><strong>상품명:</strong> <a href="/products/detailL/${item.productId}" style="color:#0d6efd; text-decoration:none;">${item.name}</a></p>
           <p><strong>옵션:</strong> ${item.option || '없음'} ${optionPrice ? `( +₩${optionPrice.toLocaleString()} )` : ''}</p>
           <p><strong>단가:</strong> ₩${(basePrice + optionPrice).toLocaleString()}</p>
           <p>

@@ -2,6 +2,7 @@ package com.refresh.board.controller;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.refresh.board.service.QBoardService;
 import com.refresh.board.vo.BoardVO;
@@ -18,6 +20,8 @@ import com.refresh.board.vo.CommentVO;
 import com.refresh.board.vo.QBoardVO;
 import com.refresh.menu.service.MenuService;
 import com.refresh.menu.vo.MenuVO;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/inquiry")
@@ -42,54 +46,99 @@ public class QBoardController {
         return "refresh/forconsumer/forconsumer";
     }
 	
+	@PostMapping("/success")
+	public ResponseEntity<String> createConsultationRequest(@RequestBody QBoardVO request, HttpSession session) {
+	    try {
+	        // 세션에서 사용자 ID 확인
+	        String memberId = (session.getAttribute("id") != null) 
+	            ? session.getAttribute("id").toString() 
+	            : "비회원";
 
-    @PostMapping("/success")
-    public ResponseEntity<String> createConsultationRequest(@RequestBody QBoardVO request) {
-        try {
-            qBoardService.createConsultationRequest(request);
-            return ResponseEntity.ok("상담 요청이 성공적으로 처리되었습니다. 상담 내용은 이메일을 통해 확인하실 수 있습니다!");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("상담 요청 처리 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
-    // 일반 게시판
-    @GetMapping("/talkboard")
-    public String getPosts(Model model) {
-    	List<BoardVO> posts = qBoardService.getPosts();
-    	List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
-        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
-        
-    	if (posts == null || posts.isEmpty()) {
-            System.out.println("No posts found.");
-        }
+	        // QBoardVO에 memberId 설정
+	        request.setMemberId(memberId);
 
-        model.addAttribute("sidebarMenus", sidebarMenus);
-        model.addAttribute("headerMenus", headerMenus);
-        model.addAttribute("posts", posts);
-        return "refresh/mainproductboard/talkboard";
-    }
+	        // 서비스 호출
+	        qBoardService.createConsultationRequest(request);
 
+	        return ResponseEntity.ok("상담 요청이 성공적으로 처리되었습니다. 상담 내용은 이메일을 통해 확인하실 수 있습니다!");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(500).body("상담 요청 처리 중 오류가 발생했습니다: " + e.getMessage());
+	    }
+	}
+    
+	@GetMapping("/talkboard")
+	public String getPosts(@RequestParam(required = false) String keyword,
+	                       @RequestParam(defaultValue = "1") int page,
+	                       @RequestParam(defaultValue = "10") int size,
+	                       Model model) {
+
+	    // 페이징 계산
+	    int offset = (page - 1) * size;
+
+	    // 검색 + 페이징 처리된 게시글 목록 가져오기
+	    List<BoardVO> posts = qBoardService.getPosts(keyword, offset, size);
+	    int totalCount = qBoardService.getTotalPostCount(keyword);
+	    int totalPages = (int) Math.ceil((double) totalCount / size);
+
+	    // 메뉴
+	    List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+	    List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+
+	    // 모델에 데이터 추가
+	    model.addAttribute("posts", posts);
+	    model.addAttribute("sidebarMenus", sidebarMenus);
+	    model.addAttribute("headerMenus", headerMenus);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", totalPages);
+
+	    return "refresh/mainproductboard/talkboard";
+	}
     
     @GetMapping("/talkDetail")
-    public String getPostDetail(int postId, Model model) {
-    	BoardVO post = qBoardService.getPostById(postId);  // 게시물 상세 조회
-	    List<CommentVO> comments = qBoardService.listCommentsByPostId(postId); // 댓글 목록 조회
-	    List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
-        List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
-
-        model.addAttribute("sidebarMenus", sidebarMenus);
-        model.addAttribute("headerMenus", headerMenus);
-	    model.addAttribute("post", post);  // 게시물 상세 정보를 모델에 추가
-	    model.addAttribute("comments", comments);  // 댓글 목록을 모델에 추가
-
-	    // 이미지가 존재하는 경우 base64로 변환
-	    if (post.getImage() != null) {
-	        String base64Image = Base64.getEncoder().encodeToString(post.getImage());
-	        model.addAttribute("imageBase64", base64Image);  // base64로 변환된 이미지를 모델에 추가
-	    } else {
-		   System.out.println("이미지 있음");
-	   }
-        return "refresh/mainproductboard/talkDetail";  // 게시물 상세 페이지로 리턴
-    }
+    public String getPostDetail(@RequestParam Long postId,
+            @RequestParam(defaultValue = "1") int page,
+            HttpSession session,
+            Model model) {
+		int pageSize = 5; // 한 페이지당 댓글 수
+		
+		// 페이징 계산
+		int startRow = (page - 1) * pageSize;
+		int endRow = page * pageSize;
+		
+		// 게시글 정보
+		BoardVO post = qBoardService.getPostById(postId);
+		
+		// 로그인 사용자 정보
+		String userId = (String) session.getAttribute("userId");
+		
+		// 댓글 페이징 처리
+		Map<String, Object> pagedResult = qBoardService.getPagedComments(postId, startRow, endRow);
+		@SuppressWarnings("unchecked")
+		List<CommentVO> comments = (List<CommentVO>) pagedResult.get("comments");
+		int totalPages = (int) pagedResult.get("totalPages");
+		
+		// 메뉴 정보
+		List<MenuVO> sidebarMenus = menuService.getMenusByPosition("sidebar");
+		List<MenuVO> headerMenus = menuService.getMenusByPosition("header");
+		
+		// 모델에 데이터 추가
+		model.addAttribute("sidebarMenus", sidebarMenus);
+		model.addAttribute("headerMenus", headerMenus);
+		model.addAttribute("post", post);
+		model.addAttribute("comments", comments);
+		model.addAttribute("postId", postId);
+		model.addAttribute("userId", userId);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		
+		// 이미지 처리
+		if (post.getImage() != null) {
+		String base64Image = Base64.getEncoder().encodeToString(post.getImage());
+		model.addAttribute("imageBase64", base64Image);
+		}
+	
+	return "refresh/mainproductboard/talkDetail";
+	}
  
 }

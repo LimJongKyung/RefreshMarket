@@ -93,3 +93,41 @@ function toggleLike(button) {
     
     likeCountSpan.textContent = likeCount; // 좋아요 수 업데이트
 }
+
+function handleCancel(orderStatus) {
+    const blockedStatuses = ['입금확인', '배송중', '배송완료'];
+
+    if (blockedStatuses.includes(orderStatus)) {
+        alert('주문 작업이 시작되어 취소가 불가능합니다!');
+        return false;
+    }
+
+    if (orderStatus === '주문취소') {
+        alert('이미 주문 취소 처리가 되었습니다.');
+        return false;
+    }
+
+    return confirm('정말 주문을 취소하시겠습니까?');
+}
+
+function openReturnModal(modalId) {
+    const wrapper = document.getElementById(modalId);
+    if (wrapper) {
+        wrapper.classList.add('show');
+    }
+}
+
+function closeReturnModal(modalId) {
+    const wrapper = document.getElementById(modalId);
+    if (wrapper) {
+        wrapper.classList.remove('show');
+    }
+}
+
+function openReturnStatusModal(id) {
+    document.getElementById(id).classList.add('show');
+}
+function closeReturnModal(id) {
+    document.getElementById(id).classList.remove('show');
+}
+

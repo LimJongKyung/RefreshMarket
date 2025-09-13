@@ -7,13 +7,49 @@
         SELECT * FROM products ORDER BY created_at DESC
     </select>
 	
-	<!-- 리뷰 목록 조회 -->
-    <select id="getReviewsByProductId" resultType="review">
-        SELECT * FROM review
-        WHERE product_id = #{productId}
-        ORDER BY created_at DESC
-    </select>
+	<!-- 리뷰 목록 조회 아이템별 검색 -->
+    <select id="getPagedReviewsByProductId" resultType="review">
+	    SELECT * FROM review
+	    WHERE product_id = #{productId}
+	    ORDER BY created_at DESC
+	    OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+	</select>
 	
+	<!-- 해당 상품의 리뷰 총 개수 -->
+	<select id="getReviewCountByProductId" resultType="int">
+	    SELECT COUNT(*) FROM review
+	    WHERE product_id = #{productId}
+	</select>
+	
+	<!-- 리뷰 목록 조회 아이디별 검색(페이징 + 검색) -->
+	  <select id="getReviewsPaged" resultType="com.refresh.board.vo.PReviewVO" parameterType="map">
+		  SELECT * FROM (
+	    SELECT REVIEW_ID, PRODUCT_ID, USER_ID, USER_NAME, RATING, REVIEW_COMMENT,
+	           CREATED_AT, UPDATED_AT,
+	           ROW_NUMBER() OVER (ORDER BY CREATED_AT DESC) AS rnum
+	    FROM review
+	    WHERE USER_ID = #{userId}
+	    <if test="keyword != null and keyword != ''">
+	      AND REVIEW_COMMENT LIKE '%' || #{keyword} || '%'
+	    </if>
+	  )
+	  WHERE rnum BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+	  <!-- 리뷰 이미지 조회 (리뷰 ID 기준) -->
+	  <select id="getImagesByReviewId" resultType="reviewImage" parameterType="long">
+	    SELECT IMAGE_ID, REVIEW_ID, IMAGE_NAME, IMAGE_DATA, UPLOAD_DATE
+	    FROM review_image
+	    WHERE REVIEW_ID = #{reviewId}
+	    ORDER BY UPLOAD_DATE ASC
+	  </select>
+	
+	  <!-- 총 리뷰 수 조회 -->
+	  <select id="getTotalReviewCountByUser" resultType="int" parameterType="map">
+	  SELECT COUNT(*) FROM review
+	  WHERE USER_ID = #{userId}
+	    AND REVIEW_COMMENT LIKE '%' || #{keyword} || '%'
+	</select>
     
     <select id="getProductById" resultType="pboard">
 	    SELECT * FROM products WHERE product_id = #{productId}
@@ -84,4 +120,167 @@
 	        SYSDATE
 	    )
 	</insert>
+	
+	<!-- 고객 아이디로 주문정보 + 상품 이미지 조회 -->
+    <select id="getOrderInfoByCustomerId" parameterType="string" resultType="order">
+        SELECT 
+            oi.ORDER_ID,
+            oi.CUSTOMER_ID,
+            oi.CUSTOMER_NAME,
+            oi.QUANTITY,
+            oi.TOTAL_PRICE,
+            oi.SHIPPING_ADDRESS,
+            oi.PAYMENT_METHOD,
+            oi.BANK_STATUS,
+            oi.ORDER_STATUS,
+            oi.ORDER_DATE,
+            oi.PHONE_NUMBER,
+            oi.EMAIL,
+            oi.DELIVERY_REQUEST,
+            oi.DELIVERY_COMPLETE_DATE,
+            oi.IS_CANCELED,
+            oi.LAST_UPDATED,
+            oi.PRODUCT_ID,
+            oi.PRODUCT_QUANTITIES,
+            oi.DETAIL_OPTION,
+            oi.TRACKING_NUMBER
+        FROM order_info oi
+        WHERE oi.CUSTOMER_ID = #{customerId}
+    </select>
+    
+    <select id="getProductImageById" parameterType="string" resultType="com.refresh.board.vo.ProductBoardVO">
+        SELECT product_id AS productId,
+               name,
+               image,
+               image_type AS imageType
+        FROM products
+        WHERE product_id = #{productId}
+    </select>
+    
+    <!-- 상품 조회 (이미지 포함) -->
+    <select id="getImagesByProductId" resultType="com.refresh.board.vo.ProductImageVO">
+	    SELECT
+	        PRODUCT_ID,
+	        IMAGE,
+	        IMAGE_TYPE,
+	        ID
+	    FROM
+	        product_images
+	    WHERE PRODUCT_ID = #{productId}
+	    ORDER BY ID ASC
+	</select>
+	
+	<!-- 특정 상품의 추가 이미지 조회 -->
+    <select id="getDetailImagesByProductId" resultType="com.refresh.board.vo.ProductDetailImageVO">
+        SELECT ID, PRODUCT_ID, IMAGE, IMAGE_TYPE
+        FROM PRODUCT_DETAIL_IMAGES
+        WHERE PRODUCT_ID = #{productId}
+        ORDER BY ID ASC
+    </select>
+    
+    <select id="findById" resultType="order">
+        SELECT * FROM order_info WHERE order_id = #{orderId}
+    </select>
+
+    <update id="updateOrderStatus">
+	    UPDATE order_info
+	    SET is_canceled = #{isCanceled},
+	        last_updated = CURRENT_DATE
+	    WHERE order_id = #{orderId}
+	</update>
+	
+	<!-- RETURN_ID 시퀀스 -->
+	<select id="getNextReturnId" resultType="long">
+	  SELECT RETURN_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- 반품 요청서 저장 -->
+	<insert id="insertReturnRequest">
+		INSERT INTO return_request (
+		  RETURN_ID, ORDER_ID, MEMBER_ID, REASON_TYPE, REASON_TEXT,
+		  REQUEST_DATE, PRODUCT_ID, STATUS, REJECT_REASON
+		) VALUES (
+		  #{returnId}, #{orderId}, #{memberId}, #{reasonType}, #{reasonText},
+		  SYSDATE, #{productId}, #{status}, #{rejectReason, jdbcType=VARCHAR}
+		)
+	  </insert>
+
+	  <!-- 반품 이미지 저장 -->
+	  <insert id="insertReturnImage">
+	    INSERT INTO return_image (
+	      IMAGE_ID, RETURN_ID, IMAGE_DATA, IMAGE_NAME, UPLOAD_DATE
+	    ) VALUES (
+	      RETURN_IMAGE_SEQ.NEXTVAL, #{returnId}, #{imageData, jdbcType=BLOB}, #{imageName}, SYSDATE
+	    )
+	  </insert>
+	  
+	<select id="selectReturnRequestsByOrderId" resultType="com.refresh.board.vo.ReturnRequest" parameterType="long">
+	    SELECT return_id, order_id, member_id, reason_type, reason_text, request_date,
+	           product_id, status, reject_reason
+	    FROM return_request
+	    WHERE order_id = #{orderId}
+	    ORDER BY request_date DESC
+	</select>
+	
+	<select id="selectReturnImages" resultType="com.refresh.board.vo.ReturnImage" parameterType="long">
+	    SELECT image_id, return_id, image_data, image_name, upload_date
+	    FROM return_image
+	    WHERE return_id = #{returnId}
+	</select>
+	
+	<insert id="insertReview" parameterType="com.refresh.board.vo.PReviewVO">
+	    <!-- 리뷰 insert 후 시퀀스 값을 VO에 세팅 -->
+	    <selectKey keyProperty="reviewId" resultType="int" order="AFTER">
+	        SELECT REVIEW_SEQ.CURRVAL FROM dual
+	    </selectKey>
+	    
+	    INSERT INTO review (
+	        review_id, product_id, review_comment, created_at, user_id, user_name, rating
+	    ) VALUES (
+	        REVIEW_SEQ.NEXTVAL, #{productId}, #{reviewComment}, #{createdAt,jdbcType=TIMESTAMP}, #{userId}, #{userName}, #{rating}
+	    )
+	</insert>
+
+    <!-- 이미지 INSERT -->
+	<insert id="insertReviewImage" parameterType="com.refresh.board.vo.ReviewImageVO">
+	    INSERT INTO review_image (
+	        image_id, review_id, image_name, image_data, upload_date
+	    ) VALUES (
+	        REVIEW_IMAGE_SEQ.NEXTVAL, #{reviewId}, #{imageName}, #{imageData}, #{uploadDate}
+	    )
+	</insert>
+	
+	<!-- 리뷰 단건 조회 -->
+    <select id="getReviewById" resultType="review">
+        SELECT review_id, user_id, review_comment, rating, created_at
+        FROM review
+        WHERE review_id = #{reviewId}
+    </select>
+
+    <!-- 리뷰 삭제 -->
+    <delete id="deleteReview">
+        DELETE FROM review WHERE review_id = #{reviewId}
+    </delete>
+
+    <!-- 리뷰 이미지 삭제 -->
+    <delete id="deleteReviewImages">
+        DELETE FROM review_image WHERE review_id = #{reviewId}
+    </delete>
+
+    <!-- 리뷰에 연결된 상품 ID 조회 -->
+    <select id="getProductIdByReviewId" resultType="long">
+        SELECT product_id FROM review WHERE review_id = #{reviewId}
+    </select>
+    
+    <update id="updateReviewComment">
+        UPDATE REVIEW
+        SET REVIEW_COMMENT = #{reviewComment}
+        WHERE REVIEW_ID = #{reviewId}
+    </update>
+    
+    <update id="updateReviewTimestamp">
+        UPDATE REVIEW
+        SET UPDATED_AT = SYSDATE
+        WHERE REVIEW_ID = #{reviewId}
+    </update>
 </mapper>
