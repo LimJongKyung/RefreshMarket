@@ -12,6 +12,7 @@ public class MemberVO {
     private String phoneNumber;
     private String email;
     private String grade;
+    private Integer point;
 	
     public MemberVO(String id, String passwd) {
         this.id = id;
@@ -69,5 +70,13 @@ public class MemberVO {
 	}
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+
+	public Integer getPoint() {
+		return point;
+	}
+
+	public void setPoint(Integer point) {
+		this.point = point;
 	}  
 }

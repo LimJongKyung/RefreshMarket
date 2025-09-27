@@ -494,6 +494,12 @@ public class ProductBoardController {
             username = memberService.getUserByName(userId);
             benefits = memberService.getBenefits(userId); // 혜택 조회
         }
+        if (userId != null) {
+            username = memberService.getUserByName(userId);
+            benefits = memberService.getBenefits(userId);
+            MemberVO memberInfo = memberService.getUserById(userId); // 포인트 포함된 객체
+            model.addAttribute("memberInfo", memberInfo);
+        }
 
         model.addAttribute("userId", userId);
         model.addAttribute("username", username);
@@ -538,7 +544,8 @@ public class ProductBoardController {
             @RequestParam String deliveryRequest,
             @RequestParam String paymentMethod,
             @RequestParam String cartData,
-            @RequestParam(required = false) String usedBenefits) {
+            @RequestParam(required = false) String usedBenefits,
+            @RequestParam(required = false, defaultValue = "0") int usedPoint) {
 
         // 비회원 주문 시 customerId를 null로 설정
         if (customerId == null || customerId.trim().isEmpty()) {
@@ -557,6 +564,17 @@ public class ProductBoardController {
             return "<script>alert('장바구니가 비어있습니다.'); window.location='/midnav/cart';</script>";
         }
 
+        if (usedPoint > 0 && customerId != null) {
+            MemberVO member = memberService.getUserById(customerId); // 기존 메서드 활용
+            int currentPoint = member.getPoint(); // 포인트 조회
+
+            if (usedPoint <= currentPoint) {
+                memberService.usePoint(customerId, usedPoint); // 포인트 차감
+            } else {
+                System.err.println("포인트 차감 실패: 보유 포인트 초과");
+            }
+        }
+        
         String productId = cart.stream()
                 .map(item -> String.valueOf(item.getProductId()))
                 .collect(Collectors.joining(","));

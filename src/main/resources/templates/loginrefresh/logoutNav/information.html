@@ -31,6 +31,7 @@
 			        <p>전화번호: <span th:text="${memberInfo.phoneNumber}">-</span></p>
 			        <p>이메일: <span th:text="${memberInfo.email}">-</span></p>
 			        <p>회원등급: <span th:text="${memberInfo.grade}">-</span></p>
+			        <p>보유 포인트: <span th:text="${memberInfo.point != null ? memberInfo.point + '원' : '0원'}">0원</span></p>
 			    </div>
 			
 			    <div class="edit-delete-buttons mb-4">

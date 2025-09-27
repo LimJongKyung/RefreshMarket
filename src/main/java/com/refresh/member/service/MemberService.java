@@ -19,4 +19,6 @@ public interface MemberService {
     // 멤버 혜택
     List<MemberBenefit> getBenefits(String memberId);
     void deleteBenefits(String memberId, List<String> benefitDescriptions);
+    
+    void usePoint(String customerId, int usedPoint);
 }

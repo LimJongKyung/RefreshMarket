@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const benefitSelector = document.getElementById('benefitSelector');
   const warningEl = document.getElementById('benefitWarning');
   const selectedBenefitsList = document.getElementById('selectedBenefitsList');
-  const usedBenefitsInput = document.getElementById('usedBenefits'); 
+  const usedBenefitsInput = document.getElementById('usedBenefits');
+  const usedPointInput = document.getElementById('usedPoint');
+  const memberPoint = parseInt(document.getElementById('memberPointValue')?.textContent) || 0;
 
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   let deliveryFee = 4000;
@@ -15,6 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let totalDiscount = 0;
 
   if (!cartItemsDiv) return;
+
+  usedPointInput.addEventListener('input', () => {
+    renderCart();
+  });
 
   function applyBenefit() {
     deliveryFee = 4000;
@@ -56,6 +62,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function applyPointDiscount(totalPriceBeforeDiscount) {
+    let usedPoint = parseInt(usedPointInput.value) || 0;
+
+    if (usedPoint > memberPoint) {
+      usedPoint = memberPoint;
+      usedPointInput.value = memberPoint;
+    }
+
+    if (usedPoint > totalPriceBeforeDiscount) {
+      usedPoint = totalPriceBeforeDiscount;
+      usedPointInput.value = totalPriceBeforeDiscount;
+    }
+
+    return usedPoint;
+  }
+
   function updateCouponOptions() {
     const options = benefitSelector?.options;
     if (!options || cart.length === 0) return;
@@ -95,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderCart() {
     cartItemsDiv.innerHTML = '';
     let totalQuantity = 0;
-    let totalPrice = 0;
+    let totalPriceBeforeDiscount = 0;
 
     applyBenefit();
     updateCouponOptions();
@@ -111,15 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>`;
       totalQuantity += item.quantity;
-      totalPrice += item.price * item.quantity;
+      totalPriceBeforeDiscount += item.price * item.quantity;
     });
 
-    totalPrice = totalPrice - totalDiscount + deliveryFee;
+    const usedPoint = applyPointDiscount(totalPriceBeforeDiscount);
+    const finalPrice = totalPriceBeforeDiscount - totalDiscount - usedPoint + deliveryFee;
 
     deliveryChargesEI.textContent = `택배비: ${deliveryFee.toLocaleString()}원`;
     totalQuantityEl.textContent = `총 수량: ${totalQuantity}개`;
-    totalPriceEl.textContent = `총 가격: ₩${totalPrice.toLocaleString()}`;
-    purchaseTotalEl.textContent = `구매할 총 금액: ₩${totalPrice.toLocaleString()}`;
+    totalPriceEl.textContent = `총 가격: ₩${totalPriceBeforeDiscount.toLocaleString()}`;
+    purchaseTotalEl.textContent = `구매할 총 금액: ₩${finalPrice.toLocaleString()}`;
   }
 
   renderCart();
@@ -134,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ✅ 구매 확정 시 쿠폰 + 합친 주소 전송
   document.getElementById('guestOrderForm').addEventListener('submit', function(e) {
     if (cart.length === 0) {
       alert('장바구니가 비어있습니다.');
@@ -142,11 +164,33 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
+    // 할인 및 택배비 계산
+    applyBenefit();
+    const totalPriceBeforeDiscount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const usedPoint = applyPointDiscount(totalPriceBeforeDiscount);
+    const finalPrice = totalPriceBeforeDiscount - totalDiscount - usedPoint + deliveryFee;
+
+    // 서버에서 sumTotalPrice = item.price * item.quantity 로 계산하므로
+    // 각 item.price를 finalPrice 기준으로 재조정
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const adjustedUnitPrice = Math.floor(finalPrice / totalQuantity);
+
+    cart = cart.map(item => ({
+      ...item,
+      price: adjustedUnitPrice
+    }));
+
+    // 서버로 넘길 데이터
     document.getElementById('cartData').value = JSON.stringify(cart);
     document.getElementById('quantities').value = cart.map(item => item.quantity).join(',');
     usedBenefitsInput.value = JSON.stringify(selectedBenefits);
 
-    // 🚀 도로명 + 상세주소 합치기
+    const usedPointHidden = document.createElement('input');
+    usedPointHidden.type = 'hidden';
+    usedPointHidden.name = 'usedPoint';
+    usedPointHidden.value = usedPoint;
+    this.appendChild(usedPointHidden);
+
     const road = document.getElementById('roadAddress').value || '';
     const detail = document.getElementById('detailAddress').value || '';
     document.getElementById('shippingAddress').value = road + ' ' + detail;

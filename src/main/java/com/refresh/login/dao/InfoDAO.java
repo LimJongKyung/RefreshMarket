@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.refresh.member.vo.MemberVO;
 
-
 @Mapper
 public interface InfoDAO {
 	MemberVO getAllInfo(String id);

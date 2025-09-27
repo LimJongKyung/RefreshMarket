@@ -52,7 +52,8 @@
            email,
            PHONENUMBER AS phoneNumber,
            address,
-           grade
+           grade,
+           point
     	FROM member
     	WHERE id = #{id}
 	</select>
@@ -81,4 +82,9 @@
 	    </foreach>
 	</delete>
 
+	<update id="subtractPoint">
+	  UPDATE member
+	  SET point = point - #{usedPoint}
+	  WHERE id = #{id}
+	</update>
 </mapper>

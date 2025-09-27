@@ -23,4 +23,6 @@ public interface MemberDAO {
     List<MemberBenefit> getBenefitsByMemberId(String memberId);
     void deleteBenefits(@Param("memberId") String memberId,
             @Param("benefitDescriptions") List<String> benefitDescriptions);
+    
+    void subtractPoint(@Param("id") String id, @Param("usedPoint") int usedPoint);
 }

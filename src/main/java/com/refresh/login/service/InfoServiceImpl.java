@@ -16,7 +16,6 @@ public class InfoServiceImpl implements InfoService {
 
     @Override
     public MemberVO getAllInfo(String id) {
-    	
     	MemberVO member = infoDAO.getAllInfo(id);
         return member;
     }

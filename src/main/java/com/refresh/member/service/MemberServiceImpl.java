@@ -87,4 +87,9 @@ public class MemberServiceImpl implements MemberService {
 
         memberDAO.deleteBenefits(memberId, benefitDescriptions);
     }
+    
+    @Override
+    public void usePoint(String customerId, int usedPoint) {
+        memberDAO.subtractPoint(customerId, usedPoint);
+    }
 }

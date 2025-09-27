@@ -72,6 +72,15 @@
 		      </select>
 		    </label>
 		
+			<!-- 보유 포인트 표시 -->
+			<p>보유 포인트: <span id="memberPointValue" th:text="${memberInfo.point ?: 0}">0</span>원</p>
+			
+			<!-- 사용할 포인트 입력 -->
+			<label>
+			  사용할 포인트
+			  <input type="number" id="usedPoint" name="usedPoint" min="0" placeholder="사용할 포인트를 입력하세요" style="width:100%; padding:8px; font-size:1rem;" />
+			</label>
+			
 		    <!-- 쿠폰 선택 영역 -->
 		    <div class="user-benefits">
 		      <h3>🎁 쿠폰 사용</h3>
