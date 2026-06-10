@@ -7,7 +7,7 @@ Do not commit real values or Oracle Wallet files.
 
 ```bash
 export DB_URL='jdbc:oracle:thin:@portfoliodb_low?TNS_ADMIN=/opt/refreshmarket/wallet'
-export DB_USERNAME='PORTFOLIO_APP'
+export DB_USERNAME='REFRESHMARKET'
 export DB_PASSWORD='your-database-password'
 export MAIL_USERNAME='your-gmail-address'
 export MAIL_PASSWORD='your-new-gmail-app-password'
@@ -40,7 +40,7 @@ the MyBatis mapper files before the application can serve database-backed pages.
 
 ## Initialize the database
 
-Sign in to Database Actions as `PORTFOLIO_APP`, open SQL, and run these files in
+Sign in to Database Actions as `REFRESHMARKET`, open SQL, and run these files in
 order:
 
 1. `database/schema.sql`
