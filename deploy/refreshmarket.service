@@ -1,0 +1,17 @@
+[Unit]
+Description=RefreshMarket Spring Boot application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=opc
+WorkingDirectory=/opt/refreshmarket/app
+EnvironmentFile=/opt/refreshmarket/refreshmarket.env
+ExecStart=/usr/bin/java -jar /opt/refreshmarket/app/target/devProject-0.0.1-SNAPSHOT.jar
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

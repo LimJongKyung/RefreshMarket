@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Local secrets and Oracle Wallet ###
+.env
+.env.*
+!.env.example
+refreshmarket.env
+wallet/
+Wallet_*.zip
+*.p12
+*.sso
+*.jks
+tnsnames.ora
+sqlnet.ora
+ojdbc.properties
