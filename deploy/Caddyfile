@@ -1,0 +1,4 @@
+refreshmarket.168-107-2-100.sslip.io {
+    encode gzip
+    reverse_proxy 127.0.0.1:8080
+}

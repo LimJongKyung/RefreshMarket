@@ -48,6 +48,18 @@ Also add an OCI ingress rule for TCP port 80 to the VM subnet security list or
 network security group. The application should then be available at the VM's
 public IP address.
 
+## HTTPS with sslip.io
+
+The included Caddy configuration publishes the application at:
+
+```text
+https://refreshmarket.168-107-2-100.sslip.io
+```
+
+TCP ports 80 and 443 must be allowed by both the OCI security list and the
+Oracle Linux firewall. Caddy obtains and renews the TLS certificate
+automatically.
+
 ## Logs
 
 ```bash
