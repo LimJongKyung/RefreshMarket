@@ -90,8 +90,8 @@ public class MainController {
             return ResponseEntity.notFound().build();
         }
 
-        if (imageType == null || imageType.isEmpty()) {
-            imageType = "image/jpeg"; // 기본값 지정 (필요하면 변경)
+        if (imageType == null || !imageType.startsWith("image/")) {
+            imageType = "image/jpeg";
         }
 
         return ResponseEntity.ok()
