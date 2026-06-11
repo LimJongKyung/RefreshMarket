@@ -43,7 +43,7 @@
 				  <h1 class="sale-h1">Today Refresh Sale</h1>
 				  <div class="products-wrapper">
 				    <div th:each="product : ${saleProducts}" class="product-card">
-				      <a th:href="@{/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
+					      <a th:href="@{/products/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
 				        <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
 				        <h4 th:text="${product.name}"></h4>
 				        <p th:text="'$' + ${product.price}"></p>
@@ -59,7 +59,7 @@
 				  <h1 class="sale-heading">공동구매</h1>
 				  <div class="products-container">
 				    <div th:each="product : ${groupProducts}" class="sale-product-card">
-				      <a th:href="@{/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
+					      <a th:href="@{/products/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
 				        <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
 				        <h4 th:text="${product.name}"></h4>
 				        <p th:text="'$' + ${product.price}"></p>
@@ -79,7 +79,7 @@
 				<h1 class="small-business-sale-heading">중소기업 제품</h1>
 				<div class="small-business-products-wrapper">
 				  <div th:each="product : ${promotionProducts}" class="small-business-product-card">
-				    <a th:href="@{/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
+					    <a th:href="@{/products/detail/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
 				      <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
 				      <h4>
 				        <span th:text="${product.name}"></span>
