@@ -47,7 +47,11 @@ body.market-home img {
 }
 
 .page-width {
+    width: calc(100% - 48px);
+    max-width: 1180px;
     width: min(1180px, calc(100% - 48px));
+    margin-left: auto;
+    margin-right: auto;
     margin-inline: auto;
 }
 
@@ -66,6 +70,8 @@ body.market-home img {
 }
 
 .market-header .container-fluid {
+    width: calc(100% - 48px);
+    max-width: 1180px;
     width: min(1180px, calc(100% - 48px));
     margin: 0 auto;
     padding: 10px 0;
@@ -130,6 +136,7 @@ body.market-home img {
     justify-self: start;
     margin: 0 !important;
     font-family: "Dancing Script", cursive;
+    font-size: 42px;
     font-size: clamp(33px, 4vw, 46px);
     font-weight: 600;
     line-height: 1;
@@ -275,6 +282,7 @@ body.market-home img {
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     align-items: center;
+    gap: 64px;
     gap: clamp(38px, 7vw, 92px);
     padding-top: 72px;
     padding-bottom: 92px;
@@ -292,6 +300,7 @@ body.market-home img {
 .hero-copy h1 {
     margin: 0;
     font-family: "Do Hyeon", sans-serif;
+    font-size: 72px;
     font-size: clamp(54px, 6.8vw, 86px);
     font-weight: 400;
     line-height: 0.98;
@@ -897,7 +906,8 @@ body.market-home img {
 @media (max-width: 760px) {
     .page-width,
     .market-header .container-fluid {
-        width: min(100% - 32px, 620px);
+        width: calc(100% - 32px);
+        max-width: 620px;
     }
 
     .market-header .container-fluid:first-child {
@@ -962,6 +972,7 @@ body.market-home img {
     }
 
     .hero-copy h1 {
+        font-size: 60px;
         font-size: clamp(52px, 15vw, 72px);
     }
 
@@ -1018,6 +1029,7 @@ body.market-home img {
     }
 
     .product-card {
+        flex: 0 0 280px;
         flex: 0 0 min(72vw, 280px);
         scroll-snap-align: start;
     }
@@ -1113,6 +1125,22 @@ body.market-home img {
 
     .local-products {
         grid-template-columns: 1fr;
+    }
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+    .slider {
+        height: 620px;
+    }
+
+    .product-image-wrap {
+        height: 285px;
+    }
+
+    @media (max-width: 760px) {
+        .slider {
+            height: 610px;
+        }
     }
 }
 
