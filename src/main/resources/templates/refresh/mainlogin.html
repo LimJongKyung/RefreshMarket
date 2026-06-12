@@ -4,7 +4,7 @@
 		<th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
 		<meta name="theme-color" content="#5fc9a6">
 		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&amp;family=Do+Hyeon&amp;family=Gowun+Dodum&amp;family=Dancing+Script:wght@600&amp;display=swap" rel="stylesheet">
-		<link href="/assets/dist/css/refreshmain.css?v=20260612-4" rel="stylesheet">
+		<link href="/assets/dist/css/refreshmain.css?v=20260612-5" rel="stylesheet">
 	</head>
 	<body class="market-home">
 		<div class="site-shell">
@@ -123,8 +123,19 @@
 					<div class="local-products" th:if="${!#lists.isEmpty(promotionProducts)}">
 						<article th:each="product : ${promotionProducts}" class="local-product-card">
 							<a th:href="@{/products/detailL/{id}(id=${product.productId})}">
-								<img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
-								<div><span>REFRESH LOCAL PICK</span><h3 th:text="${product.name}">상품명</h3><p th:text="'₩' + ${product.price}">₩0</p></div>
+								<div class="local-product-image">
+									<img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
+									<span class="local-product-badge">LOCAL BRAND</span>
+								</div>
+								<div class="local-product-info">
+									<span class="local-product-label">REFRESH LOCAL PICK</span>
+									<h3 th:text="${product.name}">상품명</h3>
+									<p class="local-product-description" th:text="${product.description}">정직한 재료로 만든 로컬 브랜드 상품입니다.</p>
+									<div class="local-product-bottom">
+										<strong th:text="'₩' + ${product.price}">₩0</strong>
+										<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+									</div>
+								</div>
 							</a>
 						</article>
 					</div>
