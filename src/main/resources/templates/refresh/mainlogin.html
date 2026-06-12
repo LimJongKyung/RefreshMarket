@@ -1,114 +1,140 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" class="h-100" data-bs-theme="light">
 	<head>
 		<th:block th:insert="~{template/refresh/fragments/block :: config}"></th:block>
-		<meta name="theme-color" content="#712cf9">
-		<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
-    	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-    	<link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
+		<meta name="theme-color" content="#5fc9a6">
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&amp;family=Do+Hyeon&amp;family=Gowun+Dodum&amp;family=Dancing+Script:wght@600&amp;display=swap" rel="stylesheet">
+		<link href="/assets/dist/css/refreshmain.css" rel="stylesheet">
 	</head>
-	<body class="d-flex h-100 text-center text-bg-dark">
-    	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    		<!-- <header class="mb-auto">
-    		<div>
-    			<h3 class="float-md-start mb-0">Cover</h3>
-    			<nav class="nav nav-masthead justify-content-center float-md-end">
-    				<a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="#">Home</a>
-    				<a class="nav-link fw-bold py-1 px-0" href="$">Features</a>
-    				<a class="nav-link fw-bold py-1 px-0" href="$">Contact</a>
-    			</nav>
-    		</div>
-    		</header> -->
-    		<header class="mb-auto">
-    			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    				<!-- header 추가 내용 -->
-    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
-    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
-    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
-    				<th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
-    			</nav>
-    		</header>
-    	
-			<main class="px-3">
-			
-			    <div class="slider">
-				    <div class="slides">
-				        <div class="slide active">
-				            <img src="./assets/brand/야채.png" alt="아이템 1">
-				        </div>
-				        <div class="slide">
-				            <img src="./assets/brand/시장에서 파는 얼음위의 싱싱한 해산물.png" alt="아이템 2">
-				        </div>
-				        <div class="slide">
-				            <img src="./assets/brand/정육점에서 파는 싱싱한 고기.png" alt="아이템 3">
-				        </div>
-				    </div>
-				    <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-				    <button class="next" onclick="changeSlide(1)">&#10095;</button>
-				</div>
-				
-				
-				<div class="specialsale">
-				  <h1 class="sale-h1">Today Refresh Sale</h1>
-				  <div class="products-wrapper">
-				    <div th:each="product : ${saleProducts}" class="product-card">
-					      <a th:href="@{/products/detailL/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
-				        <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
-				        <h4 th:text="${product.name}"></h4>
-				        <p th:text="'$' + ${product.price}"></p>
-				      </a>
-				      <p class="timer" th:id="'timer-' + ${product.productId}"></p>
-				      <button class="buy-btn">Buy Now</button>
-				    </div>
-				  </div>
-				</div>
+	<body class="market-home">
+		<div class="site-shell">
+			<header class="market-header">
+				<nav class="navbar navbar-expand-md">
+					<th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
+					<th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
+					<th:block th:insert="~{template/refresh/fragments/blocklogin :: mainNavbar}"></th:block>
+					<th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
+				</nav>
+			</header>
 
-				
-				<div class="special-sale-section">
-				  <h1 class="sale-heading">공동구매</h1>
-				  <div class="products-container">
-				    <div th:each="product : ${groupProducts}" class="sale-product-card">
-					      <a th:href="@{/products/detailL/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
-				        <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
-				        <h4 th:text="${product.name}"></h4>
-				        <p th:text="'$' + ${product.price}"></p>
-				      </a>
-				      <p class="timer" th:id="'timer-group-' + ${product.productId}"></p>
-				      <button class="sale-buy-btn">Buy Now</button>
-				
-				      <!-- 하트 버튼 -->
-				      <button class="sale-like-btn" onclick="toggleLike(this)">
-				        <i class="far fa-heart"></i>
-				      </button>
-				      <span class="like-count">0</span>
-				    </div>
-				  </div>
-				</div>
-			
-				<h1 class="small-business-sale-heading">중소기업 제품</h1>
-				<div class="small-business-products-wrapper">
-				  <div th:each="product : ${promotionProducts}" class="small-business-product-card">
-					    <a th:href="@{/products/detailL/{id}(id=${product.productId})}" style="text-decoration:none; color:inherit;">
-				      <img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
-				      <h4>
-				        <span th:text="${product.name}"></span>
-				        <img src="/assets/brand/로고.png" alt="Logo" class="small-business-product-logo">
-				      </h4>
-				      <p th:text="'$' + ${product.price}"></p>
-				    </a>
-				  </div>
-				</div>
+			<main>
+				<section class="hero-section page-width" aria-label="리프레시 마켓 소개">
+					<div class="hero-copy">
+						<p class="eyebrow">FRESH FOOD, BETTER TABLE</p>
+						<h1>오늘의 식탁을<br><span>더 신선하게.</span></h1>
+						<p class="hero-description">
+							매일 먹는 식재료일수록 더 꼼꼼하게 골라야 하니까.
+							산지의 신선함과 좋은 브랜드의 정성을 한곳에서 만나보세요.
+						</p>
+						<div class="hero-actions">
+							<a href="/products/login" class="primary-action">신선한 상품 둘러보기 <i class="fa-solid fa-arrow-right"></i></a>
+							<a href="#today-sale" class="text-action">오늘의 할인 보기</a>
+						</div>
+						<ul class="hero-benefits" aria-label="서비스 장점">
+							<li><i class="fa-solid fa-leaf"></i><span><strong>Fresh</strong>엄선한 신선식품</span></li>
+							<li><i class="fa-solid fa-truck-fast"></i><span><strong>Fast</strong>빠르고 안전한 배송</span></li>
+							<li><i class="fa-solid fa-store"></i><span><strong>Local</strong>좋은 로컬 브랜드</span></li>
+						</ul>
+					</div>
+
+					<div class="hero-visual">
+						<div class="slider">
+							<div class="slides">
+								<article class="slide active">
+									<img src="/assets/brand/야채.png" alt="싱싱한 채소가 담긴 장바구니">
+									<div class="slide-caption"><span>오늘의 채소</span><strong>밭에서 식탁까지, 싱싱하게</strong></div>
+								</article>
+								<article class="slide">
+									<img src="/assets/brand/시장에서 파는 얼음위의 싱싱한 해산물.png" alt="얼음 위에 진열된 신선한 해산물">
+									<div class="slide-caption"><span>오늘의 해산물</span><strong>바다의 신선함을 그대로</strong></div>
+								</article>
+								<article class="slide">
+									<img src="/assets/brand/정육점에서 파는 싱싱한 고기.png" alt="정육점의 신선한 고기">
+									<div class="slide-caption"><span>오늘의 정육</span><strong>좋은 고기를 고르는 기준</strong></div>
+								</article>
+							</div>
+							<button class="prev" type="button" onclick="changeSlide(-1)" aria-label="이전 이미지"><i class="fa-solid fa-arrow-left"></i></button>
+							<button class="next" type="button" onclick="changeSlide(1)" aria-label="다음 이미지"><i class="fa-solid fa-arrow-right"></i></button>
+							<div class="slide-progress" aria-hidden="true"></div>
+						</div>
+						<div class="fresh-note">
+							<img src="/assets/brand/로고.png" alt="">
+							<span>Refresh Pick</span>
+							<strong>매일 새롭게 고르는<br>신선한 식재료</strong>
+						</div>
+					</div>
+				</section>
+
+				<section class="category-section page-width" aria-labelledby="category-title">
+					<div class="section-heading compact-heading">
+						<div><p class="eyebrow">SHOP BY CATEGORY</p><h2 id="category-title">무엇을 찾고 계세요?</h2></div>
+					</div>
+					<div class="category-grid">
+						<a href="/products/login?category=채소" class="category-card"><span class="category-image"><img src="/assets/brand/당근.png" alt=""></span><span><strong>채소</strong><small>매일 싱싱하게</small></span></a>
+						<a href="/products/login?category=과일" class="category-card"><span class="category-image"><img src="/assets/brand/사과.png" alt=""></span><span><strong>과일</strong><small>달콤한 제철의 맛</small></span></a>
+						<a href="/products/login?category=정육" class="category-card"><span class="category-image"><img src="/assets/brand/스테이크.png" alt=""></span><span><strong>정육</strong><small>든든한 한 끼</small></span></a>
+						<a href="/products/login?category=수산" class="category-card"><span class="category-image"><img src="/assets/brand/초밥.png" alt=""></span><span><strong>수산</strong><small>바다에서 온 신선함</small></span></a>
+						<a href="/products/login?category=가공식품" class="category-card"><span class="category-image"><img src="/assets/brand/참치캔.png" alt=""></span><span><strong>간편식</strong><small>쉽고 맛있는 식탁</small></span></a>
+					</div>
+				</section>
+
+				<section id="today-sale" class="product-section page-width">
+					<div class="section-heading">
+						<div><p class="eyebrow">TODAY'S REFRESH SALE</p><h2>오늘 더 가볍게 만나요</h2><p>신선한 인기 상품을 특별한 가격으로 준비했어요.</p></div>
+						<a href="/products/login" class="section-link">전체 상품 <i class="fa-solid fa-arrow-right"></i></a>
+					</div>
+					<div class="product-grid" th:if="${!#lists.isEmpty(saleProducts)}">
+						<article th:each="product : ${saleProducts}" class="product-card">
+							<a th:href="@{/products/detailL/{id}(id=${product.productId})}" class="product-link">
+								<div class="product-image-wrap"><img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}"><span class="product-badge">SALE</span></div>
+								<div class="product-info"><span class="product-type">Refresh Deal</span><h3 th:text="${product.name}">상품명</h3><p class="product-price" th:text="'₩' + ${product.price}">₩0</p><p class="timer" th:id="'timer-' + ${product.productId}">오늘의 특별가</p></div>
+							</a>
+						</article>
+					</div>
+					<div class="empty-products" th:if="${#lists.isEmpty(saleProducts)}"><i class="fa-regular fa-clock"></i><p>새로운 오늘의 할인을 준비하고 있어요.</p></div>
+				</section>
+
+				<section class="group-section">
+					<div class="page-width">
+						<div class="section-heading">
+							<div><p class="eyebrow">BUY TOGETHER, SAVE MORE</p><h2>함께 사서 더 좋은 공동구매</h2><p>이웃과 함께 좋은 상품을 더 합리적으로 만나보세요.</p></div>
+							<a href="/products/login" class="section-link">공동구매 더보기 <i class="fa-solid fa-arrow-right"></i></a>
+						</div>
+						<div class="product-grid group-grid" th:if="${!#lists.isEmpty(groupProducts)}">
+							<article th:each="product : ${groupProducts}" class="product-card group-card">
+								<a th:href="@{/products/detailL/{id}(id=${product.productId})}" class="product-link">
+									<div class="product-image-wrap"><img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}"><span class="product-badge group-badge">GROUP</span></div>
+									<div class="product-info"><span class="product-type">같이 살수록 즐거운 가격</span><h3 th:text="${product.name}">상품명</h3><p class="product-price" th:text="'₩' + ${product.price}">₩0</p><p class="timer" th:id="'timer-group-' + ${product.productId}">공동구매 진행 중</p></div>
+								</a>
+								<button class="sale-like-btn" type="button" onclick="toggleLike(this)" aria-label="관심 상품 등록"><i class="far fa-heart"></i><span class="like-count">0</span></button>
+							</article>
+						</div>
+						<div class="empty-products" th:if="${#lists.isEmpty(groupProducts)}"><i class="fa-solid fa-people-group"></i><p>새로운 공동구매를 준비하고 있어요.</p></div>
+					</div>
+				</section>
+
+				<section class="local-section page-width">
+					<div class="local-intro">
+						<p class="eyebrow">SMALL BRAND, BIG HEART</p>
+						<h2>작지만 단단한<br>브랜드의 발견</h2>
+						<p>정직한 재료와 진심으로 만드는 중소기업의 좋은 제품을 리프레시 마켓이 소개합니다.</p>
+						<a href="/products/login" class="primary-action">브랜드 상품 만나기 <i class="fa-solid fa-arrow-right"></i></a>
+					</div>
+					<div class="local-products" th:if="${!#lists.isEmpty(promotionProducts)}">
+						<article th:each="product : ${promotionProducts}" class="local-product-card">
+							<a th:href="@{/products/detailL/{id}(id=${product.productId})}">
+								<img th:src="@{/image/{id}(id=${product.productId})}" th:alt="${product.name}">
+								<div><span>REFRESH LOCAL PICK</span><h3 th:text="${product.name}">상품명</h3><p th:text="'₩' + ${product.price}">₩0</p></div>
+							</a>
+						</article>
+					</div>
+					<div class="local-products empty-products" th:if="${#lists.isEmpty(promotionProducts)}"><i class="fa-solid fa-store"></i><p>소개할 로컬 브랜드를 고르고 있어요.</p></div>
+				</section>
 			</main>
-    		
-    		<!-- 공통 레이아웃 페이지에서 th:insert="~{파일경로 :: fragment명}"으로 명시. Fragment명을 호출하여 레이아웃을 구성할 수 있다. -->
-    		<footer class="mt-auto text-white-50">
-    			<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
-    		</footer>
-    	</div>
-    	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+			<footer><th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block></footer>
+		</div>
 		<script src="/js/jquery-3.7.1.min.js"></script>
-		<script src="./assets/dist/js/refreshmain.js"></script>
+		<script src="/assets/dist/js/refreshmain.js"></script>
 	</body>
 </html>
