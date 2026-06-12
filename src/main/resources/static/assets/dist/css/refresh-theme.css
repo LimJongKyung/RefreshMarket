@@ -82,6 +82,17 @@ body.market-inner-page {
     letter-spacing: -0.025em;
 }
 
+.market-inner-page .market-header .welcome-container .welcome-message {
+    margin: 0 !important;
+    color: #173d32 !important;
+    font-family: "Gowun Dodum", "Malgun Gothic", sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    letter-spacing: -0.02em !important;
+    white-space: nowrap;
+}
+
 .market-inner-page h2 {
     font-family: "Do Hyeon", "Malgun Gothic", sans-serif;
     font-size: clamp(28px, 3.5vw, 38px);
@@ -281,52 +292,134 @@ body.market-inner-page {
 }
 
 .market-inner-page .product-card-container .product-card {
+    position: relative;
     align-items: stretch !important;
     width: 100% !important;
     min-width: 0;
+    min-height: 100%;
     margin: 0 !important;
-    padding: 0 0 18px !important;
+    padding: 0 !important;
     overflow: hidden;
     border: 1px solid #e5e9e4 !important;
-    border-radius: 20px !important;
+    border-radius: 22px !important;
     background: #ffffff !important;
     color: #17231f !important;
     text-align: left !important;
-    box-shadow: none !important;
+    box-shadow: 0 10px 30px rgba(23, 61, 50, 0.06) !important;
+    cursor: pointer;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
 }
 
 .market-inner-page .product-card-container .product-card:hover {
     border-color: #5fc9a6 !important;
-    box-shadow: 0 16px 36px rgba(23, 61, 50, 0.10) !important;
-    transform: translateY(-4px);
+    box-shadow: 0 20px 44px rgba(23, 61, 50, 0.14) !important;
+    transform: translateY(-6px);
+}
+
+.market-inner-page .product-card-container .product-card-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #edf5f1;
 }
 
 .market-inner-page .product-card-container .product-image {
+    display: block;
     width: 100% !important;
     max-width: none !important;
-    height: 260px !important;
-    margin: 0 0 16px !important;
+    height: 100% !important;
+    margin: 0 !important;
     border-radius: 0 !important;
     object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.market-inner-page .product-card-container .product-card:hover .product-image {
+    transform: scale(1.045);
+}
+
+.market-inner-page .product-card-container .product-card-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(23, 61, 50, 0.88);
+    color: #ffffff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    line-height: 1;
+    backdrop-filter: blur(8px);
+}
+
+.market-inner-page .product-card-container .product-card-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 20px 20px 18px;
 }
 
 .market-inner-page .product-card-container .product-card h3,
 .market-inner-page .product-card-container .product-card p {
-    margin-right: 18px !important;
-    margin-left: 18px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 .market-inner-page .product-card-container .product-card h3 {
     overflow: hidden;
-    margin-top: 2px !important;
+    margin: 0 0 9px !important;
     color: #17231f !important;
-    font-size: 19px !important;
+    font-family: "Gowun Dodum", "Malgun Gothic", sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 1.35;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .market-inner-page .product-card-container .product-card p {
     color: #6f7c77 !important;
+}
+
+.market-inner-page .product-card-container .product-card-description {
+    display: -webkit-box;
+    min-height: 44px;
+    margin: 0 0 20px !important;
+    overflow: hidden;
+    font-size: 14px !important;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.market-inner-page .product-card-container .product-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #edf0ed;
+}
+
+.market-inner-page .product-card-container .product-card-price {
+    color: #173d32;
+    font-family: "DM Sans", "Malgun Gothic", sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.market-inner-page .product-card-container .product-card-stock {
+    flex: 0 0 auto;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: #e8f7f1;
+    color: #287c62;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .market-inner-page .pagination,
@@ -678,8 +771,12 @@ body.market-inner-page {
         gap: 13px !important;
     }
 
-    .market-inner-page .product-card-container .product-image {
-        height: 190px !important;
+    .market-inner-page .product-card-container .product-card-content {
+        padding: 16px 15px 15px;
+    }
+
+    .market-inner-page .product-card-container .product-card-price {
+        font-size: 17px;
     }
 
     .market-inner-page .table {
@@ -717,8 +814,8 @@ body.market-inner-page {
         grid-template-columns: 1fr !important;
     }
 
-    .market-inner-page .product-card-container .product-image {
-        height: 250px !important;
+    .market-inner-page .product-card-container .product-card-image {
+        aspect-ratio: 16 / 11;
     }
 
     .market-inner-page .login-container,

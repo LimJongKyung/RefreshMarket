@@ -274,8 +274,14 @@ body.market-home img {
 }
 
 .market-header .welcome-container h1 {
+    margin: 0 !important;
     color: var(--forest);
     font-family: "Gowun Dodum", sans-serif;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    letter-spacing: -0.02em !important;
+    white-space: nowrap;
 }
 
 .hero-section {
