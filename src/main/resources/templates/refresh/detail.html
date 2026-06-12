@@ -8,11 +8,11 @@
 	    <link href="/assets/dist/css/refreshmain.css?v=20260612-4" rel="stylesheet">
 	    <link href="/assets/dist/mainproductboardcss/PBoardDetail.css" rel="stylesheet"/>
 	    <link rel="stylesheet" href="/assets/dist/fragmentscss/reviewcss.css"/>
-		<link href="/assets/dist/css/refresh-theme.css?v=20260612-2" rel="stylesheet">
+		<link href="/assets/dist/css/refresh-theme.css?v=20260612-3" rel="stylesheet">
 </head>
-	<body class="market-home market-inner-page d-flex h-100 text-center text-bg-dark">
+	<body class="market-home market-inner-page product-detail-page d-flex h-100 text-center text-bg-dark">
 	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-	        <header class="market-header mb-auto">
+	        <header class="market-header">
 	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	                <th:block th:insert="~{template/refresh/fragments/block :: header}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/block :: brandName}"></th:block>
@@ -20,8 +20,7 @@
 	                <th:block th:insert="~{template/refresh/fragments/block :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
-	    </div>
-		<main>
+		<main class="product-detail-main">
 			<section class="detail-info">
 				  <h2 th:text="${product.name}">상품명</h2>
 				
@@ -181,6 +180,7 @@
 	    <footer class="mt-auto text-white-50">
     		<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
     	</footer>
+	    </div>
 	    
 	    <script>
 		  window.optionPriceList = [[${optionPriceList}]];
