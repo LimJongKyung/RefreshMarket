@@ -3,14 +3,46 @@ document.addEventListener("DOMContentLoaded", function() {
     const sidebar = document.getElementById("sidebar");
     const closeBtn = document.getElementById("close-btn");
 
-    // 햄버거 버튼 클릭 시 사이드바 열기
-    hamburger.addEventListener("click", function() {
-        sidebar.classList.toggle("open");
+    if (!hamburger || !sidebar) {
+        return;
+    }
+
+    const closeSidebar = function() {
+        sidebar.classList.remove("open");
+        hamburger.setAttribute("aria-expanded", "false");
+    };
+
+    hamburger.setAttribute("role", "button");
+    hamburger.setAttribute("tabindex", "0");
+    hamburger.setAttribute("aria-controls", "sidebar");
+    hamburger.setAttribute("aria-expanded", "false");
+
+    hamburger.addEventListener("click", function(event) {
+        event.stopPropagation();
+        const isOpen = sidebar.classList.toggle("open");
+        hamburger.setAttribute("aria-expanded", String(isOpen));
     });
 
-    // 닫기 버튼 클릭 시 사이드바 닫기
-    closeBtn.addEventListener("click", function() {
-        sidebar.classList.remove("open");
+    hamburger.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            hamburger.click();
+        }
+    });
+
+    sidebar.addEventListener("click", function(event) {
+        event.stopPropagation();
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeSidebar);
+    }
+
+    document.addEventListener("click", closeSidebar);
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeSidebar();
+        }
     });
 });
 
@@ -19,6 +51,9 @@ let timeLeft = 3600; // 10분 = 600초
 // 타이머 업데이트 함수
 function updateTimer() {
     const timerElement = document.getElementById("logout-timer");
+    if (!timerElement) {
+        return;
+    }
 
     const minutes = Math.floor(timeLeft / 60); // 남은 분 계산
     const seconds = timeLeft % 60; // 남은 초 계산
@@ -37,7 +72,10 @@ function updateTimer() {
 }
 
 // 1초마다 updateTimer 호출
-const countdown = setInterval(updateTimer, 1000);
+const countdown = document.getElementById("logout-timer")
+    ? setInterval(updateTimer, 1000)
+    : null;
 
-// 페이지가 로드되면 타이머 업데이트 시작
-updateTimer();
+if (countdown) {
+    updateTimer();
+}

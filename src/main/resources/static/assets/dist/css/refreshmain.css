@@ -391,7 +391,7 @@ body.market-home img {
 
 .hero-visual {
     position: relative;
-    padding: 0 32px 42px 0;
+    padding: 0;
 }
 
 .slider {
@@ -498,20 +498,21 @@ body.market-home img {
 }
 
 .fresh-note {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 210px;
-    padding: 18px;
-    border: 8px solid var(--cream);
-    border-radius: 22px;
+    position: static;
+    display: flex;
+    width: 100%;
+    margin-top: 14px;
+    padding: 16px 18px;
+    align-items: center;
+    border: 0;
+    border-radius: 16px;
     background: var(--mint);
     color: var(--forest);
-    box-shadow: 0 12px 30px rgba(23, 61, 50, 0.12);
+    box-shadow: none;
 }
 
 .fresh-note img {
-    float: left;
+    flex: 0 0 46px;
     width: 42px;
     height: 42px;
     margin-right: 10px;
@@ -520,8 +521,8 @@ body.market-home img {
 }
 
 .fresh-note span {
-    display: block;
-    padding-top: 2px;
+    flex: 0 0 auto;
+    padding: 0 16px 0 0;
     font-family: "DM Sans", sans-serif;
     font-size: 10px;
     font-weight: 700;
@@ -530,10 +531,10 @@ body.market-home img {
 }
 
 .fresh-note strong {
-    display: block;
-    margin-top: 4px;
+    margin: 0 0 0 auto;
     font-size: 14px;
     line-height: 1.45;
+    text-align: right;
 }
 
 .category-section {
@@ -990,7 +991,7 @@ body.market-home img {
     }
 
     .hero-visual {
-        padding-right: 18px;
+        padding: 0;
     }
 
     .slider {
@@ -998,7 +999,7 @@ body.market-home img {
     }
 
     .fresh-note {
-        width: 190px;
+        width: 100%;
     }
 
     .category-section,
@@ -1078,7 +1079,7 @@ body.market-home img {
     }
 
     .hero-visual {
-        padding: 0 10px 38px 0;
+        padding: 0;
     }
 
     .slide-caption {
@@ -1113,14 +1114,25 @@ body.market-home img {
     }
 
     .fresh-note {
-        width: 174px;
+        width: 100%;
         padding: 14px;
-        border-width: 6px;
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 
     .fresh-note img {
         width: 36px;
         height: 36px;
+    }
+
+    .fresh-note span {
+        padding-top: 10px;
+    }
+
+    .fresh-note strong {
+        flex: 0 0 100%;
+        margin-top: 10px;
+        text-align: left;
     }
 
     .local-products {

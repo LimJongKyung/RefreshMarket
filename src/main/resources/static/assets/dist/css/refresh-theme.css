@@ -1,0 +1,729 @@
+@charset "UTF-8";
+
+/* Shared visual system for every customer-facing page except the home hero. */
+body.market-inner-page {
+    display: block !important;
+    min-height: 100vh;
+    margin: 0;
+    background: #fbfaf5 !important;
+    color: #17231f !important;
+    font-family: "Gowun Dodum", "Malgun Gothic", sans-serif !important;
+    text-align: left !important;
+}
+
+.market-inner-page .cover-container {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.market-inner-page .market-header {
+    margin: 0 !important;
+    background: rgba(251, 250, 245, 0.98);
+}
+
+.market-inner-page .market-header .navbar {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    background: transparent !important;
+}
+
+.market-inner-page main,
+.market-inner-page .container.mt-5,
+.market-inner-page .detail-container,
+.market-inner-page .tracking-container,
+.market-inner-page .customer-service-container,
+.market-inner-page .inquiry-form-container,
+.market-inner-page .member-info-container,
+.market-inner-page .my-review,
+.market-inner-page .search-id,
+.market-inner-page .password-find {
+    width: calc(100% - 48px) !important;
+    max-width: 1180px;
+    margin: 64px auto 100px !important;
+    color: #17231f;
+}
+
+.market-inner-page main:not(.product-card-container):not(.signup-body),
+.market-inner-page .detail-container,
+.market-inner-page .tracking-container,
+.market-inner-page .customer-service-container,
+.market-inner-page .inquiry-form-container,
+.market-inner-page .member-info-container,
+.market-inner-page .my-review {
+    padding: clamp(24px, 4vw, 48px) !important;
+    border: 1px solid #e5e9e4 !important;
+    border-radius: 24px !important;
+    background: #ffffff !important;
+    box-shadow: 0 18px 50px rgba(23, 61, 50, 0.08) !important;
+}
+
+.market-inner-page h1,
+.market-inner-page h2,
+.market-inner-page h3,
+.market-inner-page h4,
+.market-inner-page h5 {
+    color: #17231f !important;
+}
+
+.market-inner-page h1,
+.market-inner-page .cart-intro,
+.market-inner-page .tracking-title,
+.market-inner-page .member-info-title,
+.market-inner-page .inquiry-form-title {
+    margin-top: 0;
+    font-family: "Do Hyeon", "Malgun Gothic", sans-serif !important;
+    font-size: clamp(36px, 5vw, 52px) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.025em;
+}
+
+.market-inner-page h2 {
+    font-family: "Do Hyeon", "Malgun Gothic", sans-serif;
+    font-size: clamp(28px, 3.5vw, 38px);
+    font-weight: 400;
+}
+
+.market-inner-page p,
+.market-inner-page label,
+.market-inner-page td,
+.market-inner-page .text-muted,
+.market-inner-page .text-light {
+    color: #62706b !important;
+}
+
+.market-inner-page a {
+    color: #287c62;
+}
+
+.market-inner-page input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.market-inner-page select,
+.market-inner-page textarea,
+.market-inner-page .form-control,
+.market-inner-page .form-input,
+.market-inner-page .login-input,
+.market-inner-page .signup-input,
+.market-inner-page .inquiry-form-input,
+.market-inner-page .inquiry-form-select {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 48px;
+    margin: 7px 0 0 !important;
+    padding: 11px 14px !important;
+    border: 1px solid #d8e2dc !important;
+    border-radius: 11px !important;
+    background: #ffffff !important;
+    color: #17231f !important;
+    font: inherit;
+    outline: none;
+    box-shadow: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.market-inner-page textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.market-inner-page input:focus,
+.market-inner-page select:focus,
+.market-inner-page textarea:focus {
+    border-color: #5fc9a6 !important;
+    box-shadow: 0 0 0 4px rgba(95, 201, 166, 0.13) !important;
+}
+
+.market-inner-page button,
+.market-inner-page .btn,
+.market-inner-page [class*="button"],
+.market-inner-page [class*="-btn"],
+.market-inner-page input[type="submit"] {
+    border: 0 !important;
+    border-radius: 11px !important;
+    font-family: "Gowun Dodum", "Malgun Gothic", sans-serif !important;
+    font-weight: 700;
+    text-decoration: none !important;
+}
+
+.market-inner-page .btn-primary,
+.market-inner-page .login-button,
+.market-inner-page .signup-button-primary,
+.market-inner-page .buy-button,
+.market-inner-page .tracking-submit-btn,
+.market-inner-page .search-btn,
+.market-inner-page .custom-write-btn,
+.market-inner-page .inquiry-form-submit-btn,
+.market-inner-page form button[type="submit"],
+.market-inner-page input[type="submit"] {
+    padding: 11px 20px !important;
+    background: #173d32 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .btn-primary:hover,
+.market-inner-page .login-button:hover,
+.market-inner-page .signup-button-primary:hover,
+.market-inner-page .buy-button:hover,
+.market-inner-page .tracking-submit-btn:hover,
+.market-inner-page .search-btn:hover,
+.market-inner-page .custom-write-btn:hover,
+.market-inner-page .inquiry-form-submit-btn:hover,
+.market-inner-page form button[type="submit"]:hover,
+.market-inner-page input[type="submit"]:hover {
+    background: #287c62 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.market-inner-page .btn-danger,
+.market-inner-page .btn-delete,
+.market-inner-page .clear-btn,
+.market-inner-page .remove-btn,
+.market-inner-page .btn-cancel-order {
+    padding: 10px 17px !important;
+    background: #fff0ed !important;
+    color: #b84c3f !important;
+}
+
+.market-inner-page .btn-secondary,
+.market-inner-page .btn.back,
+.market-inner-page .signup-button-reset,
+.market-inner-page .signup-button-main,
+.market-inner-page .btn-review {
+    padding: 10px 17px !important;
+    border: 1px solid #d8e2dc !important;
+    background: #ffffff !important;
+    color: #3e5049 !important;
+}
+
+.market-inner-page .login-container,
+.market-inner-page .signup-container,
+.market-inner-page .form-box,
+.market-inner-page .tracking-card {
+    width: 100% !important;
+    max-width: 520px !important;
+    margin: 0 auto !important;
+    padding: clamp(28px, 5vw, 48px) !important;
+    border: 1px solid #e5e9e4 !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: 0 18px 50px rgba(23, 61, 50, 0.09) !important;
+}
+
+.market-inner-page .signup-body {
+    width: calc(100% - 48px) !important;
+    max-width: 1180px !important;
+    margin: 64px auto 100px !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.market-inner-page .login-title,
+.market-inner-page .signup-title {
+    margin: 0 0 30px;
+    color: #173d32 !important;
+    font-size: 42px !important;
+}
+
+.market-inner-page .login-label,
+.market-inner-page .signup-label,
+.market-inner-page .inquiry-form-label,
+.market-inner-page form label {
+    display: block;
+    color: #394a44 !important;
+    font-weight: 700;
+    text-align: left;
+}
+
+.market-inner-page .login-form-group,
+.market-inner-page .signup-form-group,
+.market-inner-page .form-group {
+    margin-bottom: 18px !important;
+    text-align: left;
+}
+
+.market-inner-page .button-group,
+.market-inner-page .signup-button-group,
+.market-inner-page .button-container,
+.market-inner-page #buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.market-inner-page .btn-check-duplicate,
+.market-inner-page .btn-search-address {
+    float: right;
+    margin: 0 0 7px !important;
+    padding: 7px 11px !important;
+    background: #e8f7f1 !important;
+    color: #287c62 !important;
+}
+
+.market-inner-page .product-card-container {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+    width: calc(100% - 48px) !important;
+    max-width: 1180px !important;
+    margin: 64px auto 70px !important;
+    padding: 0 !important;
+}
+
+.market-inner-page .product-card-container > div[th\:if],
+.market-inner-page .product-card-container > p {
+    grid-column: 1 / -1;
+}
+
+.market-inner-page .product-card-container .product-card {
+    align-items: stretch !important;
+    width: 100% !important;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 0 18px !important;
+    overflow: hidden;
+    border: 1px solid #e5e9e4 !important;
+    border-radius: 20px !important;
+    background: #ffffff !important;
+    color: #17231f !important;
+    text-align: left !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .product-card-container .product-card:hover {
+    border-color: #5fc9a6 !important;
+    box-shadow: 0 16px 36px rgba(23, 61, 50, 0.10) !important;
+    transform: translateY(-4px);
+}
+
+.market-inner-page .product-card-container .product-image {
+    width: 100% !important;
+    max-width: none !important;
+    height: 260px !important;
+    margin: 0 0 16px !important;
+    border-radius: 0 !important;
+    object-fit: cover;
+}
+
+.market-inner-page .product-card-container .product-card h3,
+.market-inner-page .product-card-container .product-card p {
+    margin-right: 18px !important;
+    margin-left: 18px !important;
+}
+
+.market-inner-page .product-card-container .product-card h3 {
+    overflow: hidden;
+    margin-top: 2px !important;
+    color: #17231f !important;
+    font-size: 19px !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.market-inner-page .product-card-container .product-card p {
+    color: #6f7c77 !important;
+}
+
+.market-inner-page .pagination,
+.market-inner-page .review-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin: 30px auto 80px !important;
+    padding: 0;
+    list-style: none;
+}
+
+.market-inner-page .pagination a,
+.market-inner-page .pagination .page-link,
+.market-inner-page .review-pagination a {
+    display: grid;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 11px !important;
+    place-items: center;
+    border: 1px solid #d8e2dc !important;
+    border-radius: 9px !important;
+    background: #ffffff !important;
+    color: #52615c !important;
+}
+
+.market-inner-page .pagination a.active,
+.market-inner-page .pagination .active .page-link,
+.market-inner-page .review-pagination .active {
+    border-color: #173d32 !important;
+    background: #173d32 !important;
+    color: #ffffff !important;
+}
+
+.market-inner-page .detail-info {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+    column-gap: 54px;
+    padding: 0 !important;
+    text-align: left;
+}
+
+.market-inner-page .detail-info h2 {
+    grid-column: 1 / -1;
+    margin-bottom: 30px;
+    font-size: 46px;
+    text-align: left;
+}
+
+.market-inner-page .product-images {
+    grid-row: span 14;
+}
+
+.market-inner-page .detail-image {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 560px;
+    margin: 0 !important;
+    border-radius: 20px !important;
+    object-fit: cover;
+    box-shadow: none !important;
+}
+
+.market-inner-page .additional-images {
+    justify-content: flex-start !important;
+}
+
+.market-inner-page .detail-info hr {
+    width: 100%;
+    margin: 7px 0 13px;
+    border: 0;
+    border-top: 1px solid #edf0ed;
+}
+
+.market-inner-page .button-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 26px 0 42px !important;
+}
+
+.market-inner-page .btn.cart,
+.market-inner-page .btn.buy {
+    min-width: 140px;
+    padding: 12px 22px !important;
+    background: #173d32 !important;
+    color: #ffffff !important;
+}
+
+.market-inner-page .detail-images,
+.market-inner-page .review-section {
+    margin-top: 50px;
+    padding-top: 40px !important;
+    border-top: 1px solid #e5e9e4;
+}
+
+.market-inner-page .review,
+.market-inner-page .review-item,
+.market-inner-page .comment-item {
+    padding: 20px !important;
+    border: 1px solid #e5e9e4 !important;
+    border-radius: 15px !important;
+    background: #fbfcfa !important;
+    color: #17231f !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .cart-intro,
+.market-inner-page .like {
+    width: calc(100% - 48px);
+    max-width: 900px;
+    margin: 64px auto 30px !important;
+    color: #173d32 !important;
+    text-align: center;
+}
+
+.market-inner-page #cartItems,
+.market-inner-page #buttonContainer,
+.market-inner-page #totalQuantity,
+.market-inner-page #totalPrice,
+.market-inner-page #emptyMessage {
+    width: calc(100% - 48px);
+    max-width: 760px;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+.market-inner-page .cart-item {
+    padding: 22px !important;
+    border: 1px solid #d8e9e1 !important;
+    border-radius: 17px !important;
+    background: #eaf6f0 !important;
+    color: #173d32 !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .tracking-container {
+    max-width: 700px !important;
+    text-align: center;
+}
+
+.market-inner-page .tracking-card {
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .table {
+    width: 100%;
+    overflow: hidden;
+    border-collapse: separate !important;
+    border-spacing: 0;
+    border: 1px solid #e1e7e3;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.market-inner-page .table th {
+    padding: 15px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #d8e2dc !important;
+    background: #eaf6f0 !important;
+    color: #173d32 !important;
+}
+
+.market-inner-page .table td {
+    padding: 15px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #eef1ef !important;
+}
+
+.market-inner-page .table tbody tr:hover {
+    background: #f7fbf9 !important;
+}
+
+.market-inner-page .search-form {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    max-width: 520px;
+    margin: 0 auto 28px;
+}
+
+.market-inner-page .search-form .search-input {
+    margin: 0 !important;
+}
+
+.market-inner-page .search-form .search-btn {
+    flex: 0 0 84px;
+    margin: 0 !important;
+}
+
+.market-inner-page .detail-table {
+    overflow: hidden;
+    border: 1px solid #e3e8e5 !important;
+    border-radius: 16px;
+}
+
+.market-inner-page .detail-row {
+    gap: 20px;
+    padding: 16px 18px !important;
+    border-color: #edf0ee !important;
+}
+
+.market-inner-page .detail-header {
+    color: #287c62 !important;
+}
+
+.market-inner-page .detail-content {
+    color: #35443f !important;
+}
+
+.market-inner-page .consultation-faq-wrapper {
+    gap: 24px !important;
+}
+
+.market-inner-page .consultation-section,
+.market-inner-page .faq-section,
+.market-inner-page #consultation-detail {
+    padding: 30px !important;
+    border: 1px solid #e1e9e4;
+    border-radius: 18px !important;
+    background: #f8fbf9 !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .accordion-item {
+    margin-bottom: 10px;
+    overflow: hidden;
+    border: 1px solid #dce6e0;
+    border-radius: 12px;
+}
+
+.market-inner-page .accordion-button {
+    width: 100%;
+    padding: 15px !important;
+    background: #e8f7f1 !important;
+    color: #173d32 !important;
+    text-align: left;
+}
+
+.market-inner-page .member-info-details,
+.market-inner-page .member-info-card,
+.market-inner-page .order-card,
+.market-inner-page .card-wrapper .card {
+    padding: 24px !important;
+    border: 1px solid #e1e8e4 !important;
+    border-radius: 17px !important;
+    background: #ffffff !important;
+    color: #17231f !important;
+    box-shadow: none !important;
+}
+
+.market-inner-page .order-card {
+    margin-bottom: 20px;
+}
+
+.market-inner-page .order-header {
+    padding: 18px !important;
+    border-radius: 12px;
+    background: #eaf6f0 !important;
+}
+
+.market-inner-page .order-products .product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    width: 100% !important;
+    padding: 16px !important;
+    border: 1px solid #edf0ee !important;
+    background: #ffffff !important;
+}
+
+.market-inner-page .order-products .product-card img {
+    width: 90px !important;
+    height: 90px !important;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.market-inner-page form#guestOrderForm {
+    gap: 18px !important;
+}
+
+.market-inner-page form#guestOrderForm > label,
+.market-inner-page .user-benefits,
+.market-inner-page form#guestOrderForm > #cartItems {
+    padding: 17px;
+    border: 1px solid #e5e9e4;
+    border-radius: 13px;
+    background: #fbfcfa;
+}
+
+.market-inner-page .footer {
+    margin-top: auto !important;
+}
+
+@media (max-width: 980px) {
+    .market-inner-page .product-card-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .market-inner-page .detail-info {
+        grid-template-columns: 1fr;
+    }
+
+    .market-inner-page .product-images {
+        grid-row: auto;
+        margin-bottom: 24px;
+    }
+
+    .market-inner-page .consultation-faq-wrapper {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 760px) {
+    .market-inner-page main,
+    .market-inner-page .container.mt-5,
+    .market-inner-page .detail-container,
+    .market-inner-page .tracking-container,
+    .market-inner-page .customer-service-container,
+    .market-inner-page .inquiry-form-container,
+    .market-inner-page .member-info-container,
+    .market-inner-page .my-review,
+    .market-inner-page .search-id,
+    .market-inner-page .password-find,
+    .market-inner-page .signup-body,
+    .market-inner-page .product-card-container {
+        width: calc(100% - 32px) !important;
+        margin-top: 38px !important;
+        margin-bottom: 70px !important;
+    }
+
+    .market-inner-page main:not(.product-card-container):not(.signup-body),
+    .market-inner-page .detail-container,
+    .market-inner-page .tracking-container,
+    .market-inner-page .customer-service-container,
+    .market-inner-page .inquiry-form-container,
+    .market-inner-page .member-info-container,
+    .market-inner-page .my-review {
+        padding: 22px !important;
+        border-radius: 18px !important;
+    }
+
+    .market-inner-page .product-card-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 13px !important;
+    }
+
+    .market-inner-page .product-card-container .product-image {
+        height: 190px !important;
+    }
+
+    .market-inner-page .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .market-inner-page .detail-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .market-inner-page .detail-content {
+        text-align: left !important;
+    }
+
+    .market-inner-page .button-section,
+    .market-inner-page .signup-button-group,
+    .market-inner-page #buttonContainer {
+        flex-direction: column;
+    }
+
+    .market-inner-page .button-section .btn,
+    .market-inner-page .signup-button,
+    .market-inner-page #buttonContainer button {
+        width: 100%;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .market-inner-page .product-card-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .market-inner-page .product-card-container .product-image {
+        height: 250px !important;
+    }
+
+    .market-inner-page .login-container,
+    .market-inner-page .signup-container,
+    .market-inner-page .form-box {
+        padding: 24px 18px !important;
+    }
+}
