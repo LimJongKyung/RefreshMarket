@@ -989,7 +989,29 @@ body.market-home img {
     }
 
     .market-header .container-fluid:first-child {
-        display: none;
+        display: block;
+        padding: 7px 0 0;
+    }
+
+    .market-header .market-account-bar .d-flex {
+        justify-content: flex-end !important;
+    }
+
+    .market-header .market-account-links {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+    .market-header .market-account-links .nav-link {
+        width: auto;
+        padding: 5px 8px;
+        font-size: 12px !important;
+        line-height: 1.2;
     }
 
     .market-header .container-fluid:nth-child(2) {

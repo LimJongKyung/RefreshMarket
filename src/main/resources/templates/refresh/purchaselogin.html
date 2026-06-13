@@ -5,13 +5,13 @@
 	    <meta name="theme-color" content="#712cf9">
 	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-	    <link href="/assets/dist/css/refreshmain.css?v=20260612-5" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css?v=20260613-1" rel="stylesheet">
 	    <link href="/assets/dist/mainproductboardcss/Purchase.css" rel="stylesheet">
-		<link href="/assets/dist/css/refresh-theme.css?v=20260612-4" rel="stylesheet">
+		<link href="/assets/dist/css/refresh-theme.css?v=20260613-1" rel="stylesheet">
 </head>
-	<body class="market-home market-inner-page d-flex h-100 text-center text-bg-dark">
-	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-	        <header class="market-header mb-auto">
+	<body class="market-home market-inner-page purchase-page d-flex h-100 text-center text-bg-dark">
+	    <div class="cover-container d-flex w-100 p-3 mx-auto flex-column">
+	        <header class="market-header">
 	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
@@ -19,8 +19,7 @@
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
-	    </div>    
-	    <main style="max-width:600px; margin: 40px auto; padding: 0 20px; font-family: 'Noto Sans KR', sans-serif;">
+	    <main class="purchase-main">
 		  <h2 style="text-align:center; margin-bottom:30px;" th:text="'구매자, ' + ${username} + ' 고객님!'"></h2>
 		
 		  <!-- 기존 정보 불러오기 체크박스 -->
@@ -117,6 +116,7 @@
 	    <footer class="mt-auto text-white-50">
     		<th:block th:insert="~{template/refresh/fragments/block :: footer}"></th:block>
     	</footer>
+	    </div>
 	    <script src="https://js.tosspayments.com/v1"></script>
 		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

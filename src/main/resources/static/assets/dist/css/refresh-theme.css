@@ -440,6 +440,85 @@ body.market-inner-page {
     padding: 0 !important;
 }
 
+.product-list-page .cover-container,
+.purchase-page .cover-container {
+    height: auto !important;
+    min-height: 100vh !important;
+}
+
+.product-list-page .product-page-heading {
+    position: relative;
+    width: min(1180px, calc(100% - 48px));
+    margin: 42px auto 0;
+    padding: clamp(28px, 4vw, 46px);
+    overflow: hidden;
+    border: 1px solid #dcebe4;
+    border-radius: 26px;
+    background:
+        radial-gradient(circle at 90% 10%, rgba(95, 201, 166, 0.22), transparent 34%),
+        linear-gradient(135deg, #eef8f3 0%, #f8fbf8 65%, #fffaf0 100%);
+    color: #173d32;
+    text-align: left;
+}
+
+.product-list-page .product-page-heading::after {
+    position: absolute;
+    right: clamp(24px, 6vw, 76px);
+    bottom: -58px;
+    width: 170px;
+    height: 170px;
+    border: 28px solid rgba(95, 201, 166, 0.12);
+    border-radius: 50%;
+    content: "";
+}
+
+.product-list-page .product-page-eyebrow {
+    margin: 0 0 9px;
+    color: #287c62;
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+}
+
+.product-list-page .product-page-heading h1 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 10px;
+    font-family: "Do Hyeon", "Malgun Gothic", sans-serif !important;
+    font-size: clamp(38px, 5vw, 58px) !important;
+    font-weight: 400 !important;
+    line-height: 1.08;
+}
+
+.product-list-page .product-page-heading > p:last-child {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: #5f7069;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.product-list-page .product-card-container {
+    margin-top: 26px !important;
+}
+
+.purchase-page .purchase-main {
+    width: min(700px, calc(100% - 48px)) !important;
+    max-width: 700px !important;
+    margin: 34px auto 70px !important;
+    padding: clamp(24px, 4vw, 42px) !important;
+    font-family: "Gowun Dodum", "Malgun Gothic", sans-serif !important;
+}
+
+.purchase-page .purchase-main > h2 {
+    margin: 0 0 28px !important;
+    font-family: "Do Hyeon", "Malgun Gothic", sans-serif !important;
+    font-size: clamp(30px, 4vw, 42px) !important;
+    font-weight: 400 !important;
+}
+
 .market-inner-page .product-card-container > div[th\:if],
 .market-inner-page .product-card-container > p {
     grid-column: 1 / -1;
@@ -1067,6 +1146,37 @@ body.market-inner-page {
         width: calc(100% - 32px) !important;
     }
 
+    .market-inner-page .market-header .market-account-bar {
+        display: block !important;
+        padding-top: 7px !important;
+    }
+
+    .market-inner-page .market-header .market-account-links {
+        display: flex !important;
+        width: 100% !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 4px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .market-inner-page .market-header .market-account-links .nav-link {
+        width: auto !important;
+        padding: 5px 8px !important;
+        font-size: 12px !important;
+    }
+
+    .market-inner-page .market-header .market-account-links .welcome-container {
+        flex: 1 1 100%;
+    }
+
+    .market-inner-page .market-header .market-account-links .welcome-message {
+        margin-bottom: 2px !important;
+        text-align: right !important;
+        white-space: normal;
+    }
+
     .market-inner-page .market-header .container-fluid:nth-child(2) {
         grid-template-columns: 1fr auto !important;
         gap: 14px !important;
@@ -1124,6 +1234,32 @@ body.market-inner-page {
     .market-inner-page .product-card-container {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 13px !important;
+    }
+
+    .product-list-page .product-page-heading {
+        width: calc(100% - 32px);
+        margin-top: 26px;
+        padding: 25px 22px;
+        border-radius: 20px;
+    }
+
+    .product-list-page .product-page-heading h1 {
+        font-size: 38px !important;
+    }
+
+    .product-list-page .product-page-heading > p:last-child {
+        font-size: 14px;
+    }
+
+    .product-list-page .product-card-container {
+        margin-top: 18px !important;
+    }
+
+    .purchase-page .purchase-main {
+        width: calc(100% - 32px) !important;
+        margin-top: 24px !important;
+        margin-bottom: 60px !important;
+        padding: 22px !important;
     }
 
     .market-inner-page .product-card-container .product-card-content {

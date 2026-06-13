@@ -5,13 +5,13 @@
 	    <meta name="theme-color" content="#712cf9">
 	    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 	    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-	    <link href="/assets/dist/css/refreshmain.css?v=20260612-5" rel="stylesheet">
+	    <link href="/assets/dist/css/refreshmain.css?v=20260613-1" rel="stylesheet">
 	    <link href="/assets/dist/mainproductboardcss/productboard.css" rel="stylesheet"/>
-		<link href="/assets/dist/css/refresh-theme.css?v=20260612-4" rel="stylesheet">
+		<link href="/assets/dist/css/refresh-theme.css?v=20260613-1" rel="stylesheet">
 </head>
-	<body class="market-home market-inner-page d-flex h-100 text-center text-bg-dark">
+	<body class="market-home market-inner-page product-list-page d-flex h-100 text-center text-bg-dark">
 	    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-	        <header class="market-header mb-auto">
+	        <header class="market-header">
 	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: header}"></th:block>
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: brandName}"></th:block>
@@ -19,6 +19,12 @@
 	                <th:block th:insert="~{template/refresh/fragments/blocklogin :: sideNavbar}"></th:block>
 	            </nav>
 	        </header>
+
+	        <section class="product-page-heading">
+	            <p class="product-page-eyebrow">REFRESH MARKET COLLECTION</p>
+	            <h1 th:text="${selectedCategory != null and !#strings.isEmpty(selectedCategory) ? selectedCategory : '전체 상품'}">전체 상품</h1>
+	            <p th:text="${selectedCategory != null and !#strings.isEmpty(selectedCategory) ? selectedCategory + ' 카테고리의 신선한 상품을 만나보세요.' : '리프레시마켓의 신선한 상품을 한눈에 둘러보세요.'}">리프레시마켓의 신선한 상품을 한눈에 둘러보세요.</p>
+	        </section>
 	
 	        <main class="product-card-container">
 			    <div th:if="${#lists.isEmpty(products)}">
