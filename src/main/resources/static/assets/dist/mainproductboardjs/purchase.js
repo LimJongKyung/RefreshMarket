@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!cartItemsDiv) return;
 
-  usedPointInput.addEventListener('input', () => {
-    renderCart();
-  });
+  if (usedPointInput) {
+    usedPointInput.addEventListener('input', renderCart);
+  }
 
   function applyBenefit() {
     deliveryFee = 4000;
@@ -63,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function applyPointDiscount(totalPriceBeforeDiscount) {
+    if (!usedPointInput) return 0;
+
     let usedPoint = parseInt(usedPointInput.value) || 0;
 
     if (usedPoint > memberPoint) {
@@ -95,6 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderSelectedBenefits() {
+    if (!selectedBenefitsList) return;
+
     selectedBenefitsList.innerHTML = '';
     selectedBenefits.forEach((benefit, index) => {
       const li = document.createElement('li');
@@ -139,10 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const usedPoint = applyPointDiscount(totalPriceBeforeDiscount);
     const finalPrice = totalPriceBeforeDiscount - totalDiscount - usedPoint + deliveryFee;
 
-    deliveryChargesEI.textContent = `택배비: ${deliveryFee.toLocaleString()}원`;
-    totalQuantityEl.textContent = `총 수량: ${totalQuantity}개`;
-    totalPriceEl.textContent = `총 가격: ₩${totalPriceBeforeDiscount.toLocaleString()}`;
-    purchaseTotalEl.textContent = `구매할 총 금액: ₩${finalPrice.toLocaleString()}`;
+    if (deliveryChargesEI) deliveryChargesEI.textContent = `택배비: ${deliveryFee.toLocaleString()}원`;
+    if (totalQuantityEl) totalQuantityEl.textContent = `총 수량: ${totalQuantity}개`;
+    if (totalPriceEl) totalPriceEl.textContent = `총 가격: ₩${totalPriceBeforeDiscount.toLocaleString()}`;
+    if (purchaseTotalEl) purchaseTotalEl.textContent = `구매할 총 금액: ₩${finalPrice.toLocaleString()}`;
   }
 
   renderCart();
@@ -183,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 서버로 넘길 데이터
     document.getElementById('cartData').value = JSON.stringify(cart);
     document.getElementById('quantities').value = cart.map(item => item.quantity).join(',');
-    usedBenefitsInput.value = JSON.stringify(selectedBenefits);
+    if (usedBenefitsInput) usedBenefitsInput.value = JSON.stringify(selectedBenefits);
 
     const usedPointHidden = document.createElement('input');
     usedPointHidden.type = 'hidden';
@@ -193,7 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const road = document.getElementById('roadAddress').value || '';
     const detail = document.getElementById('detailAddress').value || '';
-    document.getElementById('shippingAddress').value = road + ' ' + detail;
+    const shippingAddressInput = document.getElementById('shippingAddress');
+    if (shippingAddressInput) {
+      shippingAddressInput.value = `${road} ${detail}`.trim();
+    } else {
+      document.getElementById('detailAddress').value = `${road} ${detail}`.trim();
+    }
 
     localStorage.removeItem('cart');
   });
@@ -212,6 +221,7 @@ function execDaumPostcode() {
 // 기존 정보 불러오기
 document.addEventListener("DOMContentLoaded", () => {
   const loadInfoCheckbox = document.getElementById("loadExistingInfo");
+  if (!loadInfoCheckbox) return;
 
   loadInfoCheckbox.addEventListener("change", async function () {
     if (this.checked) {
